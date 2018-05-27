@@ -25,7 +25,7 @@ namespace Mission_Calculator.Enumerators
         UFO = 4
     }
 
-    public enum Systems
+    public enum Systems : Int16
     {
         Kerbol = 0,
         Moho = 1,
@@ -50,7 +50,7 @@ namespace Mission_Calculator.Enumerators
         None = 19
     }
 
-    public enum Orbits
+    public enum Orbits : Int16
     {
         Sun = 0,
         Kerbol = 1,
