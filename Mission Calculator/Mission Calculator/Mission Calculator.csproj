@@ -110,6 +110,59 @@
   <ItemGroup>
     <Folder Include="Windows\" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Planets\Bop.png" />
+    <Resource Include="Images\Planets\Dres.png" />
+    <Resource Include="Images\Planets\Duna.png" />
+    <Resource Include="Images\Planets\Eeloo.png" />
+    <Resource Include="Images\Planets\Eeloo2.png" />
+    <Resource Include="Images\Planets\Eve.png" />
+    <Resource Include="Images\Planets\Gilly.png" />
+    <Resource Include="Images\Planets\Hale.png" />
+    <Resource Include="Images\Planets\Ike.png" />
+    <Resource Include="Images\Planets\Jool.png" />
+    <Resource Include="Images\Planets\Kerbin.png" />
+    <Resource Include="Images\Planets\Kerbol.png" />
+    <Resource Include="Images\Planets\Laythe.png" />
+    <Resource Include="Images\Planets\Minmus.png" />
+    <Resource Include="Images\Planets\Moho.png" />
+    <Resource Include="Images\Planets\Mun.png" />
+    <Resource Include="Images\Planets\Neidon.png" />
+    <Resource Include="Images\Planets\Nissee.png" />
+    <Resource Include="Images\Planets\None.png" />
+    <Resource Include="Images\Planets\Ovok.png" />
+    <Resource Include="Images\Planets\Plock.png" />
+    <Resource Include="Images\Planets\Pol.png" />
+    <Resource Include="Images\Planets\Polta.png" />
+    <Resource Include="Images\Planets\Priax.png" />
+    <Resource Include="Images\Planets\Sarnus.png" />
+    <Resource Include="Images\Planets\Slate.png" />
+    <Resource Include="Images\Planets\Tal.png" />
+    <Resource Include="Images\Planets\Tekto.png" />
+    <Resource Include="Images\Planets\Thatmo.png" />
+    <Resource Include="Images\Planets\Tylo.png" />
+    <Resource Include="Images\Planets\Urlum.png" />
+    <Resource Include="Images\Planets\Vall.png" />
+    <Resource Include="Images\Planets\Wal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Planets\RSS\Calisto.png" />
+    <Resource Include="Images\Planets\RSS\Deimos.png" />
+    <Resource Include="Images\Planets\RSS\Earth.png" />
+    <Resource Include="Images\Planets\RSS\Europa.png" />
+    <Resource Include="Images\Planets\RSS\Ganymede.png" />
+    <Resource Include="Images\Planets\RSS\Io.png" />
+    <Resource Include="Images\Planets\RSS\Jupiter.png" />
+    <Resource Include="Images\Planets\RSS\Mars.png" />
+    <Resource Include="Images\Planets\RSS\Mercury.png" />
+    <Resource Include="Images\Planets\RSS\Moon.png" />
+    <Resource Include="Images\Planets\RSS\Neptune.png" />
+    <Resource Include="Images\Planets\RSS\Phobos.png" />
+    <Resource Include="Images\Planets\RSS\Saturn.png" />
+    <Resource Include="Images\Planets\RSS\Titan.png" />
+    <Resource Include="Images\Planets\RSS\Uranus.png" />
+    <Resource Include="Images\Planets\RSS\Venus.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
