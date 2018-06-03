@@ -67,6 +67,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\IO.cs" />
     <Compile Include="Classes\SelestialObject.cs" />
     <Compile Include="Enumerators\Enumerators.cs" />
     <Compile Include="MainWindow.xaml.cs">
