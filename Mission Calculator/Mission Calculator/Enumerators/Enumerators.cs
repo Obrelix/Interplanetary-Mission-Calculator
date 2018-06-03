@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mission_Calculator.Enumerators
 {
+
     public class GameConstants
     {
         public const int StockPlanetsCount = 18;
@@ -14,6 +15,14 @@ namespace Mission_Calculator.Enumerators
         public const int KerbinTime = 21600; //seconds per day
         public const int EarthTime = 86400; //seconds per day
 
+    }
+
+    public enum OrbitHeight : Int16
+    {
+        Surface = 0,
+        LowOrbit = 1,
+        GeostationaryOrbit = 2,
+        EscapeOrbit = 3
     }
 
     public enum Types : Int16 
