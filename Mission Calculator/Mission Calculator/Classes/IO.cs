@@ -12,45 +12,13 @@ namespace Mission_Calculator.Classes
 {
     public static class IO
     {
-        //Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Pacman";
-        //saveDirectoryPath + "\\highScores.json";
 
         #region "Private Properties"
-        private static string _saveDirectoryPath;
-        private static string _saveFilePath;
-        #endregion
-
-        #region "Public Properties"
-
-        public static List<object> objectList { get; set; }
-        public static string fileName { get; set; }
-        public static string errorFilePath { get; set; }
-
-        public static string saveDirectoryPath
-        {
-            get
-            {
-                return _saveDirectoryPath;
-            }
-            set
-            {
-                _saveDirectoryPath = value;
-                _saveFilePath = value + fileName;
-            }
-        } 
-
-        public static string saveFilePath
-        {
-            get
-            {
-                return _saveFilePath;
-            }
-        }
 
         /// <summary>
         /// Private Property that returns the datetime now to string in a custom format
         /// </summary>
-        private static string getTimeStamp
+        private static string TimeStamp
         {
             get
             {
@@ -60,11 +28,35 @@ namespace Mission_Calculator.Classes
 
         #endregion
 
+        #region "Public Properties"
+
+        public static string errorFilePath { get; set; }
+
+        #endregion
+
+        #region "Private Methods"
+
+        private static void printError(string subStamp, Exception exc)
+        {
+            try
+            {
+                string errorMessage = subStamp + exc.Message + Environment.NewLine;
+                System.Diagnostics.Debug.WriteLine(errorMessage);
+                IO.writeToFile(errorFilePath, TimeStamp + errorMessage);
+            }
+            catch (Exception e)
+            {
+                string subStampLocal = "{Error from IO.printError}    ";
+                printError(subStampLocal, e);
+            }
+        }
+
+        #endregion
+
         #region "Public Methods"
-        
+
         public static bool writeToFile(string saveFile, string contentToWrite)
         {
-            string subStamp = "{Error from IO.writeToFile}    ";
             try
             {
                 using (StreamWriter w = File.AppendText(saveFile))
@@ -75,19 +67,19 @@ namespace Mission_Calculator.Classes
             }
             catch (Exception exc)
             {
-                string errorMessage = subStamp + exc.Message +  Environment.NewLine;
-                System.Diagnostics.Debug.WriteLine(errorMessage);
-                IO.writeToFile(errorFilePath, getTimeStamp + errorMessage);
+                string subStamp = "{Error from IO.writeToFile}    ";
+                printError(subStamp, exc);
                 return false;
             }
         }
         
         public static bool createFile(string saveFilePath, string contentToWrite)
         {
-            string subStamp = "{Error from IO.createFile}    ";
             try
             {
-                using (System.IO.FileStream fs = System.IO.File.Create(saveFilePath))
+                System.IO.FileInfo file = new System.IO.FileInfo(saveFilePath);
+                file.Directory.Create();
+                using (System.IO.FileStream fs = System.IO.File.Create(file.FullName))
                 {
                     for (byte i = 0; i < 100; i++)
                     {
@@ -95,66 +87,59 @@ namespace Mission_Calculator.Classes
                     }
                 }
 
-                System.IO.File.WriteAllText(saveFilePath, contentToWrite);
+                System.IO.File.WriteAllText(file.FullName, contentToWrite);
                 return true;
             }
             catch (Exception exc)
             {
-                string errorMessage = subStamp + exc.Message + Environment.NewLine;
-                System.Diagnostics.Debug.WriteLine(errorMessage);
-                IO.writeToFile(errorFilePath, getTimeStamp + errorMessage);
+                string subStamp = "{Error from IO.createFile}    ";
+                printError(subStamp, exc);
                 return false;
             }
         }
         
-        public static void loadFileToList(string savePath, string saveFilePath)
+        public static List<SelestialObject> LoadListFromFile(string FilePath)
         {
-            string subStamp = "{Error from IO.loadFileToList}    ";
-            Directory.CreateDirectory(savePath);
+            List<SelestialObject> objectList = new List<SelestialObject>();
             try
             {
-                if (System.IO.File.Exists(saveFilePath))
+                if (System.IO.File.Exists(FilePath))
                 {
                     objectList.Clear();
-                    objectList = JsonConvert.DeserializeObject<List<object>>(System.IO.File.ReadAllText(saveFilePath));
-                    //objectList = objectList.OrderByDescending(p => p.score).ToList();
+                    objectList = JsonConvert.DeserializeObject<List<SelestialObject>>(System.IO.File.ReadAllText(FilePath));
                 }
                 else
                 {
-                    IO.createFile(saveFilePath, "[ ]");
-                    loadFileToList(savePath, saveFilePath);
+                    IO.createFile(FilePath, "[ ]");
+                    LoadListFromFile(FilePath);
                 }
+                return objectList;
             }
             catch (Exception exc)
             {
-                string errorMessage = subStamp + exc.Message + Environment.NewLine;
-                System.Diagnostics.Debug.WriteLine(errorMessage);
-                IO.writeToFile(errorFilePath, getTimeStamp + errorMessage);
+                string subStamp = "{Error from IO.loadFileToList}    ";
+                printError(subStamp, exc);
+                return objectList;
             }
         }
 
-        public static void saveListToFile(string saveFile)
+        public static void saveListToFile(string saveFilePath, List<SelestialObject> objectList)
         {
-            string subStamp = "{Error from IO.saveListToFile}    ";
             try
             {
                 string contentsToWriteToFile = JsonConvert.SerializeObject(objectList.ToArray(), Formatting.Indented);
-
-                System.IO.File.WriteAllText(saveFile, contentsToWriteToFile);
+                createFile(saveFilePath, contentsToWriteToFile);
 
             }
             catch (Exception exc)
             {
-                string errorMessage = subStamp + exc.Message + Environment.NewLine;
-                System.Diagnostics.Debug.WriteLine(errorMessage);
-                IO.writeToFile(errorFilePath, getTimeStamp + errorMessage);
-
+                string subStamp = "{Error from IO.saveListToFile}    ";
+                printError(subStamp, exc);
             }
         }
 
         public static DataTable ToDataTable<T>(List<T> items)
         {
-            string subStamp = "{Error from IO.oDataTable}    ";
             DataTable dataTable = new DataTable(typeof(T).Name);
             try
             {
@@ -182,9 +167,8 @@ namespace Mission_Calculator.Classes
             }
             catch (Exception exc)
             {
-                string errorMessage = subStamp + exc.Message + Environment.NewLine;
-                System.Diagnostics.Debug.WriteLine(errorMessage);
-                IO.writeToFile(errorFilePath, getTimeStamp + errorMessage);
+                string subStamp = "{Error from IO.oDataTable}    ";
+                printError(subStamp, exc);
                 return null;
             }
         }

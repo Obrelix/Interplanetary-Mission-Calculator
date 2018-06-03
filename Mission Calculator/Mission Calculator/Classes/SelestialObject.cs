@@ -20,12 +20,11 @@ namespace Mission_Calculator.Classes
         #region "General Properties"
         public string Name { get; set; }
         public int Index { get; set; }
-        public int ParentIndex { get; set; }
         public string ImageUri { get; set; }
         public Types Type { get; set; }
         public Systems System { get; set; }
         public Orbits Orbits { get; set; }
-        public SelestialObject ParentObject { get; set; }
+        public int ParentObjectIndex { get; set; }
         #endregion
 
         #region "Technical Properties"
@@ -68,6 +67,44 @@ namespace Mission_Calculator.Classes
         #region "Public Methods"
 
         /// <summary>
+        /// Constractor
+        /// </summary>
+        /// <param name="parentObject"></param>
+        public SelestialObject(SelestialObject parentObject = null)
+        {
+            this.Name = "None";
+            this.Index = 0;
+            this.ImageUri = @"pack://application:,,/Images/Planets/None.png";
+            this.Type = Types.Star;
+            this.System = Systems.None;
+            this.OrbitalPeriod = 0;
+            this.SphereOfInfluence = 0;
+            this.LowOrbitHeight = 0;
+            this.SurfaceGravity = 0;
+            this.HasAtmosphere = false;
+            this.HasOxigen = false;
+            this.AtmosphericPressure = 0;
+            this.LowerAtmoHeight = 0;
+            this.UpperAtmoHeight = 0;
+            this.LowOrbitHeight = 0;
+            this.EscapeVelocity = 0;
+            this.TotalBiomesCount = 0;
+            this.SMSurface = 0;
+            this.SMLowerAtmosphere = 0;
+            this.SMUpperAtmosphere = 0;
+            this.SMNearSpace = 0;
+            this.SMOuterSpace = 0;
+            this.SurfaceToLowOrbit = 0;
+            this.LowOrbitToMoonIntercept = 0;
+            this.MoonInterceptToElipticalOrbit = 0;
+            this.MoonInterceptToElipticalOrbitMPC = 0;
+            this.LowOrbitToElipticalOrbit = 0;
+            this.ElipticalOrbitToPlanetIntercet = 0;
+            this.PlanetInterceptToStarElipticalOrbit = 0;
+            this.MaxPlaneChange = 0;
+        }
+
+        /// <summary>
         /// Public Method DeltaVCost 
         /// </summary>
         /// <param name="from">1st mandatory parameter defines the starting point </param>
@@ -80,37 +117,25 @@ namespace Mission_Calculator.Classes
         }
 
         /// <summary>
-        /// Public Method that calculates the phase angle for the HohhmanTranserOrbit between current celistial oject 
-        /// and a target selestial object
+        /// Public Method that calculates the phase angle for the Hohhman's Transer Orbit between the current celistial oject 
+        /// and a target selestial object. The bellow method is not quite accurate but it is a start.
         /// </summary>
         /// <param name="objectTo">The target selestial object</param>
         /// <returns>Returns the phase angle between the current object and tha target object </returns>
         public double PhaseAngle(SelestialObject objectTo)
         {
             double HohmannTransferTime = 0, Angle = 0;
-            double OrbitalPeriodFrom = 0, OrbitalPeriodTo = 0;
 
-            if (objectTo.System == this.System && objectTo.Orbits != this.Orbits)
-            {
-                OrbitalPeriodFrom = 0;
-                OrbitalPeriodTo = 0;
-            }
-            else
-            {
-                OrbitalPeriodFrom = this.OrbitalPeriod;
-                OrbitalPeriodTo = objectTo.OrbitalPeriod;
-            }
-            
-            ///Calculate the Hohmann Transer Time in seconds
-            ///HTT= ((OrbitalPeriod1^2/3 + OrbitalPeriod2^2/3)^1.5)/sqr32
-            HohmannTransferTime = Math.Pow((Math.Pow(OrbitalPeriodTo, (2.0 / 3.0)) + Math.Pow(OrbitalPeriodFrom, (2.0 / 3.0))), 1.5) / Math.Sqrt(32.0);
+            //calculate phase agnle for moons of the same planet demands more properties for this class so retuern 0 for now.
+            if (objectTo.System == this.System && objectTo.Orbits != this.Orbits) return 0;
 
-            Angle = 180 - (360 * (HohmannTransferTime / OrbitalPeriodTo));
-
-            ///normalize the angle
+            //Calculate the Hohmann's Transer Time in seconds
+            //HTT= ((OrbitalPeriod1^2/3 + OrbitalPeriod2^2/3)^1.5)/sqr32
+            //calculate the Hohmann's Transfer Time only by the orbital periods of the 2 selestial objects is not the best way.
+            HohmannTransferTime = Math.Pow((Math.Pow(objectTo.OrbitalPeriod, (2.0 / 3.0)) + Math.Pow(this.OrbitalPeriod, (2.0 / 3.0))), 1.5) / Math.Sqrt(32.0);
+            Angle = 180 - (360 * (HohmannTransferTime / objectTo.OrbitalPeriod));
             if (Angle < -180 && Angle >= -360) Angle += 360;
             else if (Angle < -360) Angle += Math.Abs(Math.Truncate(Angle / 360) * 360);
-
             return Angle;
         }
 
@@ -129,7 +154,7 @@ namespace Mission_Calculator.Classes
             strSpecs += Environment.NewLine;
             strSpecs += "Surface Gravity : " + this.SurfaceGravity + " m/s²    Low Orbit : " + this.LowOrbitHeight;
             strSpecs += Environment.NewLine;
-            strSpecs += "Escape Velocity : " + this.EscapeVelocity + "    Sphere of influence : " + this.SphereOfInfluence;
+            strSpecs += "Escape Velocity : " + this.EscapeVelocity + " m/s    Sphere of influence : " + this.SphereOfInfluence;
             strSpecs += Environment.NewLine;
             strSpecs += "Atmosphere Present: " + this.HasAtmosphere;
 

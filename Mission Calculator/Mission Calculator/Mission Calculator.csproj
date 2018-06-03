@@ -114,6 +114,7 @@
     <Resource Include="Images\Backgrounds\wallpapers.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="PlanetData\" />
     <Folder Include="Windows\" />
   </ItemGroup>
   <ItemGroup>

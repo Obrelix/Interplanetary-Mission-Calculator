@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         d:DesignHeight="590" d:DesignWidth="1180"
         Title="MainWindow" Height="600" Width="1200
-        ">
+        " MinWidth="1220" MinHeight="660">
     <Grid>
         <Frame x:Name="frame" Content="Frame" Margin="0" Source="/Mission Calculator;component/Pages/pgMissionCalculator.xaml"/>
 
