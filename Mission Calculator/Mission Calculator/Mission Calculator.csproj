@@ -100,6 +100,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DataSources\OuterPlanets.json" />
+    <None Include="DataSources\RSSPlanets.json" />
+    <None Include="DataSources\StockPlanets.json" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -114,7 +117,6 @@
     <Resource Include="Images\Backgrounds\wallpapers.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="PlanetData\" />
     <Folder Include="Windows\" />
   </ItemGroup>
   <ItemGroup>
@@ -221,6 +223,9 @@
     <Resource Include="Images\Biomes\RSS\VenusBiomes.png" />
     <Resource Include="Images\Biomes\Tylo_Biome_Map_0.90.0.png" />
     <Resource Include="Images\Biomes\Vall_Biome_Map_0.90.0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Biomes\None.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

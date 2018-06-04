@@ -38,13 +38,37 @@ namespace Mission_Calculator.Pages
         {
             InitializeComponent();
             errorFileInit();
+            //saveFilesInit();
             cboGameMode.SelectedIndex = 0;
             cboTimeUnit.SelectedIndex = 1;
             planetFilesInit(0);
         }
 
         #region "Methods"
+        private void saveFilesInit()
+        {
+            List<SelestialObject> objList = new List<SelestialObject>();
+            for (int i = 0; i <= 17; i++)
+            {
+                objList.Add(new SelestialObject());
+            }
+            IO.saveListToFile(StockPlanetsPath, objList);
+            objList.Clear();
+            for (int i = 0; i <= 31; i++)
+            {
+                objList.Add(new SelestialObject());
+            }
+            IO.saveListToFile(OuterPlanetsPath, objList);
+            objList.Clear();
+            for (int i = 0; i <= 16; i++)
+            {
+                objList.Add( new SelestialObject());
+            }
+            IO.saveListToFile(RSSPlanetsPath, objList);
+            objList.Clear();
 
+
+        }
         private void errorFileInit()
         {
             string errorFilePath = saveDirectoryPath + "\\errorLog.txt";
@@ -178,8 +202,6 @@ namespace Mission_Calculator.Pages
             rightPaneUpdate(((ComboBox)sender).Name);
         }
 
-        #endregion
-
         private void cboGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             planetFilesInit(((ComboBox)sender).SelectedIndex);
@@ -189,5 +211,7 @@ namespace Mission_Calculator.Pages
         {
 
         }
+        #endregion
+
     }
 }

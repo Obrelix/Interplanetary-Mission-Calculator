@@ -13,36 +13,36 @@ namespace Mission_Calculator.Classes
 
         #region "Private Properties"
 
-        private static string SemiMajorAxisUM= "m";
-        private static string ApoapsisUM= "m";
-        private static string PeriapsisUM= "m";
-        private static string OrbitalInclinationUM= "°";
-        private static string ArgumentOfPeriapsisUM= "°";
-        private static string LongitudeOfTheAscendingNodeUM= "°";
-        private static string MeanAndomalyUM= "rad";
-        private static string OrbitalPeriodUM = "s";
-        private static string OrbitalVelocityUM= "m/s";
+        private string SemiMajorAxisUM= "m";
+        private string ApoapsisUM= "m";
+        private string PeriapsisUM= "m";
+        private string OrbitalInclinationUM= "°";
+        private string ArgumentOfPeriapsisUM= "°";
+        private string LongitudeOfTheAscendingNodeUM= "°";
+        private string MeanAndomalyUM= "rad";
+        private string OrbitalPeriodUM = "s";
+        private string OrbitalVelocityUM= "m/s";
 
-        private static string EquatorialRadiusUM= "m";
-        private static string EquatorialCircumferenceUM= "m";
-        private static string SurfaceAreaUM= "m²";
-        private static string MassUM= "kg";
-        private static string StandarGravitonialParameterUM= "m²/s²";
-        private static string DensityUM= "kg/m³";
-        private static string SurfaceGravityUM= "m/s²";
-        private static string EscapeVelocityUM= "m/s";
-        private static string SiderealRotationPeriodUM= "s";
-        private static string SolarDayUM= "s";
-        private static string SiderealRotationVelocityUM= "m/s";
-        private static string SynchronousOrbitUM= "km";
-        private static string SphereOfInfluenceUM= "m";
+        private string EquatorialRadiusUM= "m";
+        private string EquatorialCircumferenceUM= "m";
+        private string SurfaceAreaUM= "m²";
+        private string MassUM= "kg";
+        private string StandarGravitonialParameterUM= "m²/s²";
+        private string DensityUM= "kg/m³";
+        private string SurfaceGravityUM= "m/s²";
+        private string EscapeVelocityUM= "m/s";
+        private string SiderealRotationPeriodUM= "s";
+        private string SolarDayUM= "s";
+        private string SiderealRotationVelocityUM= "m/s";
+        private string SynchronousOrbitUM= "km";
+        private string SphereOfInfluenceUM= "m";
 
-        private static string AtmosphericPressureUM= "atm";
-        private static string ScaleHeightUM= "m";
-        private static string AtmosphericHeightUM= "m";
-        private static string LowOrbitHeightUM= "km";
-        private static string TemperatureUM= "°C";
-        private static string DeltaVUM= "m/s";
+        private string AtmosphericPressureUM= "atm";
+        private string ScaleHeightUM= "m";
+        private string AtmosphericHeightUM= "m";
+        private string LowOrbitHeightUM= "km";
+        private string TemperatureUM= "°C";
+        private string DeltaVUM= "m/s";
 
         #endregion
 
@@ -134,7 +134,7 @@ namespace Mission_Calculator.Classes
             this.Name = "None";
             this.Index = 0;
             this.ImageUri = @"pack://application:,,/Images/Planets/None.png";
-            this.BiomeImageUri = @"pack://application:,,/Images/Planets/None.png";
+            this.BiomeImageUri = @"pack://application:,,/Images/Biomes/None.png";
             this.Type = Types.Star;
             this.System = Systems.None;
 
@@ -236,13 +236,13 @@ namespace Mission_Calculator.Classes
             if (this.Type == Types.Moon) strSpecs += "    Moon of : " + this.System;
 
             strSpecs += Environment.NewLine;
-            strSpecs += "Surface Gravity : " + this.SurfaceGravity + " m/s²    Low Orbit : " + this.LowOrbitHeight + "km    Low Orbit : ";
+            strSpecs += "Surface Gravity : " + this.SurfaceGravity + this.SurfaceGravityUM + "   Low Orbit : " + this.LowOrbitHeight + this.LowOrbitHeightUM;
             strSpecs += Environment.NewLine;
-            strSpecs += "Escape Velocity : " + this.EscapeVelocity.ToString("N") + " m/s    Sphere of influence : " + this.SphereOfInfluence.ToString("N") + " m";
+            strSpecs += "Escape Velocity : " + this.EscapeVelocity.ToString("N") + this.EscapeVelocityUM + "    Sphere of influence : " + this.SphereOfInfluence.ToString("N") + this.SphereOfInfluenceUM;
             strSpecs += Environment.NewLine;
             strSpecs += "Atmosphere Present: " + this.AtmospherePresent;
 
-            if (this.AtmospherePresent) strSpecs += "   Oxygen Present : " + this.OxygenPresent + "    Pressure : " + this.AtmosphericPressure + " atm";
+            if (this.AtmospherePresent) strSpecs += "   Oxygen Present : " + this.OxygenPresent + "    Pressure : " + this.AtmosphericPressure + this.AtmosphericPressureUM;
             
             strSpecs += Environment.NewLine;
             strSpecs += "Biomes : " + this.TotalBiomesCount + "   Scientific Multiplier:[  S : " + this.SMSurface + "    LA : " + this.SMLowerAtmosphere;
@@ -250,7 +250,7 @@ namespace Mission_Calculator.Classes
             strSpecs += Environment.NewLine;
             strSpecs += "Δv info : " + "   Surface to Low Orbit : " + string.Format("{0:n0}", this.SurfaceToLowOrbit) + " m/s    Low Orbit to SOI Edge : " +
                             string.Format("{0:n0}", (this.LowOrbitToMoonIntercept + this.MoonInterceptToElipticalOrbit + this.ElipticalOrbitToPlanetIntercet + this.LowOrbitToElipticalOrbit +
-                                                     this.PlanetInterceptToStarElipticalOrbit)) + " m/s";
+                                                     this.PlanetInterceptToStarElipticalOrbit)) + this.DeltaVUM;
             return strSpecs;
         }
 
