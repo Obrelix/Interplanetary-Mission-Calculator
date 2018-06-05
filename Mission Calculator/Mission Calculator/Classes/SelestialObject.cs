@@ -60,167 +60,43 @@ namespace Mission_Calculator.Classes
         #endregion 
 
         #region "Orbital Characteristics"
-        public double SemiMajorAxis
-        { 
-            get { return _semiMajorAxis; }
-            set { _semiMajorAxis = value; }
-         }
-        public double Apoapsis
-        { 
-            get { return _apoapsis; }
-            set { _apoapsis = value; }
-         }
-        public double Periapsis
-        { 
-            get { return _periapsis; }
-            set { _periapsis = value; }
-         }
-        public double OrbitalEccentricity
-        { 
-            get { return _orbitalEccentricity; }
-            set { _orbitalEccentricity = value; }
-         }
-        public double OrbitalInclination
-        { 
-            get { return _orbitalInclination; }
-            set { _orbitalInclination = value; }
-         }
-        public double ArgumentOfPeriapsis
-        { 
-            get { return _argumentOfPeriapsis; }
-            set { _argumentOfPeriapsis = value; }
-         }
-        public double LongitudeOfTheAscendingNode
-        { 
-            get { return _longitudeOfTheAscendingNode; }
-            set { _longitudeOfTheAscendingNode = value; }
-         }
-        public double MeanAndomaly
-        { 
-            get { return _meanAndomaly; }
-            set { _meanAndomaly= value; }
-         }
-        public double OrbitalVelocity
-        { 
-            get { return _orbitalVelocity; }
-            set { _orbitalVelocity= value; }
-         }
-        public double OrbitalPeriod
-        { 
-            get { return _orbitalPeriod; }
-            set { _orbitalPeriod = value; }
-         }
+        public double SemiMajorAxis{get { return _semiMajorAxis; } set { _semiMajorAxis = value; }}
+        public double Apoapsis{ get { return _apoapsis; } set { _apoapsis = value; } }
+        public double Periapsis{ get { return _periapsis; }set { _periapsis = value; }}
+        public double OrbitalEccentricity{ get { return _orbitalEccentricity; } set { _orbitalEccentricity = value; } }
+        public double OrbitalInclination{ get { return _orbitalInclination; } set { _orbitalInclination = value; } }
+        public double ArgumentOfPeriapsis{ get { return _argumentOfPeriapsis; } set { _argumentOfPeriapsis = value; } }
+        public double LongitudeOfTheAscendingNode{ get { return _longitudeOfTheAscendingNode; } set { _longitudeOfTheAscendingNode = value; } }
+        public double MeanAndomaly{ get { return _meanAndomaly; } set { _meanAndomaly= value; } }
+        public double OrbitalVelocity{ get { return _orbitalVelocity; } set { _orbitalVelocity= value; } }
+        public double OrbitalPeriod{ get { return _orbitalPeriod; } set { _orbitalPeriod = value; } }
         #endregion
 
         #region "Phisical Characteristics"
-        public double EquatorialRadius
-        { 
-            get { return _equatorialRadius; }
-            set { _equatorialRadius = value; }
-         }
-        public double EquatorialCircumference
-        { 
-            get { return _equatorialCircumference; }
-            set { _equatorialCircumference = value; }
-         }
-        public double SurfaceArea
-        { 
-            get { return _surfaceArea; }
-            set { _surfaceArea = value; }
-         }
-        public double Mass
-        { 
-            get { return _mass; }
-            set { _mass = value; }
-         }
-        public double StandarGravitonialParameter
-        { 
-            get { return _standarGravitonialParameter; }
-            set { _standarGravitonialParameter = value; }
-         }
-        public double Density
-        { 
-            get { return _density; }
-            set { _density = value; }
-         }
-        public double SurfaceGravity
-        { 
-            get { return _surfaceGravity; }
-            set { _surfaceGravity = value; }
-         }
-        public double EscapeVelocity
-        { 
-            get { return _escapeVelocity; }
-            set { _escapeVelocity = value; }
-         }
-        public double SiderealRotationPeriod
-        { 
-            get { return _siderealRotationPeriod; }
-            set { _siderealRotationPeriod = value; }
-         }
-        public double SolarDay
-        { 
-            get { return _solarDay; }
-            set { _solarDay = value; }
-         }
-        public double SiderealRotationVelocity
-        { 
-            get { return _siderealRotationVelocity; }
-            set { _siderealRotationVelocity = value; }
-         }
-        public double SynchronousOrbit
-        { 
-            get { return _synchronousOrbit; }
-            set { _synchronousOrbit = value; }
-         }
-        public double SphereOfInfluence
-        { 
-            get { return _sphereOfInfluence; }
-            set { _sphereOfInfluence = value; }
-         }
+        public double EquatorialRadius{ get { return _equatorialRadius; } set { _equatorialRadius = value; } }
+        public double EquatorialCircumference{ get { return _equatorialCircumference; } set { _equatorialCircumference = value; } }
+        public double SurfaceArea{ get { return _surfaceArea; } set { _surfaceArea = value; } }
+        public double Mass{ get { return _mass; } set { _mass = value; } }
+        public double StandarGravitonialParameter{ get { return _standarGravitonialParameter; } set { _standarGravitonialParameter = value; } }
+        public double Density{ get { return _density; } set { _density = value; } }
+        public double SurfaceGravity{ get { return _surfaceGravity; } set { _surfaceGravity = value; } }
+        public double EscapeVelocity { get { return _escapeVelocity; } set { _escapeVelocity = value; } }
+        public double SiderealRotationPeriod{get { return _siderealRotationPeriod; } set { _siderealRotationPeriod = value; } }
+        public double SolarDay{ get { return _solarDay; } set { _solarDay = value; } }
+        public double SiderealRotationVelocity { get { return _siderealRotationVelocity; } set { _siderealRotationVelocity = value; }}
+        public double SynchronousOrbit{ get { return _synchronousOrbit; } set { _synchronousOrbit = value; } }
+        public double SphereOfInfluence{ get { return _sphereOfInfluence; } set { _sphereOfInfluence = value; } }
         #endregion
 
         #region "Atmospheric Characteristics"
-        public bool AtmospherePresent
-        { 
-            get { return _atmospherePresent; }
-            set { _atmospherePresent = value; }
-         }
-        public bool OxygenPresent
-        { 
-            get { return _oxygenPresent; }
-            set { _oxygenPresent = value; }
-         }
-        public double AtmosphericPressure
-        { 
-            get { return _atmosphericPressure; }
-            set { _atmosphericPressure = value; }
-         }
-        public double ScaleHeight
-        { 
-            get { return _scaleHeight; }
-            set { _scaleHeight = value; }
-         }
-        public double AtmosphericHeight
-        { 
-            get { return _atmosphericHeight; }
-            set { _atmosphericHeight = value; }
-         }
-        public double LowOrbitHeight
-        { 
-            get { return _lowOrbitHeight; }
-            set { _lowOrbitHeight = value; }
-         }
-        public double TemperatureMin
-        { 
-            get { return _temperatureMin; }
-            set { _temperatureMin = value; }
-         }
-        public double TemperatureMax
-        { 
-            get { return _temperatureMax; }
-            set { _temperatureMax = value; }
-         }
+        public bool AtmospherePresent{ get { return _atmospherePresent; } set { _atmospherePresent = value; } }
+        public bool OxygenPresent{ get { return _oxygenPresent; } set { _oxygenPresent = value; } }
+        public double AtmosphericPressure{ get { return _atmosphericPressure; } set { _atmosphericPressure = value; } }
+        public double ScaleHeight{ get { return _scaleHeight; } set { _scaleHeight = value; } }
+        public double AtmosphericHeight{ get { return _atmosphericHeight; } set { _atmosphericHeight = value; } }
+        public double LowOrbitHeight{ get { return _lowOrbitHeight; } set { _lowOrbitHeight = value; } }
+        public double TemperatureMin{ get { return _temperatureMin; } set { _temperatureMin = value; } }
+        public double TemperatureMax{ get { return _temperatureMax; } set { _temperatureMax = value; } }
         #endregion
 
         #region "Science Relative Properties"
@@ -474,11 +350,11 @@ namespace Mission_Calculator.Classes
             strPropsToString += "Synchronous Orbit :  " + strSynchronousOrbit + Environment.NewLine;
             strPropsToString += "Sphere Of Influence :  " + strSphereOfInfluence + Environment.NewLine;
             strPropsToString += "Atmospheric Characteristics :  " + Environment.NewLine;
+            strPropsToString += Environment.NewLine;
             strPropsToString += "Atmosphere Present :  ";
             strPropsToString += (_atmospherePresent) ? "🗸" + Environment.NewLine : "■" + Environment.NewLine;
             strPropsToString += "Oxygen Present :  ";
             strPropsToString += (_oxygenPresent) ? "🗸" + Environment.NewLine : "■" + Environment.NewLine;
-            strPropsToString += Environment.NewLine;
             strPropsToString += "Atmospheric Pressure :  " + strAtmosphericPressure + Environment.NewLine;
             strPropsToString += "Scale Height :  " + strScaleHeight + Environment.NewLine;
             strPropsToString += "Atmospheric Height :  " + strAtmosphericHeight + Environment.NewLine;
