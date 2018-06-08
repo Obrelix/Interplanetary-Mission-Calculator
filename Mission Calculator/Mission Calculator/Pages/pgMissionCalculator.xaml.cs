@@ -120,39 +120,69 @@ namespace Mission_Calculator.Pages
         {
             try
             {
+                List<Run> runLIst;
+                string imageUri;
+                int intCBOIndex;
                 switch (cboName)
                 {
                     case "comboBoxOrigin":
-                        if (comboBoxOrigin.SelectedIndex != -1)
+                        intCBOIndex = comboBoxOrigin.SelectedIndex;
+                        if (intCBOIndex != -1)
                         {
+                            runLIst = currentPlanetList[intCBOIndex].LabelsToRunList(Brushes.Wheat);
+                            imageUri = currentPlanetList[intCBOIndex].ImageUri;
                             textBlockOrigin.Inlines.Clear();
-                            if (comboBoxOrigin.SelectedIndex != 0) foreach (Run obj in currentPlanetList[comboBoxOrigin.SelectedIndex].LabelsToRunList(Brushes.Wheat)) textBlockOrigin.Inlines.Add(obj);
-                            else textBlockOrigin.Text = "Origin";
-                            imageOrigin.Source = new BitmapImage(new Uri(currentPlanetList[comboBoxOrigin.SelectedIndex].ImageUri));
+                            if (intCBOIndex != 0)
+                                foreach (Run objRun in runLIst)
+                                    textBlockOrigin.Inlines.Add(objRun);
+                            else
+                                textBlockOrigin.Text = "Origin";
+                            imageOrigin.Source = new BitmapImage(new Uri(imageUri));
                         }
                         break;
                     case "comboBoxStop1":
-                        if (comboBoxStop1.SelectedIndex != -1)
+                        intCBOIndex = comboBoxStop1.SelectedIndex;
+                        if (intCBOIndex != -1)
                         {
-                            //if (comboBoxStop1.SelectedIndex != 0) //textBlockStop1 = currentPlanetList[comboBoxStop1.SelectedIndex].ToTextBox();
-                            //else textBlockStop1.Text = "Stop 1";
-                            imageStop1.Source = new BitmapImage(new Uri(currentPlanetList[comboBoxStop1.SelectedIndex].ImageUri));
+                            runLIst = currentPlanetList[intCBOIndex].LabelsToRunList(Brushes.PowderBlue);
+                            imageUri = currentPlanetList[intCBOIndex].ImageUri;
+                            textBlockStop1.Inlines.Clear();
+                            if (intCBOIndex != 0)
+                                foreach (Run objRun in runLIst)
+                                    textBlockStop1.Inlines.Add(objRun);
+                            else
+                                textBlockStop1.Text = "Stop1";
+                            imageStop1.Source = new BitmapImage(new Uri(imageUri));
                         }
                         break;
                     case "comboBoxStop2":
-                        if (comboBoxStop2.SelectedIndex != -1)
+                        intCBOIndex = comboBoxStop2.SelectedIndex;
+                        if (intCBOIndex != -1)
                         {
-                            //if (comboBoxStop2.SelectedIndex != 0) textBlockStop2= currentPlanetList[comboBoxStop2.SelectedIndex].ToTextBox();
-                            //else textBlockStop2.Text = "Stop 2";
-                            imageStop2.Source = new BitmapImage(new Uri(currentPlanetList[comboBoxStop2.SelectedIndex].ImageUri));
+                            runLIst = currentPlanetList[intCBOIndex].LabelsToRunList(Brushes.WhiteSmoke);
+                            imageUri = currentPlanetList[intCBOIndex].ImageUri;
+                            textBlockStop2.Inlines.Clear();
+                            if (intCBOIndex != 0)
+                                foreach (Run objRun in runLIst)
+                                    textBlockStop2.Inlines.Add(objRun);
+                            else
+                                textBlockStop2.Text = "Stop1";
+                            imageStop2.Source = new BitmapImage(new Uri(imageUri));
                         }
                         break;
                     case "comboBoxStop3":
-                        if (comboBoxStop3.SelectedIndex != -1)
+                        intCBOIndex = comboBoxStop3.SelectedIndex;
+                        if (intCBOIndex != -1)
                         {
-                            //if (comboBoxStop3.SelectedIndex != 0) textBlockStop3 = currentPlanetList[comboBoxStop3.SelectedIndex].ToTextBox();
-                            //else textBlockStop3.Text = "Stop 3";
-                            imageStop3.Source = new BitmapImage(new Uri(currentPlanetList[comboBoxStop3.SelectedIndex].ImageUri));
+                            runLIst = currentPlanetList[intCBOIndex].LabelsToRunList(Brushes.BurlyWood);
+                            imageUri = currentPlanetList[intCBOIndex].ImageUri;
+                            textBlockStop3.Inlines.Clear();
+                            if (intCBOIndex != 0)
+                                foreach (Run objRun in runLIst)
+                                    textBlockStop3.Inlines.Add(objRun);
+                            else
+                                textBlockStop3.Text = "Stop1";
+                            imageStop3.Source = new BitmapImage(new Uri(imageUri));
                         }
                         break;
                     default:
@@ -170,24 +200,38 @@ namespace Mission_Calculator.Pages
 
         #region "Event Handlers"
 
-        private void textBlockStop_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void textBlockStop_MouseButtonUp(object sender, MouseButtonEventArgs e)
         {
-            switch (((TextBlock)sender).Name)
+            try
             {
-                case "textBlockOrigin":
-                    break;
-                case "textBlockStop1":
-                    break;
-                case "textBlockStop2":
-                    break;
-                case "textBlockStop3":
-                    break;
-                default:
-                    break;
+                int intCboIndex;
+                switch (((TextBlock)sender).Name)
+                {
+                    case "textBlockOrigin":
+                        intCboIndex = comboBoxOrigin.SelectedIndex;
+                        break;
+                    case "textBlockStop1":
+                        intCboIndex = comboBoxStop1.SelectedIndex;
+                        break;
+                    case "textBlockStop2":
+                        intCboIndex = comboBoxStop2.SelectedIndex;
+                        break;
+                    case "textBlockStop3":
+                        intCboIndex = comboBoxStop3.SelectedIndex;
+                        break;
+                    default:
+                        intCboIndex = 0;
+                        break;
+                }
+                currentPlanetList[intCboIndex].Show();
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
         
-
         private void Main_Loaded(object sender, RoutedEventArgs e)
         {
 
@@ -213,12 +257,5 @@ namespace Mission_Calculator.Pages
 
         }
         #endregion
-
-        private void textBlockOrigin_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            //MessageBox.Show(currentPlanetList[comboBoxOrigin.SelectedIndex].ToString());
-            currentPlanetList[comboBoxOrigin.SelectedIndex].Show();
-
-        }
     }
 }

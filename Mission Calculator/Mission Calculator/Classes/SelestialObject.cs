@@ -323,7 +323,7 @@ namespace Mission_Calculator.Classes
         //             "Escape Velocity:", strEscapeVelocity, "S.O.I.:", strSphereOfInfluence);
         
 
-        private Run whiteTxt(string txt, Brush brush)
+        private Run colourRun(string txt, Brush brush)
         {
             try
             {
@@ -335,7 +335,7 @@ namespace Mission_Calculator.Classes
                 throw;
             }
         }
-        private Run redTxt(string txt)
+        private Run redRun(string txt)
         {
             try
             {
@@ -355,43 +355,43 @@ namespace Mission_Calculator.Classes
         {
             try
             {
-                List<Run> txt = new List<Run>();
-                txt.Clear();
+                List<Run> objPropsRunList = new List<Run>();
+                objPropsRunList.Clear();
 
-                txt.Add(whiteTxt("Celestial object : ", brush));
-                txt.Add(redTxt(Name));
-                txt.Add(whiteTxt("\t", brush));
-                txt.Add(whiteTxt("Type : ", brush));
-                txt.Add(redTxt(Type.ToString()));
-                txt.Add(new Run(Environment.NewLine));
-                txt.Add(whiteTxt("Surface Gravity : ", brush));
-                txt.Add(redTxt(strSurfaceGravity));
-                txt.Add(whiteTxt("\t", brush));
-                txt.Add(whiteTxt("Low Orbit : ", brush));
-                txt.Add(redTxt(strLowOrbitHeight));
-                txt.Add(new Run(Environment.NewLine));
-                txt.Add(whiteTxt("Escape Velocity : ", brush));
-                txt.Add(redTxt(strEscapeVelocity));
-                txt.Add(whiteTxt("\t", brush));
-                txt.Add(whiteTxt("Sphere of influence : ", brush));
-                txt.Add(redTxt(strSphereOfInfluence));
-                txt.Add(new Run(Environment.NewLine));
-                txt.Add(whiteTxt("Atmosphere : ", brush));
-                txt.Add(redTxt((AtmospherePresent) ? "🗸 " : "■ "));
-                txt.Add(whiteTxt("Oxygen : ", brush));
-                txt.Add(redTxt((OxygenPresent) ? "🗸 " : "■ "));
-                txt.Add(whiteTxt("\t", brush));
-                txt.Add(whiteTxt("Height : ", brush));
-                txt.Add(redTxt(strAtmosphericHeight));
-                txt.Add(new Run(Environment.NewLine));
-                txt.Add(whiteTxt("Surface to Low Orbit : ", brush));
-                txt.Add(redTxt(string.Format("{0:n0}", SurfaceToLowOrbit) + strDeltaV));
-                txt.Add(whiteTxt("\t", brush));
-                txt.Add(whiteTxt("Low Orbit to SOI Edge : ", brush));
-                txt.Add(redTxt(string.Format("{0:n0}", (LowOrbitToMoonIntercept + MoonInterceptToElipticalOrbit + ElipticalOrbitToPlanetIntercet +
+                objPropsRunList.Add(colourRun("Celestial object : ", brush));
+                objPropsRunList.Add(redRun(Name));
+                objPropsRunList.Add(colourRun("\t", brush));
+                objPropsRunList.Add(colourRun("Type : ", brush));
+                objPropsRunList.Add(redRun(Type.ToString()));
+                objPropsRunList.Add(new Run(Environment.NewLine));
+                objPropsRunList.Add(colourRun("Surface Gravity : ", brush));
+                objPropsRunList.Add(redRun(strSurfaceGravity));
+                objPropsRunList.Add(colourRun("\t", brush));
+                objPropsRunList.Add(colourRun("Low Orbit : ", brush));
+                objPropsRunList.Add(redRun(strLowOrbitHeight));
+                objPropsRunList.Add(new Run(Environment.NewLine));
+                objPropsRunList.Add(colourRun("Escape Velocity : ", brush));
+                objPropsRunList.Add(redRun(strEscapeVelocity));
+                objPropsRunList.Add(colourRun("\t", brush));
+                objPropsRunList.Add(colourRun("Sphere of influence : ", brush));
+                objPropsRunList.Add(redRun(strSphereOfInfluence));
+                objPropsRunList.Add(new Run(Environment.NewLine));
+                objPropsRunList.Add(colourRun("Atmosphere : ", brush));
+                objPropsRunList.Add(redRun((AtmospherePresent) ? "🗸 " : "■ "));
+                objPropsRunList.Add(colourRun("Oxygen : ", brush));
+                objPropsRunList.Add(redRun((OxygenPresent) ? "🗸 " : "■ "));
+                objPropsRunList.Add(colourRun("\t", brush));
+                objPropsRunList.Add(colourRun("Height : ", brush));
+                objPropsRunList.Add(redRun(strAtmosphericHeight));
+                objPropsRunList.Add(new Run(Environment.NewLine));
+                objPropsRunList.Add(colourRun("To Low Orbit : ", brush));
+                objPropsRunList.Add(redRun(string.Format("{0:n0}", SurfaceToLowOrbit) + strDeltaV));
+                objPropsRunList.Add(colourRun("\t", brush));
+                objPropsRunList.Add(colourRun("Low Orbit to SOI Edge : ", brush));
+                objPropsRunList.Add(redRun(string.Format("{0:n0}", (LowOrbitToMoonIntercept + MoonInterceptToElipticalOrbit + ElipticalOrbitToPlanetIntercet +
                     LowOrbitToElipticalOrbit + PlanetInterceptToStarElipticalOrbit)) + strDeltaV));
 
-                return txt;
+                return objPropsRunList;
             }
             catch (Exception)
             {

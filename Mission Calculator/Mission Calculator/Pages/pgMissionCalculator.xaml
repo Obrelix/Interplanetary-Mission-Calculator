@@ -66,7 +66,7 @@
 
                         </StackPanel>-->
 
-                        <Expander x:Name="expanderOrigin" Header="Origin" Margin="0"  Expanded="MainEvent" Collapsed="MainEvent" Foreground="#FF02FD69"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Grid.Row="1">
+                        <Expander x:Name="expanderOrigin" Header="Origin" Margin="0"  Expanded="MainEvent" Collapsed="MainEvent"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Grid.Row="1" Foreground="Wheat">
                             <Grid>
                                 <StackPanel  Orientation="Horizontal"   >
 
@@ -83,7 +83,7 @@
                             </Grid>
                         </Expander>
 
-                        <Expander x:Name="expanderStop1" Header="Stop 1" Margin="0"  Expanded="MainEvent" Collapsed="MainEvent" Foreground="#FF9CDBDE"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1"  Grid.Row="2">
+                        <Expander x:Name="expanderStop1" Header="Stop 1" Margin="0"  Expanded="MainEvent" Collapsed="MainEvent" Foreground="PowderBlue"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1"  Grid.Row="2">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
 
@@ -99,7 +99,7 @@
                             </Grid>
                         </Expander>
 
-                        <Expander Margin="0" x:Name="expanderStop2" Header="Stop 2" Expanded="MainEvent" Collapsed="MainEvent" Foreground="#FFC3A7F3"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Grid.Row="3" >
+                        <Expander Margin="0" x:Name="expanderStop2" Header="Stop 2" Expanded="MainEvent" Collapsed="MainEvent" Foreground="WhiteSmoke"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Grid.Row="3" >
                             <Grid >
                                 <StackPanel x:Name="Stop1" Orientation="Horizontal" >
 
@@ -115,7 +115,7 @@
                             </Grid>
                         </Expander>
 
-                        <Expander Margin="0" x:Name="expanderStop3" Header="Stop 3" Expanded="MainEvent" Collapsed="MainEvent" Foreground="#FFB3FFC8"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Grid.Row="4">
+                        <Expander Margin="0" x:Name="expanderStop3" Header="Stop 3" Expanded="MainEvent" Collapsed="MainEvent" Foreground="BurlyWood"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Grid.Row="4">
                             <Grid >
                                 <StackPanel x:Name="Stop1_Copy" Orientation="Horizontal"  >
 
@@ -152,16 +152,16 @@
                         </Rectangle.Fill>
                     </Rectangle>
                     <Viewbox Grid.Row="1">
-                        <TextBlock x:Name="textBlockStop1Travel" MouseLeftButtonUp="textBlockStop_MouseLeftButtonUp" TextWrapping="Wrap" Foreground="#FF9CDBDE" Text="" FontSize="14" TextDecorations="{x:Null}" Cursor="Hand" TextAlignment="Center" />
+                        <TextBlock x:Name="textBlockStop1Travel" TextWrapping="Wrap" Foreground="#FF9CDBDE" Text="" FontSize="14" TextDecorations="{x:Null}" Cursor="Hand" TextAlignment="Center" />
                     </Viewbox>
                     <Viewbox Grid.Row="2">
-                        <TextBlock x:Name="textBlockStop2Travel" MouseLeftButtonUp="textBlockStop_MouseLeftButtonUp" TextWrapping="Wrap" Foreground="#FFDAC5FF" Text="" FontSize="14" TextDecorations="{x:Null}" Cursor="Hand"/>
+                        <TextBlock x:Name="textBlockStop2Travel" TextWrapping="Wrap" Foreground="#FFDAC5FF" Text="" FontSize="14" TextDecorations="{x:Null}" Cursor="Hand"/>
                     </Viewbox>
                     <Viewbox Grid.Row="3">
-                        <TextBlock  x:Name="textBlockStop3Travel" MouseLeftButtonUp="textBlockStop_MouseLeftButtonUp" TextWrapping="Wrap" Foreground="#FFB3FFC8" Text="" FontSize="14" TextDecorations="{x:Null}"  Cursor="Hand"/>
+                        <TextBlock  x:Name="textBlockStop3Travel" TextWrapping="Wrap" Foreground="#FFB3FFC8" Text="" FontSize="14" TextDecorations="{x:Null}"  Cursor="Hand"/>
                     </Viewbox>
                     <Viewbox Grid.Row="4">
-                        <TextBlock  x:Name="textBlockOriginTravel" MouseLeftButtonUp="textBlockStop_MouseLeftButtonUp" TextWrapping="Wrap" Foreground="#FF02FD69" Text="" FontSize="14" TextDecorations="{x:Null}"  Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
+                        <TextBlock  x:Name="textBlockOriginTravel" TextWrapping="Wrap" Foreground="#FF02FD69" Text="" FontSize="14" TextDecorations="{x:Null}"  Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
                     </Viewbox>
 
                 </Grid>
@@ -234,10 +234,10 @@
                     </Rectangle.Fill>
                 </Rectangle>
 
-                <TextBlock Margin="0" Name="textBlockOrigin" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FF02FD69" Width="540" Text="Origin " FontSize="14" TextDecorations="{x:Null}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" MouseDown="textBlockOrigin_MouseDown" FontFamily="Consolas"/>
-                <TextBlock Margin="0" x:Name="textBlockStop1" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FF9CDBDE" Width="540" Text="Stop 1 " FontSize="14" TextDecorations="{x:Null}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Justify" FontFamily="Consolas"/>
-                <TextBlock Margin="0" x:Name="textBlockStop2" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FFDAC5FF" Width="540" Text="Stop 2 " FontSize="14" TextDecorations="{x:Null}" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1" TextAlignment="Justify" FontFamily="Consolas"/>
-                <TextBlock Margin="0" x:Name="textBlockStop3" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FFB3FFC8" Width="540" Text="Stop 3 " FontSize="14" TextDecorations="{x:Null}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Justify" FontFamily="Consolas"/>
+                <TextBlock Margin="0" Name="textBlockOrigin" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FF02FD69" Width="540" Text="Origin " FontSize="14" TextDecorations="{x:Null}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" MouseDown="textBlockStop_MouseButtonUp" FontFamily="Consolas"/>
+                <TextBlock Margin="0" x:Name="textBlockStop1" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FF9CDBDE" Width="540" Text="Stop 1 " FontSize="14" TextDecorations="{x:Null}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Justify" FontFamily="Consolas" MouseDown="textBlockStop_MouseButtonUp"/>
+                <TextBlock Margin="0" x:Name="textBlockStop2" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FFDAC5FF" Width="540" Text="Stop 2 " FontSize="14" TextDecorations="{x:Null}" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1" TextAlignment="Justify" FontFamily="Consolas" MouseDown="textBlockStop_MouseButtonUp"/>
+                <TextBlock Margin="0" x:Name="textBlockStop3" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FFB3FFC8" Width="540" Text="Stop 3 " FontSize="14" TextDecorations="{x:Null}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Justify" FontFamily="Consolas" MouseDown="textBlockStop_MouseButtonUp"/>
                 <Image x:Name="imageOrigin"  Margin="0" Height="130" Width="130" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/Images/Planets/Kerbin.png" Stretch="UniformToFill" Grid.Row="1" Grid.Column="2"/>
                 <Image x:Name="imageStop1"  Margin="0" Height="130" Width="130" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/Images/Planets/Duna.png" Stretch="UniformToFill" Grid.Row="2" Grid.Column="2"/>
                 <Image x:Name="imageStop2"  Margin="0" Height="130" Width="130" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/Images/Planets/Eve.png" Stretch="UniformToFill" Grid.Row="3" Grid.Column="2"/>
