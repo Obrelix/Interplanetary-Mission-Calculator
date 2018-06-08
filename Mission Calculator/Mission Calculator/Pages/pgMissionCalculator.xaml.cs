@@ -125,7 +125,8 @@ namespace Mission_Calculator.Pages
                     case "comboBoxOrigin":
                         if (comboBoxOrigin.SelectedIndex != -1)
                         {
-                            if (comboBoxOrigin.SelectedIndex != 0) textBlockOrigin.Text = currentPlanetList[comboBoxOrigin.SelectedIndex].ToTextBox();
+                            textBlockOrigin.Inlines.Clear();
+                            if (comboBoxOrigin.SelectedIndex != 0) foreach (Run obj in currentPlanetList[comboBoxOrigin.SelectedIndex].LabelsToRunList(Brushes.Wheat)) textBlockOrigin.Inlines.Add(obj);
                             else textBlockOrigin.Text = "Origin";
                             imageOrigin.Source = new BitmapImage(new Uri(currentPlanetList[comboBoxOrigin.SelectedIndex].ImageUri));
                         }
@@ -133,24 +134,24 @@ namespace Mission_Calculator.Pages
                     case "comboBoxStop1":
                         if (comboBoxStop1.SelectedIndex != -1)
                         {
-                            if (comboBoxStop1.SelectedIndex != 0) textBlockStop1.Text = currentPlanetList[comboBoxStop1.SelectedIndex].ToTextBox();
-                            else textBlockStop1.Text = "Stop 1";
+                            //if (comboBoxStop1.SelectedIndex != 0) //textBlockStop1 = currentPlanetList[comboBoxStop1.SelectedIndex].ToTextBox();
+                            //else textBlockStop1.Text = "Stop 1";
                             imageStop1.Source = new BitmapImage(new Uri(currentPlanetList[comboBoxStop1.SelectedIndex].ImageUri));
                         }
                         break;
                     case "comboBoxStop2":
                         if (comboBoxStop2.SelectedIndex != -1)
                         {
-                            if (comboBoxStop2.SelectedIndex != 0) textBlockStop2.Text = currentPlanetList[comboBoxStop2.SelectedIndex].ToTextBox();
-                            else textBlockStop2.Text = "Stop 2";
+                            //if (comboBoxStop2.SelectedIndex != 0) textBlockStop2= currentPlanetList[comboBoxStop2.SelectedIndex].ToTextBox();
+                            //else textBlockStop2.Text = "Stop 2";
                             imageStop2.Source = new BitmapImage(new Uri(currentPlanetList[comboBoxStop2.SelectedIndex].ImageUri));
                         }
                         break;
                     case "comboBoxStop3":
                         if (comboBoxStop3.SelectedIndex != -1)
                         {
-                            if (comboBoxStop3.SelectedIndex != 0) textBlockStop3.Text = currentPlanetList[comboBoxStop3.SelectedIndex].ToTextBox();
-                            else textBlockStop3.Text = "Stop 3";
+                            //if (comboBoxStop3.SelectedIndex != 0) textBlockStop3 = currentPlanetList[comboBoxStop3.SelectedIndex].ToTextBox();
+                            //else textBlockStop3.Text = "Stop 3";
                             imageStop3.Source = new BitmapImage(new Uri(currentPlanetList[comboBoxStop3.SelectedIndex].ImageUri));
                         }
                         break;
@@ -213,5 +214,11 @@ namespace Mission_Calculator.Pages
         }
         #endregion
 
+        private void textBlockOrigin_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //MessageBox.Show(currentPlanetList[comboBoxOrigin.SelectedIndex].ToString());
+            currentPlanetList[comboBoxOrigin.SelectedIndex].Show();
+
+        }
     }
 }

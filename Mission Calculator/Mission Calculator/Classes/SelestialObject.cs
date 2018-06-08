@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Mission_Calculator.Enumerators;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Documents;
 
 namespace Mission_Calculator.Classes
 {
@@ -83,7 +87,7 @@ namespace Mission_Calculator.Classes
         public double EscapeVelocity { get { return _escapeVelocity; } set { _escapeVelocity = value; } }
         public double SiderealRotationPeriod{get { return _siderealRotationPeriod; } set { _siderealRotationPeriod = value; } }
         public double SolarDay{ get { return _solarDay; } set { _solarDay = value; } }
-        public double SiderealRotationVelocity { get { return _siderealRotationVelocity; } set { _siderealRotationVelocity = value; }}
+        public double SiderealRotationVelocity { get { return _siderealRotationVelocity; } set { _siderealRotationVelocity = value; } }
         public double SynchronousOrbit{ get { return _synchronousOrbit; } set { _synchronousOrbit = value; } }
         public double SphereOfInfluence{ get { return _sphereOfInfluence; } set { _sphereOfInfluence = value; } }
         #endregion
@@ -279,11 +283,11 @@ namespace Mission_Calculator.Classes
         /// Returns a string format of the class properties in order to print them in the right panel of the calc
         /// </summary>
         /// <returns>Properties to string</returns>
-        public string ToTextBox()
+        public string ToTextBox(int i)
         {
             string objToTexbox = string.Empty;
 
-            objToTexbox = "Celestial object : " + Name + "  |  Type : " + Type;
+            objToTexbox = "Celestial object :" + Name + "  |  Type : " + Type;
             objToTexbox += (Type == Types.Moon) ? "  |  Moon of : " + System : string.Empty;
             objToTexbox += Environment.NewLine;
             objToTexbox += "Surface Gravity : " + strSurfaceGravity + "  |  Low Orbit : " + strLowOrbitHeight;
@@ -311,76 +315,203 @@ namespace Mission_Calculator.Classes
             return objToTexbox;
         }
 
+        //objToTexbox = String.Format("{0,-17} {1,-11}\t{2,-10} {3}    {4} {5}\r\n",
+        //             "Celestial object:", Name, "Type:", Type, (Type == Types.Moon) ? "Moon of:" : "", (Type == Types.Moon) ? System.ToString() : "");
+        //        objToTexbox += String.Format("{0,-17} {1,-11}\t{2,-10} {3}\r\n",
+        //             "Surface Gravity:", strSurfaceGravity, "Low Orbit:", strLowOrbitHeight);
+        //        objToTexbox += String.Format("{0,-17} {1,-11}\t{2,-10} {3}\r\n",
+        //             "Escape Velocity:", strEscapeVelocity, "S.O.I.:", strSphereOfInfluence);
+        
+
+        private Run whiteTxt(string txt, Brush brush)
+        {
+            try
+            {
+                return new Run(txt) { Foreground = brush };
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private Run redTxt(string txt)
+        {
+            try
+            {
+                return ( new Run(txt) { Foreground = Brushes.Red } );
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        /// <summary>
+        /// Returns a string format of the class properties in order to print them in the right panel of the calc
+        /// </summary>
+        /// <returns>Properties to string</returns>
+        public List<Run> LabelsToRunList(Brush brush)
+        {
+            try
+            {
+                List<Run> txt = new List<Run>();
+                txt.Clear();
+
+                txt.Add(whiteTxt("Celestial object : ", brush));
+                txt.Add(redTxt(Name));
+                txt.Add(whiteTxt("\t", brush));
+                txt.Add(whiteTxt("Type : ", brush));
+                txt.Add(redTxt(Type.ToString()));
+                txt.Add(new Run(Environment.NewLine));
+                txt.Add(whiteTxt("Surface Gravity : ", brush));
+                txt.Add(redTxt(strSurfaceGravity));
+                txt.Add(whiteTxt("\t", brush));
+                txt.Add(whiteTxt("Low Orbit : ", brush));
+                txt.Add(redTxt(strLowOrbitHeight));
+                txt.Add(new Run(Environment.NewLine));
+                txt.Add(whiteTxt("Escape Velocity : ", brush));
+                txt.Add(redTxt(strEscapeVelocity));
+                txt.Add(whiteTxt("\t", brush));
+                txt.Add(whiteTxt("Sphere of influence : ", brush));
+                txt.Add(redTxt(strSphereOfInfluence));
+                txt.Add(new Run(Environment.NewLine));
+                txt.Add(whiteTxt("Atmosphere : ", brush));
+                txt.Add(redTxt((AtmospherePresent) ? "🗸 " : "■ "));
+                txt.Add(whiteTxt("Oxygen : ", brush));
+                txt.Add(redTxt((OxygenPresent) ? "🗸 " : "■ "));
+                txt.Add(whiteTxt("\t", brush));
+                txt.Add(whiteTxt("Height : ", brush));
+                txt.Add(redTxt(strAtmosphericHeight));
+                txt.Add(new Run(Environment.NewLine));
+                txt.Add(whiteTxt("Surface to Low Orbit : ", brush));
+                txt.Add(redTxt(string.Format("{0:n0}", SurfaceToLowOrbit) + strDeltaV));
+                txt.Add(whiteTxt("\t", brush));
+                txt.Add(whiteTxt("Low Orbit to SOI Edge : ", brush));
+                txt.Add(redTxt(string.Format("{0:n0}", (LowOrbitToMoonIntercept + MoonInterceptToElipticalOrbit + ElipticalOrbitToPlanetIntercet +
+                    LowOrbitToElipticalOrbit + PlanetInterceptToStarElipticalOrbit)) + strDeltaV));
+
+                return txt;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+        }
+
+        /// <summary>
+        /// Generates a new pop up window with class atrributes printed on it
+        /// </summary>
+        public void Show()
+        {
+            try
+            {
+                Window popUpWindow = new Window();
+                StackPanel panel = new StackPanel { Orientation = Orientation.Vertical };
+         
+                TextBox txt = new TextBox();
+                txt.HorizontalAlignment = HorizontalAlignment.Stretch;
+                txt.VerticalAlignment = VerticalAlignment.Stretch;
+                txt.FontFamily = new System.Windows.Media.FontFamily("Consolas");
+                txt.FontSize = 12;
+                txt.Background = Brushes.Black;
+                txt.Foreground = Brushes.White;
+                txt.IsReadOnly = true;
+                txt.Text = this.ToString();
+                panel.Children.Add(txt);
+                popUpWindow.Content = panel;
+                popUpWindow.Width = 400;
+                popUpWindow.Show();
+                popUpWindow.Height = txt.LineCount * 14.5 ;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
         /// <summary>
         /// Overides the base ToString() method
         /// </summary>
         /// <returns>Returns a string with the properties of the class</returns>
         public override string ToString()
         {
-            string strPropsToString = string.Empty;
-            strPropsToString += Environment.NewLine;
-            strPropsToString += "Name :  " + Name + Environment.NewLine;
-            strPropsToString += "Type :  " + Type + Environment.NewLine;
-            strPropsToString += "System :  " + System + Environment.NewLine;
-            strPropsToString += Environment.NewLine;
-            strPropsToString += "Orbital Characteristics :  " + Environment.NewLine;
-            strPropsToString += "Semi Major Axis :  " + strSemiMajorAxis + Environment.NewLine;
-            strPropsToString += "Apoapsis :  " + strApoapsis + Environment.NewLine;
-            strPropsToString += "Periapsis :  " + strPeriapsis + Environment.NewLine;
-            strPropsToString += "Orbital Eccentricity :  " + strOrbitalEccentricity + Environment.NewLine;
-            strPropsToString += "Orbital Inclination :  " + strOrbitalInclination + Environment.NewLine;
-            strPropsToString += "Argument Of Periapsis :  " + strArgumentOfPeriapsis + Environment.NewLine;
-            strPropsToString += "Longitude Of The Ascending Node :  " + strLongitudeOfTheAscendingNode + Environment.NewLine;
-            strPropsToString += "Mean Andomaly :  " + strMeanAndomaly + Environment.NewLine;
-            strPropsToString += "Orbital Velocity :  " + strOrbitalVelocity + Environment.NewLine;
-            strPropsToString += "Orbital Period :  " + strOrbitalPeriod + Environment.NewLine;
-            strPropsToString += Environment.NewLine;
-            strPropsToString += "Phisical Characteristics :  " + Environment.NewLine;
-            strPropsToString += "Equatorial Radius :  " + strEquatorialRadius + Environment.NewLine;
-            strPropsToString += "Equatorial Circumference :  " + strEquatorialCircumference + Environment.NewLine;
-            strPropsToString += "SurfaceArea :  " + strSurfaceArea + Environment.NewLine;
-            strPropsToString += "Mass :  " + strMass + Environment.NewLine;
-            strPropsToString += "Standar Gravitonial Parameter :  " + strStandarGravitonialParameter + Environment.NewLine;
-            strPropsToString += "Density :  " + strDensity + Environment.NewLine;
-            strPropsToString += "Surface Gravity :  " + strSurfaceGravity + Environment.NewLine;
-            strPropsToString += "Escape Velocity :  " + strEscapeVelocity + Environment.NewLine;
-            strPropsToString += "Sidereal Rotation Period :  " + strSiderealRotationPeriod + Environment.NewLine;
-            strPropsToString += "Solar Day :  " + strSolarDay + Environment.NewLine;
-            strPropsToString += "Sidereal Rotation Velocity :  " + strSiderealRotationVelocity + Environment.NewLine;
-            strPropsToString += "Synchronous Orbit :  " + strSynchronousOrbit + Environment.NewLine;
-            strPropsToString += "Sphere Of Influence :  " + strSphereOfInfluence + Environment.NewLine;
-            strPropsToString += "Atmospheric Characteristics :  " + Environment.NewLine;
-            strPropsToString += Environment.NewLine;
-            strPropsToString += "Atmosphere Present :  ";
-            strPropsToString += (_atmospherePresent) ? "🗸" + Environment.NewLine : "■" + Environment.NewLine;
-            strPropsToString += "Oxygen Present :  ";
-            strPropsToString += (_oxygenPresent) ? "🗸" + Environment.NewLine : "■" + Environment.NewLine;
-            strPropsToString += "Atmospheric Pressure :  " + strAtmosphericPressure + Environment.NewLine;
-            strPropsToString += "Scale Height :  " + strScaleHeight + Environment.NewLine;
-            strPropsToString += "Atmospheric Height :  " + strAtmosphericHeight + Environment.NewLine;
-            strPropsToString += "Low Orbit Height :  " + strLowOrbitHeight + Environment.NewLine;
-            strPropsToString += "Temperature Min :  " + strTemperatureMin + Environment.NewLine;
-            strPropsToString += "Temperature Max :  " + strTemperatureMax + Environment.NewLine;
-            strPropsToString += Environment.NewLine;
-            strPropsToString += "Biome Characteristics :  " + Environment.NewLine;
-            strPropsToString += "Biomes :  " + TotalBiomesCount + Environment.NewLine;
-            strPropsToString += "SMSurface :  " + SMSurface + Environment.NewLine;
-            strPropsToString += "SMLowerAtmosphere :  " + SMLowerAtmosphere + Environment.NewLine;
-            strPropsToString += "SMUpperAtmosphere :  " + SMUpperAtmosphere + Environment.NewLine;
-            strPropsToString += "SMNearSpace :  " + SMNearSpace + Environment.NewLine;
-            strPropsToString += "SMOuterSpace :  " + SMOuterSpace + Environment.NewLine;
-            strPropsToString += Environment.NewLine;
-            strPropsToString += "Delta v Characteristics :  " + Environment.NewLine;
-            strPropsToString += "SurfaceToLowOrbit :  " + SurfaceToLowOrbit + Environment.NewLine;
-            strPropsToString += "LowOrbitToMoonIntercept :  " + LowOrbitToMoonIntercept + Environment.NewLine;
-            strPropsToString += "MoonInterceptToElipticalOrbit :  " + MoonInterceptToElipticalOrbit + Environment.NewLine;
-            strPropsToString += "MoonInterceptToElipticalOrbitMPC :  " + MoonInterceptToElipticalOrbitMPC + Environment.NewLine;
-            strPropsToString += "LowOrbitToElipticalOrbit :  " + LowOrbitToElipticalOrbit + Environment.NewLine;
-            strPropsToString += "ElipticalOrbitToPlanetIntercet :  " + ElipticalOrbitToPlanetIntercet + Environment.NewLine;
-            strPropsToString += "PlanetInterceptToStarElipticalOrbit :  " + PlanetInterceptToStarElipticalOrbit + Environment.NewLine;
-            strPropsToString += "MaxPlaneChange :  " + MaxPlaneChange + Environment.NewLine;
-            strPropsToString += Environment.NewLine;
-            return strPropsToString;
+            try
+            {
+
+                string strPropsToString = string.Empty;
+                strPropsToString += Environment.NewLine;
+                strPropsToString += String.Format("{0,40}\n", "[ General Characteristics ]", "");
+                strPropsToString += String.Format("{0,21} {1}\n", "Name:", Name);
+                strPropsToString += String.Format("{0,21} {1}\n", "Type:", Type);
+                strPropsToString += String.Format("{0,21} {1}\n", "System:", System);
+                strPropsToString += Environment.NewLine;
+                strPropsToString += String.Format("{0,40}\n", "[ Orbital Characteristics ]", "");
+                strPropsToString += String.Format("{0,21} {1}\n", "Semi Major Axis:", strSemiMajorAxis);
+                strPropsToString += String.Format("{0,21} {1}\n", "Apoapsis:", strApoapsis);
+                strPropsToString += String.Format("{0,21} {1}\n", "Periapsis:", strPeriapsis);
+                strPropsToString += String.Format("{0,21} {1}\n", "Orbital Ecc.:", strOrbitalEccentricity);
+                strPropsToString += String.Format("{0,21} {1}\n", "Orbital Inc.:", strOrbitalInclination);
+                strPropsToString += String.Format("{0,21} {1}\n", "A.O.P:", strArgumentOfPeriapsis);
+                strPropsToString += String.Format("{0,21} {1}\n", "L.O.T.A.N.:", strLongitudeOfTheAscendingNode);
+                strPropsToString += String.Format("{0,21} {1}\n", "Mean Andomaly:", strMeanAndomaly);
+                strPropsToString += String.Format("{0,21} {1}\n", "Orbital Velocity:", strOrbitalVelocity);
+                strPropsToString += String.Format("{0,21} {1}\n", "Orbital Period:", strOrbitalPeriod);
+                strPropsToString += Environment.NewLine;
+                strPropsToString += String.Format("{0,40}\n", "[ Phisical Characteristics ]", "");
+                strPropsToString += String.Format("{0,21} {1}\n", "Equatorial Radius:", strEquatorialRadius);
+                strPropsToString += String.Format("{0,21} {1}\n", "Equatorial Cir/nce:", strEquatorialCircumference);
+                strPropsToString += String.Format("{0,21} {1}\n", "SurfaceArea:", strSurfaceArea);
+                strPropsToString += String.Format("{0,21} {1}\n", "Mass:", strMass);
+                strPropsToString += String.Format("{0,21} {1}\n", "St. Grav. Parameter:", strStandarGravitonialParameter);
+                strPropsToString += String.Format("{0,21} {1}\n", "Density:", strDensity);
+                strPropsToString += String.Format("{0,21} {1}\n", "Surface Gravity:", strSurfaceGravity);
+                strPropsToString += String.Format("{0,21} {1}\n", "Escape Velocity:", strEscapeVelocity);
+                strPropsToString += String.Format("{0,21} {1}\n", "Sid. Rot. Period:", strSiderealRotationPeriod);
+                strPropsToString += String.Format("{0,21} {1}\n", "Solar Day:", strSolarDay);
+                strPropsToString += String.Format("{0,21} {1}\n", "Sid. Rot. Velocity:", strSiderealRotationVelocity);
+                strPropsToString += String.Format("{0,21} {1}\n", "Synchronous Orbit:", strSynchronousOrbit);
+                strPropsToString += String.Format("{0,21} {1}\n", "Sphere Of Influence:", strSphereOfInfluence);
+                strPropsToString += Environment.NewLine;
+                strPropsToString += String.Format("{0,40}\n", "[ Atmospheric Characteristics ]", "");
+                strPropsToString += String.Format("{0,21} {1}\n", "Atmosphere Present:", (_atmospherePresent) ? "🗸" : "■");
+                strPropsToString += String.Format("{0,21} {1}\n", "Oxygen Present:", (_oxygenPresent) ? "🗸" : "■");
+                strPropsToString += String.Format("{0,21} {1}\n", "Atmospheric Pressure:", strAtmosphericPressure);
+                strPropsToString += String.Format("{0,21} {1}\n", "Scale Height:", strScaleHeight);
+                strPropsToString += String.Format("{0,21} {1}\n", "Atmospheric Height:", strAtmosphericHeight);
+                strPropsToString += String.Format("{0,21} {1}\n", "Low Orbit Height:", strLowOrbitHeight);
+                strPropsToString += String.Format("{0,21} {1}\n", "Temperature Min:", strTemperatureMin);
+                strPropsToString += String.Format("{0,21} {1}\n", "Temperature Max:", strTemperatureMax);
+                strPropsToString += Environment.NewLine;
+                strPropsToString += String.Format("{0,40}\n", "[ Biome Characteristics ]", "");
+                strPropsToString += String.Format("{0,21} {1}\n", "Biomes:", TotalBiomesCount);
+                strPropsToString += String.Format("{0,21} {1}\n", "SMSurface:", SMSurface);
+                strPropsToString += String.Format("{0,21} {1}\n", "SMLowerAtmosphere:", SMLowerAtmosphere);
+                strPropsToString += String.Format("{0,21} {1}\n", "SMUpperAtmosphere:", SMUpperAtmosphere);
+                strPropsToString += String.Format("{0,21} {1}\n", "SMNearSpace:", SMNearSpace);
+                strPropsToString += String.Format("{0,21} {1}\n", "SMOuterSpace:", SMOuterSpace);
+                strPropsToString += Environment.NewLine;
+                strPropsToString += String.Format("{0,40}\n", "[ Delta V Characteristics ]", "");
+                strPropsToString += String.Format("{0,36} {1}\n", "SurfaceToLowOrbit:", SurfaceToLowOrbit);
+                strPropsToString += String.Format("{0,36} {1}\n", "LowOrbitToMoonIntercept:", LowOrbitToMoonIntercept);
+                strPropsToString += String.Format("{0,36} {1}\n", "MoonInterceptToElipticalOrbit:", MoonInterceptToElipticalOrbit);
+                strPropsToString += String.Format("{0,36} {1}\n", "MoonInterceptToElipticalOrbitMPC:", MoonInterceptToElipticalOrbitMPC);
+                strPropsToString += String.Format("{0,36} {1}\n", "LowOrbitToElipticalOrbit:", LowOrbitToElipticalOrbit);
+                strPropsToString += String.Format("{0,36} {1}\n", "ElipticalOrbitToPlanetIntercet:", ElipticalOrbitToPlanetIntercet);
+                strPropsToString += String.Format("{0,36} {1}\n", "PlanetInterceptToStarElipticalOrbit:", PlanetInterceptToStarElipticalOrbit);
+                strPropsToString += String.Format("{0,36} {1}\n", "MaxPlaneChange:", MaxPlaneChange);
+                return strPropsToString;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         #endregion
