@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Mission_Calculator.Classes;
 using Mission_Calculator.Enumerators;
 using System.Windows.Markup;
+using Mission_Calculator.Windows;
 
 namespace Mission_Calculator.Pages
 {
@@ -255,6 +256,40 @@ namespace Mission_Calculator.Pages
         private void MainEvent(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                int intCboIndex;
+                switch (((Image)sender).Name)
+                {
+                    case "imageOrigin":
+                        intCboIndex = comboBoxOrigin.SelectedIndex;
+                        break;
+                    case "imageStop1":
+                        intCboIndex = comboBoxStop1.SelectedIndex;
+                        break;
+                    case "imageStop2":
+                        intCboIndex = comboBoxStop2.SelectedIndex;
+                        break;
+                    case "imageStop3":
+                        intCboIndex = comboBoxStop3.SelectedIndex;
+                        break;
+                    default:
+                        intCboIndex = 0;
+                        break;
+                }
+                //currentPlanetList[intCboIndex].Show();
+                winBiomeMaps win = new winBiomeMaps(currentPlanetList[intCboIndex]);
+                win.Show();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         #endregion
     }

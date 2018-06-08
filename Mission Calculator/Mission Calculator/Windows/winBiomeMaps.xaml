@@ -1,0 +1,14 @@
+﻿<Window x:Class="Mission_Calculator.Windows.winBiomeMaps"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Mission_Calculator.Windows"
+        mc:Ignorable="d"
+        Title="winBiomeMaps" Height="440" Width="820">
+    <Grid>
+        <Border Name="border" ClipToBounds="True">
+            <Image x:Name="image" Source="/Images/Biomes/Mun_Biome_Map_0.90.0.png" VerticalAlignment="Bottom" MouseLeftButtonDown="image_MouseLeftButtonDown" MouseMove="image_MouseMove" MouseWheel="image_MouseWheel" MouseLeftButtonUp="image_MouseLeftButtonUp"  />
+        </Border>
+    </Grid>
+</Window>
