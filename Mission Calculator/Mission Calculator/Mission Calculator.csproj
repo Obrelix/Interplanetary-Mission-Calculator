@@ -123,7 +123,23 @@
   <ItemGroup>
     <Resource Include="Images\Backgrounds\wallpapers.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\Biomes\Bop_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Dres_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Duna_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Eeloo_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Eve_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Gilly_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Ike_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Kerbin_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Laythe_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Minmus_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Moho_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Mun_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Pol_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Tylo_Biome_Map_1.2.png" />
+    <Resource Include="Images\Biomes\Vall_Biome_Map_1.2.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Planets\Bop.png" />
     <Resource Include="Images\Planets\Dres.png" />
@@ -178,21 +194,21 @@
     <Resource Include="Images\Planets\RSS\Venus.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Biomes\Bop_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\Dres_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\Duna_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\Eeloo_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\Eve_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\Gilly_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\Ike_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\KerbinBiomeMap.png" />
-    <Resource Include="Images\Biomes\Kerbin_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\Laythe_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\Minmusbiome.png" />
-    <Resource Include="Images\Biomes\Minmus_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\Moho_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\MunBiomeMap.png" />
-    <Resource Include="Images\Biomes\Mun_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Bop_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Dres_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Duna_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Eeloo_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Eve_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Gilly_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Ike_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\KerbinBiomeMap.png" />
+    <Resource Include="Images\Biomes\OutDated\Kerbin_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Laythe_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Minmusbiome.png" />
+    <Resource Include="Images\Biomes\OutDated\Minmus_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Moho_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\MunBiomeMap.png" />
+    <Resource Include="Images\Biomes\OutDated\Mun_Biome_Map_0.90.0.png" />
     <Resource Include="Images\Biomes\OuterPlanets\Hale_Biome_Map.png" />
     <Resource Include="Images\Biomes\OuterPlanets\Ovok_Biome_Map.png" />
     <Resource Include="Images\Biomes\OuterPlanets\Polta_Biome_Map.png" />
@@ -201,7 +217,7 @@
     <Resource Include="Images\Biomes\OuterPlanets\Tal_Biome_Map.png" />
     <Resource Include="Images\Biomes\OuterPlanets\Tekto_Biome_Map.png" />
     <Resource Include="Images\Biomes\OuterPlanets\Wal_Biome_Map.png" />
-    <Resource Include="Images\Biomes\Pol_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Pol_Biome_Map_0.90.0.png" />
     <Resource Include="Images\Biomes\RSS\CallistoBiomes.png" />
     <Resource Include="Images\Biomes\RSS\CharonBiomes.png" />
     <Resource Include="Images\Biomes\RSS\DeimosBiomes.png" />
@@ -226,8 +242,8 @@
     <Resource Include="Images\Biomes\RSS\TritonBiomes.png" />
     <Resource Include="Images\Biomes\RSS\UranusBiomes.png" />
     <Resource Include="Images\Biomes\RSS\VenusBiomes.png" />
-    <Resource Include="Images\Biomes\Tylo_Biome_Map_0.90.0.png" />
-    <Resource Include="Images\Biomes\Vall_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Tylo_Biome_Map_0.90.0.png" />
+    <Resource Include="Images\Biomes\OutDated\Vall_Biome_Map_0.90.0.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Biomes\None.png" />

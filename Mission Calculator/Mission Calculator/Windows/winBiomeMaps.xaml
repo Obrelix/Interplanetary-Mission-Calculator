@@ -8,7 +8,7 @@
         Title="winBiomeMaps" Height="440" Width="820">
     <Grid>
         <Border Name="border" ClipToBounds="True">
-            <Image x:Name="image" Source="/Images/Biomes/Mun_Biome_Map_0.90.0.png" VerticalAlignment="Bottom" MouseLeftButtonDown="image_MouseLeftButtonDown" MouseMove="image_MouseMove" MouseWheel="image_MouseWheel" MouseLeftButtonUp="image_MouseLeftButtonUp"  />
+            <Image x:Name="image" Source="/Images/Biomes/Mun_Biome_Map_1.2.png" VerticalAlignment="Bottom" MouseLeftButtonDown="image_MouseLeftButtonDown" MouseMove="image_MouseMove" MouseWheel="image_MouseWheel" MouseLeftButtonUp="image_MouseLeftButtonUp"  />
         </Border>
     </Grid>
 </Window>

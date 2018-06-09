@@ -28,9 +28,10 @@ namespace Mission_Calculator.Windows
             this.objSO = obj;
             BitmapImage logo = new BitmapImage();
             logo.BeginInit();
-            logo.UriSource = new Uri(@obj.ImageUri);
+            logo.UriSource = new Uri(@obj.BiomeImageUri);
             logo.EndInit();
             image.Source = logo;
+            this.Title = obj.Name + "  Biome Map";
         }
 
         private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -33,14 +33,25 @@ namespace Mission_Calculator.Pages
         static string OuterPlanetsPath = planeDataDirectoryPath + "\\OuterPlanets.json";
         static string RSSPlanetsPath = planeDataDirectoryPath + "\\RSSPlanets.json";
 
+        TextBlock textBlockOrigin = new TextBlock();
+        TextBlock textBlockStop1 = new TextBlock();
+        TextBlock textBlockStop2 = new TextBlock();
+        TextBlock textBlockStop3 = new TextBlock();
+        Image imageOrigin = new Image();
+        Image imageStop1 = new Image();
+        Image imageStop2 = new Image();
+        Image imageStop3 = new Image();
+        StackPanel pnlRPOrigin = new StackPanel();
         #endregion
 
         public pgMissionCalculator()
         {
             InitializeComponent();
+            textBlocksInit();
+            imagesInit();
             errorFileInit();
             //saveFilesInit();
-            cboGameMode.SelectedIndex = 0;
+            //cboGameMode.SelectedIndex = 0;
             cboTimeUnit.SelectedIndex = 1;
             planetFilesInit(0);
         }
@@ -97,6 +108,96 @@ namespace Mission_Calculator.Pages
             }
             comboboxesInit();
         }
+        
+        private void textBlocksInit()
+        {
+            try
+            {
+                textBlockOrigin.Name = "textBlockOrigin";
+                textBlockOrigin.SetValue(Grid.RowProperty, 1);
+                textBlockOrigin.SetValue(Grid.ColumnProperty, 1);
+                textBlockOrigin.Margin = new Thickness(0);
+                textBlockOrigin.HorizontalAlignment = HorizontalAlignment.Left;
+                textBlockOrigin.TextWrapping = TextWrapping.Wrap;
+                textBlockOrigin.FontSize = 14;
+                textBlockOrigin.TextAlignment = TextAlignment.Justify;
+                textBlockOrigin.FontFamily = new FontFamily("Consolas");
+                textBlockOrigin.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+
+                textBlockStop1.Name = "textBlockStop1";
+                textBlockStop1.SetValue(Grid.RowProperty, 2);
+                textBlockStop1.SetValue(Grid.ColumnProperty, 1);
+                textBlockStop1.Margin = new Thickness(0);
+                textBlockStop1.HorizontalAlignment = HorizontalAlignment.Left;
+                textBlockStop1.TextWrapping = TextWrapping.Wrap;
+                textBlockStop1.FontSize = 14;
+                textBlockStop1.TextAlignment = TextAlignment.Justify;
+                textBlockStop1.FontFamily = new FontFamily("Consolas");
+                textBlockStop1.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+
+                textBlockStop2.Name = "textBlockStop2";
+                textBlockStop2.SetValue(Grid.RowProperty, 3);
+                textBlockStop2.SetValue(Grid.ColumnProperty, 1);
+                textBlockStop2.Margin = new Thickness(0);
+                textBlockStop2.HorizontalAlignment = HorizontalAlignment.Left;
+                textBlockStop2.TextWrapping = TextWrapping.Wrap;
+                textBlockStop2.FontSize = 14;
+                textBlockStop2.TextAlignment = TextAlignment.Justify;
+                textBlockStop2.FontFamily = new FontFamily("Consolas");
+                textBlockStop2.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+
+                textBlockStop3.Name = "textBlockStop3";
+                textBlockStop3.SetValue(Grid.RowProperty, 4);
+                textBlockStop3.SetValue(Grid.ColumnProperty, 1);
+                textBlockStop3.Margin = new Thickness(0);
+                textBlockStop3.HorizontalAlignment = HorizontalAlignment.Left;
+                textBlockStop3.TextWrapping = TextWrapping.Wrap;
+                textBlockStop3.FontSize = 14;
+                textBlockStop3.TextAlignment = TextAlignment.Justify;
+                textBlockStop3.FontFamily = new FontFamily("Consolas");
+                textBlockStop3.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void imagesInit()
+        {
+            try
+            {
+                imageOrigin.Name = "imageOrigin";
+                imageOrigin.SetValue(Grid.RowProperty, 1);
+                imageOrigin.SetValue(Grid.ColumnProperty, 2);
+                imageOrigin.Stretch = Stretch.UniformToFill;
+                imageOrigin.MouseLeftButtonDown += image_MouseLeftButtonDown;
+
+                imageStop1.Name = "imageStop1";
+                imageStop1.SetValue(Grid.RowProperty, 2);
+                imageStop1.SetValue(Grid.ColumnProperty, 2);
+                imageStop1.Stretch = Stretch.UniformToFill;
+                imageStop1.MouseLeftButtonDown += image_MouseLeftButtonDown;
+
+                imageStop2.Name = "imageStop2";
+                imageStop2.SetValue(Grid.RowProperty, 3);
+                imageStop2.SetValue(Grid.ColumnProperty, 2);
+                imageStop2.Stretch = Stretch.UniformToFill;
+                imageStop2.MouseLeftButtonDown += image_MouseLeftButtonDown;
+
+                imageStop3.Name = "imageStop3";
+                imageStop3.SetValue(Grid.RowProperty, 4);
+                imageStop3.SetValue(Grid.ColumnProperty, 2);
+                imageStop3.Stretch = Stretch.UniformToFill;
+                imageStop3.MouseLeftButtonDown += image_MouseLeftButtonDown;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         private void comboboxesInit()
         {
@@ -117,74 +218,27 @@ namespace Mission_Calculator.Pages
             comboBoxStop3.SelectedIndex = 0;
         }
 
-        private void rightPaneUpdate(string cboName)
+        private void rightPaneUpdate(string controlName)
         {
             try
             {
-                List<Run> runLIst;
-                string imageUri;
-                int intCBOIndex;
-                switch (cboName)
+                switch (controlName)
                 {
+                    case "expanderOrigin":
                     case "comboBoxOrigin":
-                        intCBOIndex = comboBoxOrigin.SelectedIndex;
-                        if (intCBOIndex != -1)
-                        {
-                            runLIst = currentPlanetList[intCBOIndex].LabelsToRunList(Brushes.Wheat);
-                            imageUri = currentPlanetList[intCBOIndex].ImageUri;
-                            textBlockOrigin.Inlines.Clear();
-                            if (intCBOIndex != 0)
-                                foreach (Run objRun in runLIst)
-                                    textBlockOrigin.Inlines.Add(objRun);
-                            else
-                                textBlockOrigin.Text = "Origin";
-                            imageOrigin.Source = new BitmapImage(new Uri(imageUri));
-                        }
+                        updateGrid(expanderOrigin, comboBoxOrigin, textBlockOrigin, imageOrigin);
                         break;
+                    case "expanderStop1":
                     case "comboBoxStop1":
-                        intCBOIndex = comboBoxStop1.SelectedIndex;
-                        if (intCBOIndex != -1)
-                        {
-                            runLIst = currentPlanetList[intCBOIndex].LabelsToRunList(Brushes.PowderBlue);
-                            imageUri = currentPlanetList[intCBOIndex].ImageUri;
-                            textBlockStop1.Inlines.Clear();
-                            if (intCBOIndex != 0)
-                                foreach (Run objRun in runLIst)
-                                    textBlockStop1.Inlines.Add(objRun);
-                            else
-                                textBlockStop1.Text = "Stop1";
-                            imageStop1.Source = new BitmapImage(new Uri(imageUri));
-                        }
+                        updateGrid(expanderStop1, comboBoxStop1, textBlockStop1, imageStop1);
                         break;
+                    case "expanderStop2":
                     case "comboBoxStop2":
-                        intCBOIndex = comboBoxStop2.SelectedIndex;
-                        if (intCBOIndex != -1)
-                        {
-                            runLIst = currentPlanetList[intCBOIndex].LabelsToRunList(Brushes.WhiteSmoke);
-                            imageUri = currentPlanetList[intCBOIndex].ImageUri;
-                            textBlockStop2.Inlines.Clear();
-                            if (intCBOIndex != 0)
-                                foreach (Run objRun in runLIst)
-                                    textBlockStop2.Inlines.Add(objRun);
-                            else
-                                textBlockStop2.Text = "Stop1";
-                            imageStop2.Source = new BitmapImage(new Uri(imageUri));
-                        }
+                        updateGrid(expanderStop2, comboBoxStop2, textBlockStop2, imageStop2);
                         break;
+                    case "expanderStop3":
                     case "comboBoxStop3":
-                        intCBOIndex = comboBoxStop3.SelectedIndex;
-                        if (intCBOIndex != -1)
-                        {
-                            runLIst = currentPlanetList[intCBOIndex].LabelsToRunList(Brushes.BurlyWood);
-                            imageUri = currentPlanetList[intCBOIndex].ImageUri;
-                            textBlockStop3.Inlines.Clear();
-                            if (intCBOIndex != 0)
-                                foreach (Run objRun in runLIst)
-                                    textBlockStop3.Inlines.Add(objRun);
-                            else
-                                textBlockStop3.Text = "Stop1";
-                            imageStop3.Source = new BitmapImage(new Uri(imageUri));
-                        }
+                        updateGrid(expanderStop3, comboBoxStop3, textBlockStop3, imageStop3);
                         break;
                     default:
                         break;
@@ -197,16 +251,43 @@ namespace Mission_Calculator.Pages
             
         }
 
-        #endregion
+        private void updateGrid(Expander expander, ComboBox combobox, TextBlock txtBlock, Image Image)
+        {
+            try
+            {
+                List<Run> runLIst;
+                string imageUri;
+                int intCBOIndex = combobox.SelectedIndex;
+                bool isExpanded = expander.IsExpanded;
+                if (intCBOIndex != -1 && intCBOIndex != 0 && isExpanded)
+                {
+                    runLIst = currentPlanetList[intCBOIndex].ToShortRunList(expander.Foreground, Brushes.Tomato);
+                    imageUri = currentPlanetList[intCBOIndex].ImageUri;
+                    txtBlock.Inlines.Clear();
+                    foreach (Run objRun in runLIst) txtBlock.Inlines.Add(objRun);
+                    Image.Source = new BitmapImage(new Uri(imageUri));
+                    if (!grdRightPanel.Children.Contains(txtBlock)) grdRightPanel.Children.Add(txtBlock);
+                    if (!grdRightPanel.Children.Contains(Image)) grdRightPanel.Children.Add(Image);
+                }
+                else
+                {
+                    if (grdRightPanel.Children.Contains(txtBlock)) grdRightPanel.Children.Remove(txtBlock);
+                    if (grdRightPanel.Children.Contains(Image)) grdRightPanel.Children.Remove(Image);
+                }
+            }
+            catch (Exception)
+            {
 
-        #region "Event Handlers"
+                throw;
+            }
+        }
 
-        private void textBlockStop_MouseButtonUp(object sender, MouseButtonEventArgs e)
+        private void showObjectInfo(string controlName)
         {
             try
             {
                 int intCboIndex;
-                switch (((TextBlock)sender).Name)
+                switch (controlName)
                 {
                     case "textBlockOrigin":
                         intCboIndex = comboBoxOrigin.SelectedIndex;
@@ -231,6 +312,49 @@ namespace Mission_Calculator.Pages
 
                 throw;
             }
+        }
+
+        private void showBiomeMaps(string controlName)
+        {
+            try
+            {
+                int intCboIndex;
+                switch (controlName)
+                {
+                    case "imageOrigin":
+                        intCboIndex = comboBoxOrigin.SelectedIndex;
+                        break;
+                    case "imageStop1":
+                        intCboIndex = comboBoxStop1.SelectedIndex;
+                        break;
+                    case "imageStop2":
+                        intCboIndex = comboBoxStop2.SelectedIndex;
+                        break;
+                    case "imageStop3":
+                        intCboIndex = comboBoxStop3.SelectedIndex;
+                        break;
+                    default:
+                        intCboIndex = 1;
+                        break;
+                }
+                //currentPlanetList[intCboIndex].Show();
+                winBiomeMaps win = new winBiomeMaps(currentPlanetList[intCboIndex]);
+                win.Show();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region "Event Handlers"
+
+        private void textBlockStop_MouseButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            showObjectInfo(((TextBlock)sender).Name);
         }
         
         private void Main_Loaded(object sender, RoutedEventArgs e)
@@ -260,37 +384,15 @@ namespace Mission_Calculator.Pages
 
         private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            try
-            {
-                int intCboIndex;
-                switch (((Image)sender).Name)
-                {
-                    case "imageOrigin":
-                        intCboIndex = comboBoxOrigin.SelectedIndex;
-                        break;
-                    case "imageStop1":
-                        intCboIndex = comboBoxStop1.SelectedIndex;
-                        break;
-                    case "imageStop2":
-                        intCboIndex = comboBoxStop2.SelectedIndex;
-                        break;
-                    case "imageStop3":
-                        intCboIndex = comboBoxStop3.SelectedIndex;
-                        break;
-                    default:
-                        intCboIndex = 0;
-                        break;
-                }
-                //currentPlanetList[intCboIndex].Show();
-                winBiomeMaps win = new winBiomeMaps(currentPlanetList[intCboIndex]);
-                win.Show();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            showBiomeMaps(((Image)sender).Name);
         }
+
+        private void expander_Expanded(object sender, RoutedEventArgs e)
+        {
+            rightPaneUpdate(((Expander)sender).Name);
+        }
+
         #endregion
+
     }
 }

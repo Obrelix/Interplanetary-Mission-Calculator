@@ -14,41 +14,45 @@
     <Grid >
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="100*"/>
+            <RowDefinition Height="50*"/>
             <RowDefinition Height="557*"/>
             <RowDefinition Height="50*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,9" Background="#FF052F3C" Opacity="0.985">
-            <StackPanel  VerticalAlignment="Center" Margin="0" HorizontalAlignment="Right">
+        <!--<StackPanel  VerticalAlignment="Center" Margin="0" HorizontalAlignment="Right" Visibility="Hidden">
                 <TextBlock x:Name="txtGameMode" Text="Mode" FontSize="16" Foreground="#FFF7E428" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <ComboBox x:Name="cboGameMode" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" FontSize="12" SelectionChanged="cboGameMode_SelectionChanged">
                     <ComboBoxItem Background="#FF0EF502" Content="Stock Planets" />
                     <ComboBoxItem Content="Outer Planets" Foreground="Black" Background="#FFFF7373"/>
                     <ComboBoxItem Content="RSS" Foreground="Black" Background="#FFE8FF80"/>
                 </ComboBox>
-            </StackPanel>
-            <StackPanel x:Name="spTimeUnit" VerticalAlignment="Center" Margin="14,0,0,0" HorizontalAlignment="Right">
-                <TextBlock x:Name="txtTimeUnit" Text="Time" FontSize="16" Foreground="#FFF7E428" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ComboBox x:Name="cboTimeUnit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100"  SelectionChanged="cboPlanetsSelectionChange" FontSize="12">
-                    <ComboBoxItem  Content="Kerbin Time" Background="#FF0EF502" ToolTip="(6h days, 426d years)" />
-                    <ComboBoxItem Content="Earth Time" Foreground="Black" ToolTip=" (24h days, 365d years)" Background="#FFFF5959"/>
-                </ComboBox>
-            </StackPanel>
-        </StackPanel>
+            </StackPanel>-->
 
-        <StackPanel Orientation="Horizontal"  Grid.Row="1" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Top"    >
+        <StackPanel Orientation="Horizontal"  Grid.Row="1" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"    >
 
             <StackPanel >
 
-                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Right">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                    <StackPanel x:Name="spTimeUnit" VerticalAlignment="Center" Margin="0" HorizontalAlignment="Center">
+                        <TextBlock x:Name="txtTimeUnit" Text="Time" FontSize="16" Foreground="#FFF7E428" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cboTimeUnit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60"  SelectionChanged="cboPlanetsSelectionChange" FontSize="8">
+                            <ComboBoxItem  Content="Kerbin Time" Background="#FF0EF502" ToolTip="(6h days, 426d years)" />
+                            <ComboBoxItem Content="Earth Time" Foreground="Black" ToolTip=" (24h days, 365d years)" Background="#FFFF5959"/>
+                        </ComboBox>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" Margin="0" HorizontalAlignment="Center">
+                        <CheckBox x:Name="checkBox" Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1EEEE"  Unchecked="checkBox_Checked" Checked="checkBox_Checked" Padding="0" />
+                    </StackPanel>
+                    
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3"/>
                             <ColumnDefinition Width="100*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="30*"/>
+                            <RowDefinition Height="100*"/>
                             <RowDefinition Height="100*"/>
                             <RowDefinition Height="100*"/>
                             <RowDefinition Height="100*"/>
@@ -61,12 +65,7 @@
                             </Rectangle.Fill>
                         </Rectangle>
 
-                        <!--<StackPanel Orientation="Horizontal" Margin="0" Grid.ColumnSpan="2" HorizontalAlignment="Center">
-                            <CheckBox x:Name="checkBox" Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1EEEE"  Unchecked="checkBox_Checked" Checked="checkBox_Checked" Width="76" Height="20"/>
-
-                        </StackPanel>-->
-
-                        <Expander x:Name="expanderOrigin" Header="Origin" Margin="0"  Expanded="MainEvent" Collapsed="MainEvent"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Grid.Row="1" Foreground="Wheat">
+                        <Expander x:Name="expanderOrigin" Header="Origin" Margin="0"  Expanded="expander_Expanded" Collapsed="expander_Expanded"  ExpandDirection="Left" HorizontalAlignment="Center" FontSize="14" Grid.Column="1" Grid.Row="1" Foreground="Wheat">
                             <Grid>
                                 <StackPanel  Orientation="Horizontal"   >
 
@@ -74,8 +73,8 @@
                                         <ComboBox x:Name="comboBoxOrigin" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" SelectionChanged="cboPlanetsSelectionChange" FontSize="14" FontWeight="Bold"/>
                                     </StackPanel>
                                     <StackPanel Width="100">
-                                        <CheckBox x:Name="checkBoxReturn" Content="Round Trip" HorizontalAlignment="Left"  VerticalAlignment="Center"  Foreground="#FF9AD6D8" Unchecked="MainEvent" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
-                                        <CheckBox  x:Name="checkBoxLowOrbit" Checked="MainEvent"  Unchecked="MainEvent" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Center"  Foreground="#FFFFD100"  FontSize="12" Margin="10,0,0,0"/>
+                                        <CheckBox x:Name="checkBoxReturn" Content="Round Trip" HorizontalAlignment="Left"  VerticalAlignment="Center"  Foreground="Wheat" Unchecked="MainEvent" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
+                                        <CheckBox  x:Name="checkBoxLowOrbit" Checked="MainEvent"  Unchecked="MainEvent" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Center"  Foreground="Wheat" FontSize="12" Margin="10,0,0,0"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -83,7 +82,7 @@
                             </Grid>
                         </Expander>
 
-                        <Expander x:Name="expanderStop1" Header="Stop 1" Margin="0"  Expanded="MainEvent" Collapsed="MainEvent" Foreground="PowderBlue"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1"  Grid.Row="2">
+                        <Expander x:Name="expanderStop1" Header="Stop 1" Margin="0"  Expanded="expander_Expanded" Collapsed="expander_Expanded" Foreground="PowderBlue"  ExpandDirection="Left" HorizontalAlignment="Center" FontSize="14" Grid.Column="1"  Grid.Row="2">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
 
@@ -91,15 +90,15 @@
                                         <ComboBox x:Name="comboBoxStop1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="136" SelectionChanged="cboPlanetsSelectionChange" FontWeight="Bold"/>
                                     </StackPanel>
                                     <StackPanel Width="100">
-                                        <RadioButton GroupName="Dest" x:Name="radioButtonLanding1" Content="Landing" HorizontalAlignment="Left"  VerticalAlignment="Center"  Foreground="#FFFFD100" Checked="MainEvent" FontSize="12" Height="16" Margin="10,0,0,0"/>
-                                        <RadioButton GroupName="Dest" x:Name="radioButtonLowOrbit1" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FFFFD100" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
+                                        <RadioButton GroupName="Dest" x:Name="radioButtonLanding1" Content="Landing" HorizontalAlignment="Left"  VerticalAlignment="Center"  Foreground="PowderBlue" Checked="MainEvent" FontSize="12" Height="16" Margin="10,0,0,0"/>
+                                        <RadioButton GroupName="Dest" x:Name="radioButtonLowOrbit1" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="PowderBlue" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
                                     </StackPanel>
 
                                 </StackPanel>
                             </Grid>
                         </Expander>
 
-                        <Expander Margin="0" x:Name="expanderStop2" Header="Stop 2" Expanded="MainEvent" Collapsed="MainEvent" Foreground="WhiteSmoke"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Grid.Row="3" >
+                        <Expander Margin="0" x:Name="expanderStop2" Header="Stop 2" Expanded="expander_Expanded" Collapsed="expander_Expanded" Foreground="AliceBlue"  ExpandDirection="Left" HorizontalAlignment="Center" FontSize="14" Grid.Column="1" Grid.Row="3" >
                             <Grid >
                                 <StackPanel x:Name="Stop1" Orientation="Horizontal" >
 
@@ -107,15 +106,15 @@
                                         <ComboBox x:Name="comboBoxStop2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="136" SelectionChanged="cboPlanetsSelectionChange" FontWeight="Bold"/>
                                     </StackPanel>
                                     <StackPanel Width="100" Margin="0">
-                                        <RadioButton GroupName="Stop1" x:Name="radioButtonLanding2" Content="Landing" HorizontalAlignment="Left"  VerticalAlignment="Top"   Foreground="#FFFFD100" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
-                                        <RadioButton GroupName="Stop1" x:Name="radioButtonLowOrbit2" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Top"  Foreground="#FFFFD100" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
+                                        <RadioButton GroupName="Stop1" x:Name="radioButtonLanding2" Content="Landing" HorizontalAlignment="Left"  VerticalAlignment="Top"   Foreground="AliceBlue" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
+                                        <RadioButton GroupName="Stop1" x:Name="radioButtonLowOrbit2" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Top"  Foreground="AliceBlue" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
                                     </StackPanel>
 
                                 </StackPanel>
                             </Grid>
                         </Expander>
 
-                        <Expander Margin="0" x:Name="expanderStop3" Header="Stop 3" Expanded="MainEvent" Collapsed="MainEvent" Foreground="BurlyWood"  ExpandDirection="Left" HorizontalAlignment="Right" FontSize="14" Grid.Column="1" Grid.Row="4">
+                        <Expander Margin="0" x:Name="expanderStop3" Header="Stop 3" Expanded="expander_Expanded" Collapsed="expander_Expanded" Foreground="Aquamarine"  ExpandDirection="Left" HorizontalAlignment="Center" FontSize="14" Grid.Column="1" Grid.Row="4">
                             <Grid >
                                 <StackPanel x:Name="Stop1_Copy" Orientation="Horizontal"  >
 
@@ -123,8 +122,8 @@
                                         <ComboBox x:Name="comboBoxStop3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="136" SelectionChanged="cboPlanetsSelectionChange" FontWeight="Bold" />
                                     </StackPanel>
                                     <StackPanel Width="100">
-                                        <RadioButton GroupName="Stop2" x:Name="radioButtonLanding" Content="Landing" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="#FFFFD100" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
-                                        <RadioButton GroupName="Stop2" x:Name="radioButtonLowOrbit" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Top"  Foreground="#FFFFD100" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
+                                        <RadioButton GroupName="Stop2" x:Name="radioButtonLanding" Content="Landing" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="Aquamarine" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
+                                        <RadioButton GroupName="Stop2" x:Name="radioButtonLowOrbit" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Top"  Foreground="Aquamarine" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
                                     </StackPanel>
 
                                 </StackPanel>
@@ -136,7 +135,6 @@
                 </StackPanel>
 
                 <Grid>
-
                     <Grid.RowDefinitions>
                         <RowDefinition Height="3*"/>
                         <RowDefinition Height="100*"/>
@@ -146,86 +144,65 @@
                         <RowDefinition Height="3*"/>
                     </Grid.RowDefinitions>
 
-                    <Rectangle RadiusX="10" RadiusY="10" Grid.RowSpan="12" Grid.ColumnSpan="2" Margin="0">
+                    <Rectangle RadiusX="10" RadiusY="10" Grid.RowSpan="6" Margin="0">
                         <Rectangle.Fill>
                             <SolidColorBrush Color="#FF052F3C" Opacity="0.5"/>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <Viewbox Grid.Row="1">
-                        <TextBlock x:Name="textBlockStop1Travel" TextWrapping="Wrap" Foreground="#FF9CDBDE" Text="" FontSize="14" TextDecorations="{x:Null}" Cursor="Hand" TextAlignment="Center" />
-                    </Viewbox>
-                    <Viewbox Grid.Row="2">
-                        <TextBlock x:Name="textBlockStop2Travel" TextWrapping="Wrap" Foreground="#FFDAC5FF" Text="" FontSize="14" TextDecorations="{x:Null}" Cursor="Hand"/>
-                    </Viewbox>
-                    <Viewbox Grid.Row="3">
-                        <TextBlock  x:Name="textBlockStop3Travel" TextWrapping="Wrap" Foreground="#FFB3FFC8" Text="" FontSize="14" TextDecorations="{x:Null}"  Cursor="Hand"/>
-                    </Viewbox>
-                    <Viewbox Grid.Row="4">
-                        <TextBlock  x:Name="textBlockOriginTravel" TextWrapping="Wrap" Foreground="#FF02FD69" Text="" FontSize="14" TextDecorations="{x:Null}"  Cursor="Hand" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0"/>
-                    </Viewbox>
+
+                    <!--<TextBlock x:Name="textBlockStop1Travel" Grid.Row="1" TextWrapping="Wrap" Foreground="#FF9CDBDE" Text=""  Cursor="Hand" />
+                    <TextBlock x:Name="textBlockStop2Travel" Grid.Row="2" TextWrapping="Wrap" Foreground="#FFDAC5FF" Text="" Cursor="Hand"/>
+                    <TextBlock  x:Name="textBlockStop3Travel" Grid.Row="3" TextWrapping="Wrap" Foreground="#FFB3FFC8" Text="" Cursor="Hand"/>
+                    <TextBlock  x:Name="textBlockOriginTravel" Grid.Row="4" TextWrapping="Wrap" Foreground="#FF02FD69" Text="" Cursor="Hand" />-->
 
                 </Grid>
 
-                <Grid Height="70" Width="280" VerticalAlignment="Bottom" HorizontalAlignment="Right">
-
+                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100*"/>
                         <ColumnDefinition Width="10*"/>
                         <ColumnDefinition Width="100*"/>
                     </Grid.ColumnDefinitions>
-
                     <Grid.RowDefinitions>
                         <RowDefinition Height="15*"/>
                         <RowDefinition Height="15*"/>
                     </Grid.RowDefinitions>
 
-                    <Rectangle  RadiusY="10" RadiusX="10" Grid.RowSpan="3" Grid.ColumnSpan="7">
+                    <Rectangle  RadiusY="10" RadiusX="10" Grid.RowSpan="2" Grid.ColumnSpan="3">
                         <Rectangle.Fill>
                             <SolidColorBrush Color="Black" Opacity="0.5"/>
                         </Rectangle.Fill>
                     </Rectangle>
 
-                    <TextBlock Text="Δv Budget" FontSize="20" Grid.Column="0" Foreground="#FFFF3A00" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
-
-                    <TextBlock Text="Travel Time" Grid.Column="0" Grid.Row="1" FontSize="20" Foreground="#FFFFDC00" Margin="0" HorizontalAlignment="Center" />
+                    <TextBlock Text="" FontSize="20" Grid.Column="0" Foreground="#FFFF3A00" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="" Grid.Column="0" Grid.Row="1" FontSize="20" Foreground="#FFFFDC00" Margin="0" HorizontalAlignment="Center" />
 
                     <Viewbox  Grid.Row="0" Grid.Column="2" >
-                        <TextBlock x:Name="textBlockTotalDV" 
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center" FontSize="16"
-                                   Foreground="#FFFF3A00"
-                                    Margin="0"/>
+                        <TextBlock x:Name="textBlockTotalDV" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="#FFFF3A00" Margin="0"/>
                     </Viewbox>
 
                     <Viewbox Grid.Row="1" Grid.Column="2">
-                        <TextBlock x:Name="textBlockTotaTime" 
-                                   HorizontalAlignment="Center" 
-                                   VerticalAlignment="Center" FontSize="16" 
-                                    Foreground="#FFFFDC00" 
-                                    Margin="0"  />
+                        <TextBlock x:Name="textBlockTotaTime"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="#FFFFDC00" Margin="0"  />
                     </Viewbox>
-
                 </Grid>
 
             </StackPanel>
 
 
-            <Grid Width="670" Height="534"  >
-
+            <Grid x:Name="grdRightPanel" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3"/>
                     <ColumnDefinition Width="60*"/>
-                    <ColumnDefinition Width="18*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="3"/>
                 </Grid.ColumnDefinitions>
-
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="100*"/>
-                    <RowDefinition Height="100*"/>
-                    <RowDefinition Height="100*"/>
-                    <RowDefinition Height="100*"/>
-                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3"/>
                 </Grid.RowDefinitions>
 
                 <Rectangle RadiusX="10" RadiusY="10" Grid.RowSpan="6" Grid.ColumnSpan="4" >
@@ -234,19 +211,10 @@
                     </Rectangle.Fill>
                 </Rectangle>
 
-                <TextBlock Margin="0" Name="textBlockOrigin" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FF02FD69" Width="540" Text="Origin " FontSize="14" TextDecorations="{x:Null}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" MouseDown="textBlockStop_MouseButtonUp" FontFamily="Consolas"/>
-                <TextBlock Margin="0" x:Name="textBlockStop1" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FF9CDBDE" Width="540" Text="Stop 1 " FontSize="14" TextDecorations="{x:Null}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Justify" FontFamily="Consolas" MouseDown="textBlockStop_MouseButtonUp"/>
-                <TextBlock Margin="0" x:Name="textBlockStop2" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FFDAC5FF" Width="540" Text="Stop 2 " FontSize="14" TextDecorations="{x:Null}" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="1" TextAlignment="Justify" FontFamily="Consolas" MouseDown="textBlockStop_MouseButtonUp"/>
-                <TextBlock Margin="0" x:Name="textBlockStop3" HorizontalAlignment="Left"  TextWrapping="Wrap" Foreground="#FFB3FFC8" Width="540" Text="Stop 3 " FontSize="14" TextDecorations="{x:Null}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" TextAlignment="Justify" FontFamily="Consolas" MouseDown="textBlockStop_MouseButtonUp"/>
-                <Image x:Name="imageOrigin"  Margin="0" Height="130" Width="130" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/Images/Planets/Kerbin.png" Stretch="UniformToFill" Grid.Row="1" Grid.Column="2" MouseLeftButtonDown="image_MouseLeftButtonDown"/>
-                <Image x:Name="imageStop1"  Margin="0" Height="130" Width="130" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/Images/Planets/Duna.png" Stretch="UniformToFill" Grid.Row="2" Grid.Column="2" MouseLeftButtonDown="image_MouseLeftButtonDown"/>
-                <Image x:Name="imageStop2"  Margin="0" Height="130" Width="130" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/Images/Planets/Eve.png" Stretch="UniformToFill" Grid.Row="3" Grid.Column="2" MouseLeftButtonDown="image_MouseLeftButtonDown"/>
-                <Image x:Name="imageStop3"  Margin="0" Height="130" Width="130" HorizontalAlignment="Right" VerticalAlignment="Top" Source="/Images/Planets/Jool.png" Stretch="UniformToFill" Grid.Row="4" Grid.Column="2" MouseLeftButtonDown="image_MouseLeftButtonDown"/>
 
             </Grid>
 
         </StackPanel>
-        <TextBox x:Name="textBox" Margin="0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" HorizontalContentAlignment="Stretch" />
 
     </Grid>
 
