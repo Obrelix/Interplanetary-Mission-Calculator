@@ -7,9 +7,6 @@
        mc:Ignorable="d" 
       d:DesignHeight="740" d:DesignWidth="1180"
      Title="Mission Calculator" x:Name="Main" Loaded="Main_Loaded" MinHeight="620" MinWidth="1180">
-    <Page.Background>
-        <ImageBrush ImageSource="/Images/Backgrounds/wallpapers.jpg" Stretch="UniformToFill"/>
-    </Page.Background>
 
     <Grid >
 
@@ -30,21 +27,19 @@
 
         <StackPanel Orientation="Horizontal"  Grid.Row="1" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"    >
 
+            <StackPanel x:Name="spTimeUnit" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <TextBlock x:Name="txtTimeUnit" Text="Time" FontSize="16" Foreground="#FFF7E428" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <ComboBox x:Name="cboTimeUnit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60"  SelectionChanged="cboPlanetsSelectionChange" FontSize="8">
+                    <ComboBoxItem  Content="Kerbin Time" Background="#FF0EF502" ToolTip="(6h days, 426d years)" />
+                    <ComboBoxItem Content="Earth Time" Foreground="Black" ToolTip=" (24h days, 365d years)" Background="#FFFF5959"/>
+                </ComboBox>
+                <CheckBox x:Name="checkBox" Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1EEEE"  Unchecked="checkBox_Checked" Checked="checkBox_Checked" Padding="0" />
+            </StackPanel>
+
             <StackPanel >
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
-                    <StackPanel x:Name="spTimeUnit" VerticalAlignment="Center" Margin="0" HorizontalAlignment="Center">
-                        <TextBlock x:Name="txtTimeUnit" Text="Time" FontSize="16" Foreground="#FFF7E428" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        <ComboBox x:Name="cboTimeUnit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60"  SelectionChanged="cboPlanetsSelectionChange" FontSize="8">
-                            <ComboBoxItem  Content="Kerbin Time" Background="#FF0EF502" ToolTip="(6h days, 426d years)" />
-                            <ComboBoxItem Content="Earth Time" Foreground="Black" ToolTip=" (24h days, 365d years)" Background="#FFFF5959"/>
-                        </ComboBox>
-                    </StackPanel>
-                    
-                    <StackPanel Orientation="Horizontal" Margin="0" HorizontalAlignment="Center">
-                        <CheckBox x:Name="checkBox" Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1EEEE"  Unchecked="checkBox_Checked" Checked="checkBox_Checked" Padding="0" />
-                    </StackPanel>
                     
                     <Grid>
                         <Grid.ColumnDefinitions>

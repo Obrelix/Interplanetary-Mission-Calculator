@@ -32,6 +32,7 @@ namespace Mission_Calculator.Windows
             logo.EndInit();
             image.Source = logo;
             this.Title = obj.Name + "  Biome Map";
+            //this.Icon = new System.Drawing.Icon(Application.GetResourceStream(new Uri("pack://application:,,,/YourReferencedAssembly;component/YourPossibleSubFolder/YourResourceFile.ico")).Stream;);
         }
 
         private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

@@ -24,5 +24,45 @@ namespace Mission_Calculator
         {
             InitializeComponent();
         }
+
+        private void Forum_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Reddit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Wiki_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CurseMods_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Download(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Issues_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void KSP_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

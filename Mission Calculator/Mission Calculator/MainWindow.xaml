@@ -6,10 +6,37 @@
         xmlns:local="clr-namespace:Mission_Calculator"
         mc:Ignorable="d"
         d:DesignHeight="700" d:DesignWidth="1180"
-        Title="MainWindow" Height="650" Width="1200
-        " MinWidth="1200" MinHeight="700">
-    <Grid>
-        <Frame x:Name="frame" Content="Frame" Margin="0" Source="/Mission Calculator;component/Pages/pgMissionCalculator.xaml"/>
+        Title="MainWindow" Height="750" Width="1200
+        " MinWidth="1200" MinHeight="750" Icon="pack://siteoforigin:,,,/Resources/astro.ico">
+    <Window.Background>
+        <ImageBrush ImageSource="Images/Backgrounds/wallpapers.jpg"/>
+    </Window.Background>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="White">
+            <MenuItem Header="_Menu" >
+                <Separator />
+                <MenuItem Header="_Start KSP" Click="KSP_Click" />
+                <!--<MenuItem Header="_Start Ckan" Click="Ckan_Click" />-->
+                <Separator />
+                <MenuItem Header="_Forums" Click="Forum_Click" />
+                <MenuItem Header="_SubReddit" Click="Reddit_Click"/>
+                <MenuItem Header="_Wiki" Click="Wiki_Click"/>
+                <MenuItem Header="_Mods" Click="CurseMods_Click"/>
+                <Separator />
+                <MenuItem Header="_Exit" Click="Exit_Click" />
+            </MenuItem>
+            <MenuItem Header="Help">
+                <MenuItem Header="Download" Click="Download"/>
+                <MenuItem Header="Report an _issue" Click="Issues_Click"/>
+            </MenuItem>
+        </Menu>
+        <Grid>
+            <Frame x:Name="frame" Content="Frame" Margin="0" Source="/Mission Calculator;component/Pages/pgMissionCalculator.xaml">
+                <Frame.Background>
+                    <ImageBrush/>
+                </Frame.Background>
+            </Frame>
 
-    </Grid>
+        </Grid>
+    </DockPanel>
 </Window>
