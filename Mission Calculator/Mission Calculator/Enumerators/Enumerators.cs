@@ -17,21 +17,21 @@ namespace Mission_Calculator.Enumerators
 
     }
 
-    public enum OrbitHeight : Int16
+    public enum Orbit : Int16
     {
         Surface = 0,
-        LowOrbit = 1,
-        GeostationaryOrbit = 2,
-        EscapeOrbit = 3
+        Low = 1,
+        Synchronous = 2,
+        Escape = 3
     }
 
-    public enum Types : Int16 
+    public enum Types : Int16
     {
-        Star = 0,
+        UFO = 0,
         Planet = 1,
         Moon = 2,
         Gasgiant = 3,
-        UFO = 4
+        Star = 4
     }
 
     public enum Systems : Int16

@@ -63,9 +63,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Globals.cs" />
+    <Compile Include="Classes\Routes.cs" />
     <Compile Include="Classes\SMath.cs" />
     <Compile Include="Windows\winBiomeMaps.xaml.cs">
       <DependentUpon>winBiomeMaps.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\winTransferOrbit.xaml.cs">
+      <DependentUpon>winTransferOrbit.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -87,6 +92,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\winBiomeMaps.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\winTransferOrbit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

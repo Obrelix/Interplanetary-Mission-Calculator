@@ -27,16 +27,21 @@ namespace Mission_Calculator.Pages
         #region "General Declaration"
         
         List<SelestialObject> currentPlanetList;
+        List<List<SelestialObject>> couplesList;
         static string saveDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Interplanetary Mission Calulator";
         static string planeDataDirectoryPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\PlanetsData";
         static string StockPlanetsPath = planeDataDirectoryPath + "\\StockPlanets.json";
         static string OuterPlanetsPath = planeDataDirectoryPath + "\\OuterPlanets.json";
         static string RSSPlanetsPath = planeDataDirectoryPath + "\\RSSPlanets.json";
 
-        TextBlock textBlockOrigin = new TextBlock();
-        TextBlock textBlockStop1 = new TextBlock();
-        TextBlock textBlockStop2 = new TextBlock();
-        TextBlock textBlockStop3 = new TextBlock();
+        TextBlock txtSOOrigin;
+        TextBlock txtSOStop1;
+        TextBlock txtSOStop2;
+        TextBlock txtSOStop3;
+        TextBlock txtTravelStop1;
+        TextBlock txtTravelStop2;
+        TextBlock txtTravelStop3;
+        TextBlock txtTravelReturn;
         Image imageOrigin = new Image();
         Image imageStop1 = new Image();
         Image imageStop2 = new Image();
@@ -44,17 +49,20 @@ namespace Mission_Calculator.Pages
         StackPanel pnlRPOrigin = new StackPanel();
         #endregion
 
+        /// <summary>
+        /// Constractror
+        /// </summary>
         public pgMissionCalculator()
         {
             InitializeComponent();
-            textBlocksInit();
-            imagesInit();
+            txtPlanetInfoInit(); txtTravelInfoInit(); imagesInit();
             errorFileInit();
-            //saveFilesInit();
-            //cboGameMode.SelectedIndex = 0;
-            cboTimeUnit.SelectedIndex = 1;
             planetFilesInit(0);
+            couplesList = new List<List<SelestialObject>>();
         }
+        //saveFilesInit();
+        //cboGameMode.SelectedIndex = 0;
+        //cboTimeUnit.SelectedIndex = 1;
 
         #region "Methods"
 
@@ -109,53 +117,98 @@ namespace Mission_Calculator.Pages
             comboboxesInit();
         }
         
-        private void textBlocksInit()
+        private TextBlock dtxtPlanetInfo()
+        {
+            return new TextBlock
+            {
+                Margin = new Thickness(0),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                TextWrapping = TextWrapping.Wrap,
+                FontSize = 14,
+                TextAlignment = TextAlignment.Justify,
+                FontFamily = new FontFamily("Consolas"),
+            };
+        }
+
+        private TextBlock dtxtTravelInfo()
+        {
+            return new TextBlock
+            {
+                Margin = new Thickness(0),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                TextWrapping = TextWrapping.Wrap,
+                FontSize = 14,
+                TextAlignment = TextAlignment.Justify,
+                FontFamily = new FontFamily("Consolas"),
+                Cursor = Cursors.Hand
+            };
+        }
+
+
+
+        //<!--<TextBlock x:Name="textBlockStop1Travel" Grid.Row="1" TextWrapping="Wrap" Foreground="#FF9CDBDE" Text=""  Cursor="Hand" />
+        //<TextBlock x:Name="textBlockStop2Travel" Grid.Row="2" TextWrapping="Wrap" Foreground="#FFDAC5FF" Text="" Cursor="Hand"/>
+        //<TextBlock x:Name="textBlockStop3Travel" Grid.Row="3" TextWrapping="Wrap" Foreground="#FFB3FFC8" Text="" Cursor="Hand"/>
+        //<TextBlock x:Name="textBlockOriginTravel" Grid.Row="4" TextWrapping="Wrap" Foreground="#FF02FD69" Text="" Cursor="Hand" />-->
+
+        private void txtTravelInfoInit()
         {
             try
             {
-                textBlockOrigin.Name = "textBlockOrigin";
-                textBlockOrigin.SetValue(Grid.RowProperty, 1);
-                textBlockOrigin.SetValue(Grid.ColumnProperty, 1);
-                textBlockOrigin.Margin = new Thickness(0);
-                textBlockOrigin.HorizontalAlignment = HorizontalAlignment.Left;
-                textBlockOrigin.TextWrapping = TextWrapping.Wrap;
-                textBlockOrigin.FontSize = 14;
-                textBlockOrigin.TextAlignment = TextAlignment.Justify;
-                textBlockOrigin.FontFamily = new FontFamily("Consolas");
-                textBlockOrigin.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+                txtTravelStop1 = dtxtTravelInfo();
+                txtTravelStop1.Name = "txtTravelStop1";
+                txtTravelStop1.SetValue(Grid.RowProperty, 1);
+                txtTravelStop1.MouseLeftButtonDown += txtTravelInfo_MouseButtonUp;
 
-                textBlockStop1.Name = "textBlockStop1";
-                textBlockStop1.SetValue(Grid.RowProperty, 2);
-                textBlockStop1.SetValue(Grid.ColumnProperty, 1);
-                textBlockStop1.Margin = new Thickness(0);
-                textBlockStop1.HorizontalAlignment = HorizontalAlignment.Left;
-                textBlockStop1.TextWrapping = TextWrapping.Wrap;
-                textBlockStop1.FontSize = 14;
-                textBlockStop1.TextAlignment = TextAlignment.Justify;
-                textBlockStop1.FontFamily = new FontFamily("Consolas");
-                textBlockStop1.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+                txtTravelStop2 = dtxtTravelInfo();
+                txtTravelStop2.Name = "txtTravelStop2";
+                txtTravelStop2.SetValue(Grid.RowProperty, 2);
+                txtTravelStop2.MouseLeftButtonDown += txtTravelInfo_MouseButtonUp;
 
-                textBlockStop2.Name = "textBlockStop2";
-                textBlockStop2.SetValue(Grid.RowProperty, 3);
-                textBlockStop2.SetValue(Grid.ColumnProperty, 1);
-                textBlockStop2.Margin = new Thickness(0);
-                textBlockStop2.HorizontalAlignment = HorizontalAlignment.Left;
-                textBlockStop2.TextWrapping = TextWrapping.Wrap;
-                textBlockStop2.FontSize = 14;
-                textBlockStop2.TextAlignment = TextAlignment.Justify;
-                textBlockStop2.FontFamily = new FontFamily("Consolas");
-                textBlockStop2.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+                txtTravelStop3 = dtxtTravelInfo();
+                txtTravelStop3.Name = "txtTravelStop3";
+                txtTravelStop3.SetValue(Grid.RowProperty, 3);
+                txtTravelStop3.MouseLeftButtonDown += txtTravelInfo_MouseButtonUp;
 
-                textBlockStop3.Name = "textBlockStop3";
-                textBlockStop3.SetValue(Grid.RowProperty, 4);
-                textBlockStop3.SetValue(Grid.ColumnProperty, 1);
-                textBlockStop3.Margin = new Thickness(0);
-                textBlockStop3.HorizontalAlignment = HorizontalAlignment.Left;
-                textBlockStop3.TextWrapping = TextWrapping.Wrap;
-                textBlockStop3.FontSize = 14;
-                textBlockStop3.TextAlignment = TextAlignment.Justify;
-                textBlockStop3.FontFamily = new FontFamily("Consolas");
-                textBlockStop3.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+                txtTravelReturn = dtxtTravelInfo();
+                txtTravelReturn.Name = "txtTravelReturn";
+                txtTravelReturn.SetValue(Grid.RowProperty, 4);
+                txtTravelReturn.MouseLeftButtonDown += txtTravelInfo_MouseButtonUp;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void txtPlanetInfoInit()
+        {
+            try
+            {
+                txtSOOrigin = dtxtPlanetInfo();
+                txtSOOrigin.Name = "txtSOOrigin";
+                txtSOOrigin.SetValue(Grid.RowProperty, 1);
+                txtSOOrigin.SetValue(Grid.ColumnProperty, 1);
+                txtSOOrigin.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+
+                txtSOStop1 = dtxtPlanetInfo();
+                txtSOStop1.Name = "txtSOStop1";
+                txtSOStop1.SetValue(Grid.RowProperty, 2);
+                txtSOStop1.SetValue(Grid.ColumnProperty, 1);
+                txtSOStop1.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+
+                txtSOStop2 = dtxtPlanetInfo();
+                txtSOStop2.Name = "txtSOStop2";
+                txtSOStop2.SetValue(Grid.RowProperty, 3);
+                txtSOStop2.SetValue(Grid.ColumnProperty, 1);
+                txtSOStop2.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+
+                txtSOStop3 = dtxtPlanetInfo();
+                txtSOStop3.Name = "txtSOStop3";
+                txtSOStop3.SetValue(Grid.RowProperty, 4);
+                txtSOStop3.SetValue(Grid.ColumnProperty, 1);
+                txtSOStop3.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
             }
             catch (Exception)
             {
@@ -226,19 +279,19 @@ namespace Mission_Calculator.Pages
                 {
                     case "expanderOrigin":
                     case "comboBoxOrigin":
-                        updateGrid(expanderOrigin, comboBoxOrigin, textBlockOrigin, imageOrigin);
+                        updateGrid(expanderOrigin, comboBoxOrigin, txtSOOrigin, imageOrigin);
                         break;
                     case "expanderStop1":
                     case "comboBoxStop1":
-                        updateGrid(expanderStop1, comboBoxStop1, textBlockStop1, imageStop1);
+                        updateGrid(expanderStop1, comboBoxStop1, txtSOStop1, imageStop1);
                         break;
                     case "expanderStop2":
                     case "comboBoxStop2":
-                        updateGrid(expanderStop2, comboBoxStop2, textBlockStop2, imageStop2);
+                        updateGrid(expanderStop2, comboBoxStop2, txtSOStop2, imageStop2);
                         break;
                     case "expanderStop3":
                     case "comboBoxStop3":
-                        updateGrid(expanderStop3, comboBoxStop3, textBlockStop3, imageStop3);
+                        updateGrid(expanderStop3, comboBoxStop3, txtSOStop3, imageStop3);
                         break;
                     default:
                         break;
@@ -282,6 +335,83 @@ namespace Mission_Calculator.Pages
             }
         }
 
+        private bool isActive(Expander exp)
+        {
+            switch (exp.Name)
+            {
+                case "expanderOrigin":
+                    if (exp.IsExpanded) return (comboBoxOrigin.SelectedIndex != 0 && comboBoxOrigin.SelectedIndex != -1);
+                    else return false;
+                case "expanderStop1":
+                    if (exp.IsExpanded) return (comboBoxStop1.SelectedIndex != 0 && comboBoxStop1.SelectedIndex != -1);
+                    else return false;
+                case "expanderStop2":
+                    if (exp.IsExpanded) return (comboBoxStop2.SelectedIndex != 0 && comboBoxStop2.SelectedIndex != -1);
+                    else return false;
+                case "expanderStop3":
+                    if (exp.IsExpanded) return (comboBoxStop3.SelectedIndex != 0 && comboBoxStop3.SelectedIndex != -1);
+                    else return false;
+                default:
+                    return false;
+            }
+        }
+
+        private bool findIndex(Expander exp)
+        {
+            switch (exp.Name)
+            {
+                case "expanderOrigin":
+                    if (exp.IsExpanded) return (comboBoxOrigin.SelectedIndex != 0 && comboBoxOrigin.SelectedIndex != -1);
+                    else return false;
+                case "expanderStop1":
+                    if (exp.IsExpanded) return (comboBoxStop1.SelectedIndex != 0 && comboBoxStop1.SelectedIndex != -1);
+                    else return false;
+                case "expanderStop2":
+                    if (exp.IsExpanded) return (comboBoxStop2.SelectedIndex != 0 && comboBoxStop2.SelectedIndex != -1);
+                    else return false;
+                case "expanderStop3":
+                    if (exp.IsExpanded) return (comboBoxStop3.SelectedIndex != 0 && comboBoxStop3.SelectedIndex != -1);
+                    else return false;
+                default:
+                    return false;
+            }
+        }
+
+        private void showTransferOrbit(string controlName)
+        {
+            try
+            {
+
+                int intCboIndexFrom, intCboIndexTo;
+                switch (controlName)
+                {
+                    case "txtTravelStop1":
+                        intCboIndexFrom = comboBoxOrigin.SelectedIndex; intCboIndexTo = 0;
+                        winTransferOrbit win = new winTransferOrbit(currentPlanetList[intCboIndexFrom], currentPlanetList[intCboIndexTo]);
+                        win.Show();
+                        break;
+                    case "txtTravelStop2":
+                        intCboIndexFrom = comboBoxStop1.SelectedIndex; intCboIndexTo = 0;
+                        break;
+                    case "txtTravelStop3":
+                        intCboIndexFrom = comboBoxStop2.SelectedIndex; intCboIndexTo = 0;
+                        break;
+                    case "txtTravelReturn":
+                        intCboIndexFrom = comboBoxStop3.SelectedIndex; intCboIndexTo = 0;
+                        break;
+                    default:
+                        intCboIndexFrom = 0; intCboIndexTo = 0;
+                        break;
+                }
+               
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         private void showObjectInfo(string controlName)
         {
             try
@@ -289,16 +419,16 @@ namespace Mission_Calculator.Pages
                 int intCboIndex;
                 switch (controlName)
                 {
-                    case "textBlockOrigin":
+                    case "txtSOOrigin":
                         intCboIndex = comboBoxOrigin.SelectedIndex;
                         break;
-                    case "textBlockStop1":
+                    case "txtSOStop1":
                         intCboIndex = comboBoxStop1.SelectedIndex;
                         break;
-                    case "textBlockStop2":
+                    case "txtSOStop2":
                         intCboIndex = comboBoxStop2.SelectedIndex;
                         break;
-                    case "textBlockStop3":
+                    case "txtSOStop3":
                         intCboIndex = comboBoxStop3.SelectedIndex;
                         break;
                     default:
@@ -352,6 +482,11 @@ namespace Mission_Calculator.Pages
 
         #region "Event Handlers"
 
+        private void txtTravelInfo_MouseButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            showTransferOrbit(((TextBlock)sender).Name);
+        }
+
         private void textBlockStop_MouseButtonUp(object sender, MouseButtonEventArgs e)
         {
             showObjectInfo(((TextBlock)sender).Name);
@@ -372,10 +507,10 @@ namespace Mission_Calculator.Pages
             rightPaneUpdate(((ComboBox)sender).Name);
         }
 
-        private void cboGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            planetFilesInit(((ComboBox)sender).SelectedIndex);
-        }
+        //private void cboGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    planetFilesInit(((ComboBox)sender).SelectedIndex);
+        //}
 
         private void MainEvent(object sender, RoutedEventArgs e)
         {

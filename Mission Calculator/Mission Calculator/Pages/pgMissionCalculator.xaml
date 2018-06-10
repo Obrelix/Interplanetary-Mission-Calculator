@@ -36,7 +36,7 @@
                 <CheckBox x:Name="checkBox" Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1EEEE"  Unchecked="checkBox_Checked" Checked="checkBox_Checked" Padding="0" />
             </StackPanel>
 
-            <StackPanel >
+            <StackPanel x:Name="pnlMainControls" >
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
@@ -144,11 +144,6 @@
                             <SolidColorBrush Color="#FF052F3C" Opacity="0.5"/>
                         </Rectangle.Fill>
                     </Rectangle>
-
-                    <!--<TextBlock x:Name="textBlockStop1Travel" Grid.Row="1" TextWrapping="Wrap" Foreground="#FF9CDBDE" Text=""  Cursor="Hand" />
-                    <TextBlock x:Name="textBlockStop2Travel" Grid.Row="2" TextWrapping="Wrap" Foreground="#FFDAC5FF" Text="" Cursor="Hand"/>
-                    <TextBlock  x:Name="textBlockStop3Travel" Grid.Row="3" TextWrapping="Wrap" Foreground="#FFB3FFC8" Text="" Cursor="Hand"/>
-                    <TextBlock  x:Name="textBlockOriginTravel" Grid.Row="4" TextWrapping="Wrap" Foreground="#FF02FD69" Text="" Cursor="Hand" />-->
 
                 </Grid>
 
