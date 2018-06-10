@@ -17,10 +17,11 @@ namespace Mission_Calculator.Classes
         public Orbit OrbitFrom { get; set; }
         public Orbit OrbitTo { get; set; }
 
-        public double DeparturePhaseAngle { get; set; }
+        public double DeparturePhaseAngle { get { return SMath.DeparturePhaseAngle(ObjectFrom, ObjectTo); }}
         public double DeltaVBugdet { get; set; }
         public double TranferTime { get; set; }
         public double IntervalBetweenLanchWindows { get; set; }
+
         public string strTransferTime{get{return Globals.FormatTimeFromSecs(TranferTime);} }
         public string strInterval { get { return Globals.FormatTimeFromSecs(IntervalBetweenLanchWindows); } }
         public string strDv { get { return String.Format("{0:n0}", DeltaVBugdet + " m/s"); } }
