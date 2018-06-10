@@ -9,7 +9,7 @@
         Title="MainWindow" Height="750" Width="1200
         " MinWidth="1200" MinHeight="750" Icon="pack://siteoforigin:,,,/Resources/astro.ico">
     <Window.Background>
-        <ImageBrush ImageSource="Images/Backgrounds/wallpapers.jpg"/>
+        <ImageBrush ImageSource="Images/Backgrounds/backGround.jpg" Stretch="UniformToFill"/>
     </Window.Background>
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="White">

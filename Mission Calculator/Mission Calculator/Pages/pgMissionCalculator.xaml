@@ -25,23 +25,35 @@
                 </ComboBox>
             </StackPanel>-->
 
-        <StackPanel Orientation="Horizontal"  Grid.Row="1" Margin="100,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"    >
+        <StackPanel Orientation="Horizontal"  Grid.Row="1" Margin="25,0,0,0"    >
 
-            <StackPanel x:Name="spTimeUnit" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <!--<StackPanel x:Name="spTimeUnit" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <TextBlock x:Name="txtTimeUnit" Text="Time" FontSize="16" Foreground="#FFF7E428" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <ComboBox x:Name="cboTimeUnit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60"  SelectionChanged="cboPlanetsSelectionChange" FontSize="8">
                     <ComboBoxItem  Content="Kerbin Time" Background="#FF0EF502" ToolTip="(6h days, 426d years)" />
                     <ComboBoxItem Content="Earth Time" Foreground="Black" ToolTip=" (24h days, 365d years)" Background="#FFFF5959"/>
                 </ComboBox>
                 <CheckBox x:Name="checkBox" Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1EEEE"  Unchecked="checkBox_Checked" Checked="checkBox_Checked" Padding="0" />
-            </StackPanel>
+            </StackPanel>-->
 
-            <StackPanel x:Name="pnlMainControls" >
+            <StackPanel x:Name="pnlMainControls" VerticalAlignment="Bottom" >
 
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
 
+
+                    <Grid x:Name="grdRouteInfo">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="3*"/>
+                            <RowDefinition Height="100*"/>
+                            <RowDefinition Height="100*"/>
+                            <RowDefinition Height="100*"/>
+                            <RowDefinition Height="100*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
+
+                    </Grid>
                     
-                    <Grid>
+                    <Grid x:Name="grdPlanetSelection">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3"/>
                             <ColumnDefinition Width="100*"/>
@@ -65,7 +77,7 @@
                                 <StackPanel  Orientation="Horizontal"   >
 
                                     <StackPanel>
-                                        <ComboBox x:Name="comboBoxOrigin" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" SelectionChanged="cboPlanetsSelectionChange" FontSize="14" FontWeight="Bold"/>
+                                        <ComboBox x:Name="comboBoxOrigin" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" SelectionChanged="cboPlanetsSelectionChange" FontSize="14" FontWeight="Bold" FontFamily="BatangChe"/>
                                     </StackPanel>
                                     <StackPanel Width="100">
                                         <CheckBox x:Name="checkBoxReturn" Content="Round Trip" HorizontalAlignment="Left"  VerticalAlignment="Center"  Foreground="Wheat" Unchecked="MainEvent" Checked="MainEvent" FontSize="12" Margin="10,0,0,0"/>
@@ -129,25 +141,8 @@
 
                 </StackPanel>
 
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="3*"/>
-                    </Grid.RowDefinitions>
 
-                    <Rectangle RadiusX="10" RadiusY="10" Grid.RowSpan="6" Margin="0">
-                        <Rectangle.Fill>
-                            <SolidColorBrush Color="#FF052F3C" Opacity="0.5"/>
-                        </Rectangle.Fill>
-                    </Rectangle>
-
-                </Grid>
-
-                <Grid VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                <Grid x:Name="grdTotalInfo" VerticalAlignment="Bottom" HorizontalAlignment="Right">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100*"/>
                         <ColumnDefinition Width="10*"/>
@@ -179,7 +174,7 @@
             </StackPanel>
 
 
-            <Grid x:Name="grdRightPanel" VerticalAlignment="Top">
+            <Grid x:Name="grdPlanetInfo" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3"/>
                     <ColumnDefinition Width="60*"/>

@@ -9,13 +9,15 @@ namespace Mission_Calculator.Classes
 {
     public static class SMath
     {
+        public static List<SelestialObject> objList { get; set; }
+        
         /// <summary>
-       /// Public Method DeltaVCost 
-       /// </summary>
-       /// <param name="from">1st mandatory parameter defines the starting point </param>
-       /// <param name="orbitHeight"></param>
-       /// <returns>Returns the cost of Delta V (m/s) from the parameter planet</returns>
-       public static double DeltaVCost(SelestialObject from, Orbit orbitHeight)
+        /// Public Method DeltaVCost 
+        /// </summary>
+        /// <param name="from">1st mandatory parameter defines the starting point </param>
+        /// <param name="orbitHeight"></param>
+        /// <returns>Returns the cost of Delta V (m/s) from the parameter planet</returns>
+        public static double DeltaVCost(SelestialObject objFrom, SelestialObject objTo)
        {
            double DVCost = 0.0;
            return DVCost;
@@ -31,28 +33,111 @@ namespace Mission_Calculator.Classes
        {
            try
            {
-               double HohmannTransferTime = 0, Angle = 0;
-
-               //calculate phase agnle for moons of the same planet demands more properties for objFrom class so retuern 0 for now.
-               if (objTo.System == objFrom.System && objTo.Orbits != objFrom.Orbits) return 0;
-
-               //Calculate the Hohmann's Transer Time in seconds
-               //HTT= ((OrbitalPeriod1^2/3 + OrbitalPeriod2^2/3)^1.5)/sqr32
-               //calculate the Hohmann's Transfer Time only by the orbital periods of the 2 selestial objects is not the best way.
-               HohmannTransferTime = Math.Pow((Math.Pow(objTo.OrbitalPeriod, (2.0 / 3.0)) +
-                                     Math.Pow(objFrom.OrbitalPeriod, (2.0 / 3.0))), 1.5) /
-                                     Math.Sqrt(32.0);
-               Angle = 180 - (360 * (HohmannTransferTime / objTo.OrbitalPeriod));
-               if (Angle< -180 && Angle >= -360) Angle += 360;
-               else if (Angle< -360) Angle += Math.Abs(Math.Truncate(Angle / 360) * 360);
-               return Angle;
+                double HohmannTransferTime = 0, Angle = 0 , orbPeriodFrom = 0, orbPeriodTo = 0;
+                findActualOrbit(objFrom, objTo, out orbPeriodFrom,out orbPeriodTo);
+                HohmannTransferTime = HohmanTransferTime(objFrom, objTo);
+                Angle = 180 - (360 * (HohmannTransferTime / orbPeriodTo));
+                if (Angle < -180 && Angle >= -360) Angle += 360;
+                else if (Angle < -360) Angle += Math.Abs(Math.Truncate(Angle / 360) * 360);
+                return Angle;
            }
            catch (Exception)
            {
 
                throw;
            }
-       }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objFrom"></param>
+        /// <param name="objTo"></param>
+        /// <param name="orbPeriodFrom"></param>
+        /// <param name="orbPeriodTo"></param>
+        private static void findActualOrbit(SelestialObject objFrom, SelestialObject objTo, out double orbPeriodFrom, out double orbPeriodTo)
+        {
+            if (objFrom.Index != objFrom.ParentObjectIndex &&  objTo.ParentObjectIndex != objTo.Index && 
+                objFrom.ParentObjectIndex != objTo.ParentObjectIndex)
+            {
+                orbPeriodFrom = objList[objFrom.ParentObjectIndex].OrbitalPeriod;
+                orbPeriodTo = objList[objTo.ParentObjectIndex].OrbitalPeriod;
+            }
+            else if (objFrom.Index == objFrom.ParentObjectIndex && objTo.ParentObjectIndex != objTo.Index &&
+                objFrom.ParentObjectIndex != objTo.ParentObjectIndex)
+            {
+                orbPeriodFrom = objFrom.OrbitalPeriod;
+                orbPeriodTo = objList[objTo.ParentObjectIndex].OrbitalPeriod;
+            }
+            else if (objFrom.Index != objFrom.ParentObjectIndex && objTo.ParentObjectIndex == objTo.Index &&
+                objFrom.ParentObjectIndex != objTo.ParentObjectIndex)
+            {
+                orbPeriodFrom = objList[objFrom.ParentObjectIndex].OrbitalPeriod;
+                orbPeriodTo = objTo.OrbitalPeriod;
+            }
+            else if (objFrom.Index != objFrom.ParentObjectIndex && objTo.ParentObjectIndex != objTo.Index &&
+                objFrom.ParentObjectIndex == objTo.ParentObjectIndex)
+            {
+                orbPeriodFrom = objFrom.OrbitalPeriod;
+                orbPeriodTo = objTo.OrbitalPeriod;
+            }
+            else if (objFrom.Index == objTo.ParentObjectIndex)
+            {
+                orbPeriodFrom = 0;
+                orbPeriodTo = 0;
+            }
+            else
+            {
+                orbPeriodFrom = objFrom.OrbitalPeriod;
+                orbPeriodTo = objTo.OrbitalPeriod;
+            }
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objFrom"></param>
+        /// <param name="objTo"></param>
+        /// <returns></returns>
+        public static double IntervalBetweenLanchWindows(SelestialObject objFrom, SelestialObject objTo)
+        {
+            try
+            {
+                double orbPeriodFrom = 0, orbPeriodTo = 0;
+                findActualOrbit(objFrom, objTo, out orbPeriodFrom, out orbPeriodTo);
+                if (orbPeriodFrom == 0 || orbPeriodTo == 0) return  0;
+                else return Math.Abs(1 / ((1 / orbPeriodFrom) - (1 / orbPeriodTo)));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="objFrom"></param>
+        /// <param name="objTo"></param>
+        /// <returns></returns>
+        public static double HohmanTransferTime(SelestialObject objFrom, SelestialObject objTo)
+        {
+            try
+            {
+                double orbPeriodFrom = 0, orbPeriodTo = 0;
+                findActualOrbit(objFrom, objTo, out orbPeriodFrom, out orbPeriodTo);
+                //Calculate the Hohmann's Transer Time in seconds
+                //HTT= ((OrbitalPeriod1^2/3 + OrbitalPeriod2^2/3)^1.5)/sqr32
+                //calculate the Hohmann's Transfer Time only by the orbital periods of the 2 selestial objects is not the best way.
+                return Math.Pow((Math.Pow(orbPeriodFrom, (2.0 / 3.0)) + Math.Pow(orbPeriodTo, (2.0 / 3.0))), 1.5) / Math.Sqrt(32.0);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
     }
 }

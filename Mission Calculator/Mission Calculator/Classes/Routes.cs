@@ -16,44 +16,70 @@ namespace Mission_Calculator.Classes
         public SelestialObject ObjectTo { get; set; }
         public Orbit OrbitFrom { get; set; }
         public Orbit OrbitTo { get; set; }
+        public Brush FromBrush { get; set; }
+        public Brush ToBrush { get; set; }
+        public Brush TitleBrush { get; set; }
+        public Brush ValueBrush { get; set; }
+        public double DeparturePhaseAngle { get; private set; }
+        public double DeltaVBugdet { get; private set; }
+        public double TranferTime { get; private set; }
+        public double IntervalBetweenLanchWindows { get; private set; }
 
-        public double DeparturePhaseAngle { get { return SMath.DeparturePhaseAngle(ObjectFrom, ObjectTo); }}
-        public double DeltaVBugdet { get; set; }
-        public double TranferTime { get; set; }
-        public double IntervalBetweenLanchWindows { get; set; }
 
         public string strTransferTime{get{return Globals.FormatTimeFromSecs(TranferTime);} }
         public string strInterval { get { return Globals.FormatTimeFromSecs(IntervalBetweenLanchWindows); } }
-        public string strDv { get { return String.Format("{0:n0}", DeltaVBugdet + " m/s"); } }
-        public string strPhAngle { get { return String.Format("{0:n2}", DeparturePhaseAngle + " °"); } }
+        public string strDv { get { return string.Format("{0:n0}", DeltaVBugdet + " m/s"); } }
+        public string strPhAngle { get{ return DeparturePhaseAngle.ToString("n2") + " °"; } }
 
         public Routes()
         {
-
+            ObjectFrom = new SelestialObject();
+            ObjectTo = new SelestialObject();
+            Name = "";
         }
-
-        public List<Run> ToShortRunList(Brush nameBrush, Brush valueBrush)
+        public Routes(string Name, SelestialObject ObjectFrom, SelestialObject ObjectTo, 
+            Brush FromBrush, Brush ToBrush, Brush TitleBrush, Brush ValueBrush)
+        {
+            this.FromBrush = FromBrush;
+            this.ToBrush = ToBrush;
+            this.TitleBrush = TitleBrush;
+            this.ValueBrush = ValueBrush;
+            this.Name = Name;
+            this.ObjectFrom = ObjectFrom;
+            this.ObjectTo = ObjectTo;
+        }
+        public void Update()
+        {
+            IntervalBetweenLanchWindows = SMath.IntervalBetweenLanchWindows(ObjectFrom, ObjectTo);
+            TranferTime = SMath.HohmanTransferTime(ObjectFrom, ObjectTo);
+            DeparturePhaseAngle = SMath.DeparturePhaseAngle(ObjectFrom, ObjectTo);
+            DeltaVBugdet = SMath.DeltaVCost(ObjectFrom, ObjectTo);
+        }
+        public List<Run> ToShortRunList()
         {
             try
             {
+                Update();
                 List<Run> objPropsRunList = new List<Run>();
                 objPropsRunList.Clear();
-
-                objPropsRunList.Add(Globals.coloredRun(ObjectFrom.Name, valueBrush));
-                objPropsRunList.Add(Globals.coloredRun(" --> ", nameBrush));
-                objPropsRunList.Add(Globals.coloredRun(ObjectTo.Name, valueBrush));
+                //objPropsRunList.Add(new Run("\t"));
+                objPropsRunList.Add(Globals.coloredRun("[ ", ValueBrush));
+                objPropsRunList.Add(Globals.coloredRun(ObjectFrom.Name, FromBrush));
+                objPropsRunList.Add(Globals.coloredRun(" --> ", TitleBrush));
+                objPropsRunList.Add(Globals.coloredRun(ObjectTo.Name, ToBrush));
+                objPropsRunList.Add(Globals.coloredRun(" ]", ValueBrush));
                 objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("Tr. Time : ", nameBrush));
-                objPropsRunList.Add(Globals.coloredRun(strTransferTime, valueBrush));
-                objPropsRunList.Add(new Run("\t"));
-                objPropsRunList.Add(Globals.coloredRun("Ph. Angle : ", nameBrush));
-                objPropsRunList.Add(Globals.coloredRun(strPhAngle, valueBrush));
+                objPropsRunList.Add(Globals.coloredRun("Phase Angle : ", TitleBrush));
+                objPropsRunList.Add(Globals.coloredRun(strPhAngle, ValueBrush));
                 objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("I.B.L.W : ", nameBrush));
-                objPropsRunList.Add(Globals.coloredRun(strInterval, valueBrush));
-                objPropsRunList.Add(new Run("\t"));
-                objPropsRunList.Add(Globals.coloredRun("Δv : ", nameBrush));
-                objPropsRunList.Add(Globals.coloredRun(strDv, valueBrush));
+                objPropsRunList.Add(Globals.coloredRun("Transfer Δv : ", TitleBrush));
+                objPropsRunList.Add(Globals.coloredRun(strDv, ValueBrush));
+                objPropsRunList.Add(new Run(Environment.NewLine));
+                objPropsRunList.Add(Globals.coloredRun("Travel Time : ", TitleBrush));
+                objPropsRunList.Add(Globals.coloredRun(strTransferTime, ValueBrush));
+                objPropsRunList.Add(new Run(Environment.NewLine));
+                objPropsRunList.Add(Globals.coloredRun("I.B.L.W     : ", TitleBrush, "Interval between launch windows."));
+                objPropsRunList.Add(Globals.coloredRun(strInterval, ValueBrush));
                 return objPropsRunList;
             }
             catch (Exception)
@@ -65,15 +91,24 @@ namespace Mission_Calculator.Classes
 
         public override string ToString()
         {
-            string strPropsToString = string.Empty;
-            strPropsToString += String.Format("{0,11} {1}\n", "Name:", Name);
-            strPropsToString += String.Format("{0,11} {1,6} ( {2} )\n", "From:", ObjectFrom.Name, OrbitFrom.ToString());
-            strPropsToString += String.Format("{0,11} {1,6} ( {2} )\n", "To:", ObjectTo.Name, OrbitFrom.ToString());
-            strPropsToString += String.Format("{0,11} {1,6} \n", "Ph. Angle:", strPhAngle);
-            strPropsToString += String.Format("{0,11} {1,6} \n", "Tr. Time:", strTransferTime);
-            strPropsToString += String.Format("{0,11} {1,6} \n", "I.B.L.W:", strInterval);
-            strPropsToString += String.Format("{0,11} {1,6} \n", "Δv:", strInterval);
-            return strPropsToString;
+            try
+            {
+                Update();
+                string strPropsToString = string.Empty;
+                strPropsToString += String.Format("{0,11} {1}\n", "Name:", Name);
+                strPropsToString += String.Format("{0,11} {1,6} ( {2} )\n", "From:", ObjectFrom.Name, OrbitFrom.ToString());
+                strPropsToString += String.Format("{0,11} {1,6} ( {2} )\n", "To:", ObjectTo.Name, OrbitFrom.ToString());
+                strPropsToString += String.Format("{0,11} {1,6} \n", "Ph. Angle:", strPhAngle);
+                strPropsToString += String.Format("{0,11} {1,6} \n", "Tr. Time:", strTransferTime);
+                strPropsToString += String.Format("{0,11} {1,6} \n", "I.B.L.W:", strInterval);
+                strPropsToString += String.Format("{0,11} {1,6} \n", "Δv:", strInterval);
+                return strPropsToString;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -65,7 +65,9 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Globals.cs" />
     <Compile Include="Classes\Routes.cs" />
+    <Compile Include="Classes\RoutesControlSet.cs" />
     <Compile Include="Classes\SMath.cs" />
+    <Compile Include="Classes\PlanetInfoControlSet.cs" />
     <Compile Include="Windows\winBiomeMaps.xaml.cs">
       <DependentUpon>winBiomeMaps.xaml</DependentUpon>
     </Compile>
@@ -266,6 +268,9 @@
     <None Include="Resources\astro.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Backgrounds\backGround.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

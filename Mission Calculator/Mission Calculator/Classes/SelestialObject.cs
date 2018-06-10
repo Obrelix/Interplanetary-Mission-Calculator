@@ -254,58 +254,62 @@ namespace Mission_Calculator.Classes
 
                 objPropsRunList.Add(Globals.coloredRun("Celestial object : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(Name, valueBrush));
-                objPropsRunList.Add(new Run("\t"));
-                objPropsRunList.Add(Globals.coloredRun("Type : ", nameBrush));
+                objPropsRunList.Add(new Run("\t\t"));
+                objPropsRunList.Add(Globals.coloredRun("Type       : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(Type.ToString(), valueBrush));
                 objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("Surface Gravity : ", nameBrush));
+                objPropsRunList.Add(Globals.coloredRun("Surface Gravity  : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(strSurfaceGravity, valueBrush));
-                objPropsRunList.Add(new Run("\t"));
-                objPropsRunList.Add(Globals.coloredRun("Mass : ", nameBrush));
+                objPropsRunList.Add(new Run("\t\t"));
+                objPropsRunList.Add(Globals.coloredRun("Mass       : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(strMass, valueBrush));
                 objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("Escape Velocity : ", nameBrush));
+                objPropsRunList.Add(Globals.coloredRun("Escape Velocity  : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(strEscapeVelocity, valueBrush));
-                objPropsRunList.Add(new Run("\t"));
-                objPropsRunList.Add(Globals.coloredRun("S.O.I. : ", nameBrush));
-                objPropsRunList.Add(Globals.coloredRun(strSphereOfInfluence, valueBrush));
+                if (strEscapeVelocity.Length > 9) objPropsRunList.Add(new Run("\t"));
+                else objPropsRunList.Add(new Run("\t\t"));
+                objPropsRunList.Add(Globals.coloredRun("S.O.I.     : ", nameBrush, "Sphere of influence"));
+                objPropsRunList.Add(Globals.coloredRun(strSphereOfInfluence, valueBrush, "Sphere of influence"));
                 objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("Rot. Velocity : ", nameBrush));
+                objPropsRunList.Add(Globals.coloredRun("Rot. Velocity    : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(strSiderealRotationVelocity, valueBrush));
-                objPropsRunList.Add(new Run("\t"));
-                objPropsRunList.Add(Globals.coloredRun("Biomes : ", nameBrush));
+                if (strSiderealRotationVelocity.Length > 9) objPropsRunList.Add(new Run("\t"));
+                else objPropsRunList.Add(new Run("\t\t"));
+                objPropsRunList.Add(Globals.coloredRun("Biomes     : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(TotalBiomesCount.ToString(), valueBrush));
                 objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("Low Orbit Height : ", nameBrush));
+                objPropsRunList.Add(Globals.coloredRun("Low Orbit        : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(strLowOrbitHeight, valueBrush));
-                objPropsRunList.Add(new Run("\t"));
-                objPropsRunList.Add(Globals.coloredRun("Sync. Orbit : ", nameBrush));
+                if (strLowOrbitHeight.Length > 9) objPropsRunList.Add(new Run("\t"));
+                else objPropsRunList.Add(new Run("\t\t"));
+                objPropsRunList.Add(Globals.coloredRun("Syn. Orbit : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(strSynchronousOrbit, valueBrush));
+                objPropsRunList.Add(new Run(Environment.NewLine));
+                objPropsRunList.Add(Globals.coloredRun("To Low Orbit     : ", nameBrush, "Dv cost from object's surface to object's low orbit."));
+                objPropsRunList.Add(Globals.coloredRun(string.Format("{0:n0}", SurfaceToLowOrbit) + strDeltaV, valueBrush, "Dv cost from planet's surface to low orbit."));
+                objPropsRunList.Add(new Run("\t\t"));
+                objPropsRunList.Add(Globals.coloredRun("To S.O.I.  : ", nameBrush, "Dv cost from object's surface to parent planet's Sphere of influence edge."));
+                objPropsRunList.Add(Globals.coloredRun(string.Format("{0:n0}", (SurfaceToLowOrbit + LowOrbitToMoonIntercept +
+                    MoonInterceptToElipticalOrbit + ElipticalOrbitToPlanetIntercet +
+                    LowOrbitToElipticalOrbit + PlanetInterceptToStarElipticalOrbit)) +
+                    strDeltaV, valueBrush, "Dv cost from low orbit to planet Sphere of influence edge."));
                 objPropsRunList.Add(new Run(Environment.NewLine));
                 objPropsRunList.Add(Globals.coloredRun("Atmosphere : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun((AtmospherePresent) ? "🗸 " : "■ ", valueBrush));
                 objPropsRunList.Add(Globals.coloredRun("Oxygen : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun((OxygenPresent) ? "🗸 " : "■ ", valueBrush));
-                objPropsRunList.Add(new Run("\t"));
-                objPropsRunList.Add(Globals.coloredRun("Height : ", nameBrush));
+                objPropsRunList.Add(new Run("\t\t"));
+                objPropsRunList.Add(Globals.coloredRun("Height     : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(strAtmosphericHeight, valueBrush));
                 objPropsRunList.Add(new Run(Environment.NewLine));
                 objPropsRunList.Add(Globals.coloredRun("Tmin : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(strTemperatureMin, valueBrush));
                 objPropsRunList.Add(Globals.coloredRun(" Tmax : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(strTemperatureMax, valueBrush));
-                objPropsRunList.Add(new Run("\t"));
-                objPropsRunList.Add(Globals.coloredRun("Solar Day : ", nameBrush));
+                if (strTemperatureMax.Length > 6) objPropsRunList.Add(new Run("\t"));
+                else objPropsRunList.Add(new Run("\t\t"));
+                objPropsRunList.Add(Globals.coloredRun("Solar Day  : ", nameBrush));
                 objPropsRunList.Add(Globals.coloredRun(strSolarDay, valueBrush));
-                objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("To Low Orbit : ", nameBrush));
-                objPropsRunList.Add(Globals.coloredRun(string.Format("{0:n0}", SurfaceToLowOrbit) + strDeltaV, valueBrush));
-                objPropsRunList.Add(new Run("\t"));
-                objPropsRunList.Add(Globals.coloredRun("To S.O.I. : ", nameBrush));
-                objPropsRunList.Add(Globals.coloredRun(string.Format("{0:n0}", (SurfaceToLowOrbit + LowOrbitToMoonIntercept + 
-                    MoonInterceptToElipticalOrbit + ElipticalOrbitToPlanetIntercet +
-                    LowOrbitToElipticalOrbit + PlanetInterceptToStarElipticalOrbit)) + 
-                    strDeltaV, valueBrush));
 
                 return objPropsRunList;
             }

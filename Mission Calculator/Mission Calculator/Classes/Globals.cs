@@ -17,11 +17,13 @@ namespace Mission_Calculator.Classes
         /// <param name="txt">Text to include the Run</param>
         /// <param name="brush">Colour of Text</param>
         /// <returns>A new coloured Run with text</returns>
-        public static Run coloredRun(string txt, Brush brush)
+        public static Run coloredRun(string txt, Brush brush, string txtToolTip = "")
         {
             try
-            {
-                return new Run(txt) { Foreground = brush };
+            {   if(String.IsNullOrEmpty(txtToolTip))
+                    return new Run{Text = txt, Foreground = brush };
+                else
+                    return new Run { Text = txt, Foreground = brush, ToolTip = txtToolTip };
             }
             catch (Exception)
             {
@@ -40,7 +42,7 @@ namespace Mission_Calculator.Classes
             try
             {
                 TimeSpan t = TimeSpan.FromSeconds(secs);
-                return string.Format("{0:D2}h {1:D2}m {2:D2}s", t.Hours, t.Minutes, t.Seconds);
+                return string.Format("{0:D2} h {1:D2} m {2:D2} s", t.Hours, t.Minutes, t.Seconds);
             }
             catch (Exception)
             {
