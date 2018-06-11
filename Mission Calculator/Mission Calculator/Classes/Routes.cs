@@ -14,6 +14,8 @@ namespace Mission_Calculator.Classes
         public string Name { get; set; }
         public SelestialObject ObjectFrom { get; set; }
         public SelestialObject ObjectTo { get; set; }
+        public SelestialObject ObjectInner { get; private set; }
+        public SelestialObject ObjectOuter { get; private set; }
         public Orbit OrbitFrom { get; set; }
         public Orbit OrbitTo { get; set; }
         public Brush FromBrush { get; set; }
@@ -37,6 +39,7 @@ namespace Mission_Calculator.Classes
             ObjectTo = new SelestialObject();
             Name = "";
         }
+
         public Routes(string Name, SelestialObject ObjectFrom, SelestialObject ObjectTo, 
             Brush FromBrush, Brush ToBrush, Brush TitleBrush, Brush ValueBrush)
         {
@@ -47,19 +50,42 @@ namespace Mission_Calculator.Classes
             this.Name = Name;
             this.ObjectFrom = ObjectFrom;
             this.ObjectTo = ObjectTo;
-        }
-        public void Update()
-        {
             IntervalBetweenLanchWindows = SMath.IntervalBetweenLanchWindows(ObjectFrom, ObjectTo);
             TranferTime = SMath.HohmanTransferTime(ObjectFrom, ObjectTo);
             DeparturePhaseAngle = SMath.DeparturePhaseAngle(ObjectFrom, ObjectTo);
             DeltaVBugdet = SMath.DeltaVCost(ObjectFrom, ObjectTo);
+            if (DeparturePhaseAngle < 0)
+            {
+                ObjectInner = ObjectTo;
+                ObjectOuter = ObjectFrom;
+            }
+            else
+            {
+                ObjectInner = ObjectFrom;
+                ObjectOuter = ObjectTo;
+            }
         }
+
+        public void Update()
+        {
+            try
+            {
+                IntervalBetweenLanchWindows = SMath.IntervalBetweenLanchWindows(ObjectFrom, ObjectTo);
+                TranferTime = SMath.HohmanTransferTime(ObjectFrom, ObjectTo);
+                DeparturePhaseAngle = SMath.DeparturePhaseAngle(ObjectFrom, ObjectTo);
+                DeltaVBugdet = SMath.DeltaVCost(ObjectFrom, ObjectTo);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<Run> ToShortRunList()
         {
             try
             {
-                Update();
                 List<Run> objPropsRunList = new List<Run>();
                 objPropsRunList.Clear();
                 //objPropsRunList.Add(new Run("\t"));
@@ -93,7 +119,6 @@ namespace Mission_Calculator.Classes
         {
             try
             {
-                Update();
                 string strPropsToString = string.Empty;
                 strPropsToString += String.Format("{0,11} {1}\n", "Name:", Name);
                 strPropsToString += String.Format("{0,11} {1,6} ( {2} )\n", "From:", ObjectFrom.Name, OrbitFrom.ToString());

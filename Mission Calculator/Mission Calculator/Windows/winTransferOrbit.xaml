@@ -5,8 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mission_Calculator.Windows"
         mc:Ignorable="d"
-        Title="Phase Angle" Height="300" Width="300" Icon="pack://siteoforigin:,,,/Resources/astro.ico">
-    <Grid>
-        
-    </Grid>
+        Title="Phase Angle"  Height="750" Width="650" Background="Black" Icon="pack://siteoforigin:,,,/Resources/astro.ico">
+    <Canvas x:Name="DrawCanvas" Width="600" Height="600" />
 </Window>

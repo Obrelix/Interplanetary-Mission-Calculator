@@ -204,7 +204,7 @@ namespace Mission_Calculator.Classes
                 foreach (RoutesManager obj in routesCSList)
                 {
                     if (obj.txt.Name == controlName)
-                        new winTransferOrbit(obj.route.ObjectFrom, obj.route.ObjectTo).Show();
+                        new winTransferOrbit(obj.route).Show();
                 }
             }
             catch (Exception)

@@ -47,12 +47,14 @@ namespace Mission_Calculator.Classes
             this.planetList = planetList;
             this.obj = planetList[cbo.SelectedIndex];
         }
+
         public bool isEnabled()
         {
             int intCBOIndex = cbo.SelectedIndex;
             bool isExpanded = exp.IsExpanded;
             return (intCBOIndex != -1 && intCBOIndex != 0 && isExpanded);
         }
+
         public void Reset()
         {
             try

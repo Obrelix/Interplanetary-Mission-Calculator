@@ -66,6 +66,7 @@
     <Compile Include="Classes\Globals.cs" />
     <Compile Include="Classes\Routes.cs" />
     <Compile Include="Classes\RoutesControlSet.cs" />
+    <Compile Include="Classes\Shapes.cs" />
     <Compile Include="Classes\SMath.cs" />
     <Compile Include="Classes\PlanetInfoControlSet.cs" />
     <Compile Include="Windows\winBiomeMaps.xaml.cs">
