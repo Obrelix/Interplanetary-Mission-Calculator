@@ -79,7 +79,7 @@ namespace Mission_Calculator.Classes
                 if (parentGrid.Children.Contains(img)) parentGrid.Children.Remove(img);
                 if (isEnabled())
                 {
-                    runLIst = obj.ToShortRunList(exp.Foreground, Brushes.Tomato);
+                    runLIst = obj.ToShortRunList(exp.Foreground, obj.objectColour);
                     txt.Inlines.Clear();
                     foreach (Run objRun in runLIst) txt.Inlines.Add(objRun);
                     img.Source = new BitmapImage(new Uri(obj.ImageUri));
@@ -176,6 +176,7 @@ namespace Mission_Calculator.Classes
                 FontSize = 14,
                 TextAlignment = TextAlignment.Justify,
                 FontFamily = new FontFamily("Consolas"),
+                Cursor = Cursors.Hand
             };
         }
 
@@ -223,12 +224,14 @@ namespace Mission_Calculator.Classes
                 imageOrigin.Stretch = Stretch.UniformToFill;
                 imageOrigin.SetValue(Grid.RowProperty, 1);
                 imageOrigin.SetValue(Grid.ColumnProperty, 2);
+                imageOrigin.Cursor = Cursors.Hand;
                 imageOrigin.MouseLeftButtonDown += image_MouseLeftButtonDown;
 
                 imageStop1 = new Image();
                 imageStop1.Name = "imageStop1";
                 imageStop1.SetValue(Grid.RowProperty, 2);
                 imageStop1.SetValue(Grid.ColumnProperty, 2);
+                imageStop1.Cursor = Cursors.Hand;
                 imageStop1.Stretch = Stretch.UniformToFill;
                 imageStop1.MouseLeftButtonDown += image_MouseLeftButtonDown;
 
@@ -236,6 +239,7 @@ namespace Mission_Calculator.Classes
                 imageStop2.Name = "imageStop2";
                 imageStop2.SetValue(Grid.RowProperty, 3);
                 imageStop2.SetValue(Grid.ColumnProperty, 2);
+                imageStop2.Cursor = Cursors.Hand;
                 imageStop2.Stretch = Stretch.UniformToFill;
                 imageStop2.MouseLeftButtonDown += image_MouseLeftButtonDown;
 
@@ -243,6 +247,7 @@ namespace Mission_Calculator.Classes
                 imageStop3.Name = "imageStop3";
                 imageStop3.SetValue(Grid.RowProperty, 4);
                 imageStop3.SetValue(Grid.ColumnProperty, 2);
+                imageStop3.Cursor = Cursors.Hand;
                 imageStop3.Stretch = Stretch.UniformToFill;
                 imageStop3.MouseLeftButtonDown += image_MouseLeftButtonDown;
             }
