@@ -61,6 +61,7 @@ namespace Mission_Calculator.Classes
         public Systems System { get; set; }
         public Orbits Orbits { get; set; }
         public int ParentObjectIndex { get; set; }
+        public Brush objectColour { get; set; }
         #endregion 
 
         #region "Orbital Characteristics"
@@ -178,6 +179,8 @@ namespace Mission_Calculator.Classes
             this.BiomeImageUri = @"pack://application:,,/Images/Biomes/None.png";
             this.Type = Types.Star;
             this.System = Systems.None;
+            this.ParentObjectIndex = 0;
+            this.objectColour = Brushes.Aqua;
             //"Orbital Characteristics"
             this._semiMajorAxis = 0;
             this._apoapsis = 0;

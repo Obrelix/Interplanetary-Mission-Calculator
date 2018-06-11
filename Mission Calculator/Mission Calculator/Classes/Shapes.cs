@@ -18,8 +18,8 @@ namespace Mission_Calculator.Classes
             {
                 SnapsToDevicePixels = true,
                 Visibility = Visibility.Visible,
-                Stroke = Brushes.Yellow,
-                Fill = Brushes.Yellow,
+                Stroke = brush,
+                Fill = brush,
                 StrokeThickness = 3,
                 Height = size.Height,
                 Width = size.Width,
