@@ -50,11 +50,11 @@ namespace Mission_Calculator.Classes
             this.Name = Name;
             this.ObjectFrom = ObjectFrom;
             this.ObjectTo = ObjectTo;
-            IntervalBetweenLanchWindows = SMath.IntervalBetweenLanchWindows(ObjectFrom, ObjectTo);
-            TranferTime = SMath.HohmanTransferTime(ObjectFrom, ObjectTo);
-            DeparturePhaseAngle = SMath.DeparturePhaseAngle(ObjectFrom, ObjectTo);
-            DeltaVBugdet = SMath.DeltaVCost(ObjectFrom, ObjectTo);
-            if (DeparturePhaseAngle < 0)
+            IntervalBetweenLanchWindows = SMath.IntervalBetweenLanchWindows(this);
+            TranferTime = SMath.HohmanTransferTime(this);
+            DeparturePhaseAngle = SMath.DeparturePhaseAngle(this);
+            DeltaVBugdet = SMath.DeltaVCost(this);
+            if (ObjectTo.OrbitalPeriod < ObjectFrom.OrbitalPeriod)
             {
                 ObjectInner = ObjectTo;
                 ObjectOuter = ObjectFrom;
@@ -70,10 +70,10 @@ namespace Mission_Calculator.Classes
         {
             try
             {
-                IntervalBetweenLanchWindows = SMath.IntervalBetweenLanchWindows(ObjectFrom, ObjectTo);
-                TranferTime = SMath.HohmanTransferTime(ObjectFrom, ObjectTo);
-                DeparturePhaseAngle = SMath.DeparturePhaseAngle(ObjectFrom, ObjectTo);
-                DeltaVBugdet = SMath.DeltaVCost(ObjectFrom, ObjectTo);
+                IntervalBetweenLanchWindows = SMath.IntervalBetweenLanchWindows(this);
+                TranferTime = SMath.HohmanTransferTime(this);
+                DeparturePhaseAngle = SMath.DeparturePhaseAngle(this);
+                DeltaVBugdet = SMath.DeltaVCost(this);
             }
             catch (Exception)
             {
