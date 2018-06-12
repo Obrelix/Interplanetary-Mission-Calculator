@@ -153,11 +153,9 @@ namespace Mission_Calculator.Classes
             try
             {         
                 if(i > 3) return  new RoutesInfo(grdRouteInfo,
-                               new Routes("Return ", activeList[activeList.Count - 1].obj, activeList[0].obj,
-                                activeList[activeList.Count - 1].exp.Foreground, activeList[0].exp.Foreground, activeList[0].exp.Foreground, Brushes.Tomato), i);
+                               new Routes("Return ", activeList[activeList.Count - 1].obj, activeList[0].obj, activeList[0].exp.Foreground, Brushes.Tomato), i);
                 else return new RoutesInfo(grdRouteInfo, 
-                                new Routes("Route " + i, activeList[i - 1].obj, activeList[i].obj,
-                                activeList[i - 1].exp.Foreground, activeList[i].exp.Foreground, activeList[i].exp.Foreground, Brushes.Tomato), i);
+                                new Routes("Route " + i, activeList[i - 1].obj, activeList[i].obj, activeList[i].exp.Foreground, Brushes.Tomato), i);
             }
             catch (Exception)
             {

@@ -72,7 +72,7 @@ namespace Mission_Calculator.Windows
                 TextBlock InnerPlanetText = Shapes.textBlock(route.ObjectInner.Name, new Point(innerPlanetPoint.X - planetSize.Width - 15, innerPlanetPoint.Y- 15), 16, route.ObjectInner.objectColour);
                 TextBlock OuterPlanetText = Shapes.textBlock(route.ObjectOuter.Name, new Point(outerPlanetPoint.X - planetSize.Width - 15, outerPlanetPoint.Y -15), 16, route.ObjectOuter.objectColour);
                 TextBlock SunText = Shapes.textBlock(sun.Name, new Point(sunPoint.X-sunSize.Width, sunPoint.Y +20 ), 16, sun.objectColour);
-
+                
                 SunText.ToolTip = sun.Name;
                 Sun.ToolTip = sun.Name;
                 InnerOrbit.ToolTip = route.ObjectInner.Name;
@@ -109,11 +109,24 @@ namespace Mission_Calculator.Windows
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.DrawCanvas.Children.Clear(); // Genocide :P
+            //this.DrawCanvas.Children.Clear(); // Genocide :P
             Size planetSize = new Size(30, 30);
             Size canvasSize = new Size(DrawCanvas.Width, DrawCanvas.Height);
             Size maxSize = new Size(DrawCanvas.Width, DrawCanvas.Height);
             update(canvasSize, maxSize, planetSize);
+            expRouteInfo.Header = route.Name + " Info";
+            TextBlock routeInfo = new TextBlock
+            {
+                Margin = new Thickness(0),
+                HorizontalAlignment = HorizontalAlignment.Left,
+                TextWrapping = TextWrapping.Wrap,
+                FontSize = 14,
+                TextAlignment = TextAlignment.Justify,
+                FontFamily = new FontFamily("Consolas"),
+            };
+            routeInfo.Inlines.Clear();
+            foreach (Run obj in route.ToShortRunList()) routeInfo.Inlines.Add(obj);
+            grdRouteInfo.Children.Add(routeInfo);
         }
     }
 }

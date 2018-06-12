@@ -18,8 +18,6 @@ namespace Mission_Calculator.Classes
         public SelestialObject ObjectOuter { get; private set; }
         public Orbit OrbitFrom { get; set; }
         public Orbit OrbitTo { get; set; }
-        public Brush FromBrush { get; set; }
-        public Brush ToBrush { get; set; }
         public Brush TitleBrush { get; set; }
         public Brush ValueBrush { get; set; }
         public double DeparturePhaseAngle { get; private set; }
@@ -40,11 +38,8 @@ namespace Mission_Calculator.Classes
             Name = "";
         }
 
-        public Routes(string Name, SelestialObject ObjectFrom, SelestialObject ObjectTo, 
-            Brush FromBrush, Brush ToBrush, Brush TitleBrush, Brush ValueBrush)
+        public Routes(string Name, SelestialObject ObjectFrom, SelestialObject ObjectTo, Brush TitleBrush, Brush ValueBrush)
         {
-            this.FromBrush = FromBrush;
-            this.ToBrush = ToBrush;
             this.TitleBrush = TitleBrush;
             this.ValueBrush = ValueBrush;
             this.Name = Name;
@@ -90,9 +85,9 @@ namespace Mission_Calculator.Classes
                 objPropsRunList.Clear();
                 //objPropsRunList.Add(new Run("\t"));
                 objPropsRunList.Add(Globals.coloredRun("[ ", ValueBrush));
-                objPropsRunList.Add(Globals.coloredRun(ObjectFrom.Name, FromBrush));
+                objPropsRunList.Add(Globals.coloredRun(ObjectFrom.Name, ObjectFrom.objectColour));
                 objPropsRunList.Add(Globals.coloredRun(" --> ", TitleBrush));
-                objPropsRunList.Add(Globals.coloredRun(ObjectTo.Name, ToBrush));
+                objPropsRunList.Add(Globals.coloredRun(ObjectTo.Name, ObjectTo.objectColour));
                 objPropsRunList.Add(Globals.coloredRun(" ]", ValueBrush));
                 objPropsRunList.Add(new Run(Environment.NewLine));
                 objPropsRunList.Add(Globals.coloredRun("Phase Angle : ", TitleBrush));

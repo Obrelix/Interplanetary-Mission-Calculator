@@ -63,12 +63,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Classes\Globals.cs" />
+    <Compile Include="Classes\Static Classes\Globals.cs" />
     <Compile Include="Classes\Routes.cs" />
-    <Compile Include="Classes\RoutesHandler.cs" />
-    <Compile Include="Classes\Shapes.cs" />
-    <Compile Include="Classes\SMath.cs" />
-    <Compile Include="Classes\PlanetInfoHandler.cs" />
+    <Compile Include="Classes\UI Classes\RoutesHandler.cs" />
+    <Compile Include="Classes\Static Classes\Shapes.cs" />
+    <Compile Include="Classes\Static Classes\SMath.cs" />
+    <Compile Include="Classes\UI Classes\PlanetInfoHandler.cs" />
     <Compile Include="Windows\winBiomeMaps.xaml.cs">
       <DependentUpon>winBiomeMaps.xaml</DependentUpon>
     </Compile>
@@ -83,7 +83,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\IO.cs" />
+    <Compile Include="Classes\Static Classes\IO.cs" />
     <Compile Include="Classes\SelestialObject.cs" />
     <Compile Include="Enumerators\Enumerators.cs" />
     <Compile Include="MainWindow.xaml.cs">
