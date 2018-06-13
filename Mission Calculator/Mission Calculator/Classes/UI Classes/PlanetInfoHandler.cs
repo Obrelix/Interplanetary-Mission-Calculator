@@ -16,6 +16,8 @@ namespace Mission_Calculator.Classes
 {
     public class PlanetInfo
     {
+        #region "General Declaration"
+
         Brush defColour;
         public int Index { get; set; }
         public SelestialObject obj { get; set; }
@@ -25,6 +27,10 @@ namespace Mission_Calculator.Classes
         public Image img { get; set; }
         public Grid parentGrid { get; set; }
         public List<SelestialObject> planetList { get; set; }
+
+        #endregion
+
+        #region "Constractor"
 
         public PlanetInfo()
         {
@@ -52,6 +58,9 @@ namespace Mission_Calculator.Classes
             defColour = exp.Foreground;
         }
 
+        #endregion
+
+        #region "Methods"
 
         private TextBlock txtPlanetInfo(int grdRowIndex, int grdColumnIndex)
         {
@@ -101,41 +110,19 @@ namespace Mission_Calculator.Classes
                 throw;
             }
         }
-        private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                new winBiomeMaps(obj).Show();
-            }
-            catch (Exception)
-            {
 
-                throw;
-            }
-        }
 
         private void comboboxesInit()
         {
             foreach (SelestialObject obj in planetList)
             {
-                    string displayName = displayName = (obj.Type == Types.Moon) ? "    " + obj.Name : obj.Name;
-                    cbo.Items.Add(displayName);
+                string displayName = displayName = (obj.Type == Types.Moon) ? "    " + obj.Name : obj.Name;
+                cbo.Items.Add(displayName);
             }
             cbo.SelectedIndex = 0;
         }
 
-        private void textBlockStop_MouseButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                obj.Show();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        
+
         public bool isEnabled()
         {
             return (cbo.SelectedIndex != -1 && cbo.SelectedIndex != 0 && exp.IsExpanded);
@@ -188,24 +175,65 @@ namespace Mission_Calculator.Classes
             this.obj = planetList[cbo.SelectedIndex];
 
         }
+        #endregion
+
+        #region "Event Handlers"
+
+        private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                new winBiomeMaps(obj).Show();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void textBlockStop_MouseButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                obj.Show();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        #endregion
+
     }
 
     public class PlaneInfoHandler
     {
+        #region "General Declaration"
+
         public List<PlanetInfo> planetInfoCSList = new List<PlanetInfo>();
         List<SelestialObject> currentPlanetList;
-        
+
         Grid grdPlanetInfo;
+
+        #endregion
+
+        #region "Constractor"
 
         public PlaneInfoHandler(Grid grdPlanetInfo, List<ComboBox> cboList, List<Expander> expList)
         {
-            
+
             this.grdPlanetInfo = grdPlanetInfo;
             this.currentPlanetList = Globals.objList;
             planetInfoCSList.Clear();
             for (int i = 0; i < 4; i++)
-                planetInfoCSList.Add(new PlanetInfo(expList[i], cboList[i], new System.Drawing.Point(i+1, 1), new System.Drawing.Point(i+1, 2), grdPlanetInfo));
+                planetInfoCSList.Add(new PlanetInfo(expList[i], cboList[i], new System.Drawing.Point(i + 1, 1), new System.Drawing.Point(i + 1, 2), grdPlanetInfo));
         }
+
+        #endregion
+
+        #region "Methods"
 
         public List<PlanetInfo> CSList()
         {
@@ -225,6 +253,9 @@ namespace Mission_Calculator.Classes
             }
 
         }
+
+        #endregion
+
 
     }
 

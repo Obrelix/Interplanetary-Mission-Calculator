@@ -10,6 +10,8 @@ namespace Mission_Calculator.Classes
 {
     public static class Globals
     {
+        #region "General Declaration"
+
         public static List<SelestialObject> objList { get; set; }
         public static MainWindow ParetWindow { get; set; }
 
@@ -25,6 +27,13 @@ namespace Mission_Calculator.Classes
         static string OuterPlanetsPath = planeDataDirectoryPath + "\\OuterPlanets.json";
         static string RSSPlanetsPath = planeDataDirectoryPath + "\\RSSPlanets.json";
 
+        #endregion
+
+        #region "Constractor"
+
+        #endregion
+
+        #region "Methods"
         public static List<SelestialObject> planetFilesInit(int mode)
         {
             if (objList != null) objList.Clear();
@@ -52,6 +61,7 @@ namespace Mission_Calculator.Classes
             IO.errorFilePath = errorFilePath;
             IO.createFile(errorFilePath, "");
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -87,8 +97,9 @@ namespace Mission_Calculator.Classes
         public static Run coloredRun(string txt, Brush brush, string txtToolTip = "")
         {
             try
-            {   if(String.IsNullOrEmpty(txtToolTip))
-                    return new Run{Text = txt, Foreground = brush };
+            {
+                if (String.IsNullOrEmpty(txtToolTip))
+                    return new Run { Text = txt, Foreground = brush };
                 else
                     return new Run { Text = txt, Foreground = brush, ToolTip = txtToolTip };
             }
@@ -117,5 +128,7 @@ namespace Mission_Calculator.Classes
                 throw;
             }
         }
+        #endregion
+
     }
 }

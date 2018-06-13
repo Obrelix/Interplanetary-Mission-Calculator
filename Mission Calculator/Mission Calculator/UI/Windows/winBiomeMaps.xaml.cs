@@ -19,9 +19,16 @@ namespace Mission_Calculator.Windows
     /// </summary>
     public partial class winBiomeMaps : Window
     {
+        #region "General Declaration"
+
         private Classes.SelestialObject objSO;
         private Point origin;
         private Point start;
+
+        #endregion
+
+        #region "Constractor"
+
         public winBiomeMaps(Classes.SelestialObject obj)
         {
             InitializeComponent();
@@ -34,6 +41,14 @@ namespace Mission_Calculator.Windows
             this.Title = obj.Name + "  Biome Map";
             //this.Icon = new System.Drawing.Icon(Application.GetResourceStream(new Uri("pack://application:,,,/YourReferencedAssembly;component/YourPossibleSubFolder/YourResourceFile.ico")).Stream;);
         }
+
+        #endregion
+
+        #region "Methods"
+
+        #endregion
+
+        #region "Event Handlers"
 
         private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -74,5 +89,6 @@ namespace Mission_Calculator.Windows
         {
             image.ReleaseMouseCapture();
         }
+
+        #endregion}
     }
-}

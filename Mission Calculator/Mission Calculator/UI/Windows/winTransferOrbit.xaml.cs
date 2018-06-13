@@ -20,8 +20,14 @@ namespace Mission_Calculator.Windows
     /// </summary>
     public partial class winTransferOrbit : Window
     {
+        #region "General Declaration"
 
         Routes route;
+
+        #endregion
+
+        #region "Constractor"
+
         public winTransferOrbit(Routes route)
         {
             InitializeComponent();
@@ -30,7 +36,9 @@ namespace Mission_Calculator.Windows
             this.WindowState = WindowState.Normal;
         }
 
-        
+        #endregion
+
+        #region "Methods"
 
         private void update(Size maxSize, Size canvasSize, Size planetSize)
         {
@@ -68,11 +76,11 @@ namespace Mission_Calculator.Windows
                 SweepDirection dir = (route.DeparturePhaseAngle < 0) ? SweepDirection.Clockwise : SweepDirection.Counterclockwise;
                 Path path = Shapes.arcShape(arcStartPoint, arcEndPoint, arcSize, Brushes.SkyBlue, 90, dir);
 
-                TextBlock AngleText = Shapes.textBlock(route.strPhAngle, new Point(arcEndPoint.X+30, arcEndPoint.Y +10), 14, Brushes.SkyBlue);
-                TextBlock InnerPlanetText = Shapes.textBlock(route.ObjectInner.Name, new Point(innerPlanetPoint.X - planetSize.Width - 15, innerPlanetPoint.Y- 15), 16, route.ObjectInner.objectColour);
-                TextBlock OuterPlanetText = Shapes.textBlock(route.ObjectOuter.Name, new Point(outerPlanetPoint.X - planetSize.Width - 15, outerPlanetPoint.Y -15), 16, route.ObjectOuter.objectColour);
-                TextBlock SunText = Shapes.textBlock(sun.Name, new Point(sunPoint.X-sunSize.Width, sunPoint.Y +20 ), 16, sun.objectColour);
-                
+                TextBlock AngleText = Shapes.textBlock(route.strPhAngle, new Point(arcEndPoint.X + 30, arcEndPoint.Y + 10), 14, Brushes.SkyBlue);
+                TextBlock InnerPlanetText = Shapes.textBlock(route.ObjectInner.Name, new Point(innerPlanetPoint.X - planetSize.Width - 15, innerPlanetPoint.Y - 15), 16, route.ObjectInner.objectColour);
+                TextBlock OuterPlanetText = Shapes.textBlock(route.ObjectOuter.Name, new Point(outerPlanetPoint.X - planetSize.Width - 15, outerPlanetPoint.Y - 15), 16, route.ObjectOuter.objectColour);
+                TextBlock SunText = Shapes.textBlock(sun.Name, new Point(sunPoint.X - sunSize.Width, sunPoint.Y + 20), 16, sun.objectColour);
+
                 SunText.ToolTip = sun.Name;
                 Sun.ToolTip = sun.Name;
                 InnerOrbit.ToolTip = route.ObjectInner.Name;
@@ -104,8 +112,12 @@ namespace Mission_Calculator.Windows
 
                 throw;
             }
-            
+
         }
+
+        #endregion
+
+        #region "Event Handlers"
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -128,5 +140,7 @@ namespace Mission_Calculator.Windows
             foreach (Run obj in route.ToShortRunList()) routeInfo.Inlines.Add(obj);
             grdRouteInfo.Children.Add(routeInfo);
         }
+
+        #endregion
     }
 }

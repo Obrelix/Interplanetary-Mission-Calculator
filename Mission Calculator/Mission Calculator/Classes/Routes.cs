@@ -11,6 +11,8 @@ namespace Mission_Calculator.Classes
 {
     public class Routes
     {
+        #region "General Declaration"
+
         public string Name { get; set; }
         public SelestialObject ObjectFrom { get; set; }
         public SelestialObject ObjectTo { get; set; }
@@ -26,10 +28,14 @@ namespace Mission_Calculator.Classes
         public double IntervalBetweenLanchWindows { get; private set; }
 
 
-        public string strTransferTime{get{return Globals.FormatTimeFromSecs(TranferTime);} }
+        public string strTransferTime { get { return Globals.FormatTimeFromSecs(TranferTime); } }
         public string strInterval { get { return Globals.FormatTimeFromSecs(IntervalBetweenLanchWindows); } }
         public string strDv { get { return string.Format("{0:n0}", DeltaVBugdet + " m/s"); } }
-        public string strPhAngle { get{ return DeparturePhaseAngle.ToString("n2") + " °"; } }
+        public string strPhAngle { get { return DeparturePhaseAngle.ToString("n2") + " °"; } }
+
+        #endregion
+
+        #region "Constractor"
 
         public Routes()
         {
@@ -60,6 +66,10 @@ namespace Mission_Calculator.Classes
                 ObjectOuter = ObjectTo;
             }
         }
+
+        #endregion
+
+        #region "Methods"
 
         public void Update()
         {
@@ -130,5 +140,8 @@ namespace Mission_Calculator.Classes
                 throw;
             }
         }
+
+        #endregion
+
     }
 }

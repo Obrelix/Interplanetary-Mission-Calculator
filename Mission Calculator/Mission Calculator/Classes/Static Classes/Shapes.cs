@@ -12,6 +12,17 @@ namespace Mission_Calculator.Classes
 {
     public static class Shapes
     {
+
+        #region "General Declaration"
+
+        #endregion
+
+        #region "Constractor"
+
+        #endregion
+
+        #region "Methods"
+
         public static Ellipse planetShape(Point startPoint, Size size, Brush brush)
         {
             Ellipse planet = new Ellipse
@@ -116,6 +127,10 @@ namespace Mission_Calculator.Classes
                 Margin = new Thickness(startPoint.X, startPoint.Y, 0, 0)
             };
         }
+
+        #endregion
+
+
 
 
     }
