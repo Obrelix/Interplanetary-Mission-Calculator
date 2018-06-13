@@ -6,17 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mission_Calculator.Enumerators
 {
-
-    public class GameConstants
-    {
-        public const int StockPlanetsCount = 18;
-        public const int OuterPlanetsCount = 32;
-        public const int RssPlanetsCount = 17;
-        public const int KerbinTime = 21600; //seconds per day
-        public const int EarthTime = 86400; //seconds per day
-
-    }
-
+    
     public enum Orbit : Int16
     {
         Surface = 0,

@@ -31,7 +31,7 @@
             </MenuItem>
         </Menu>
         <Grid>
-            <Frame x:Name="frame" Content="Frame" Margin="0" Source="/Mission Calculator;component/Pages/pgMissionCalculator.xaml">
+            <Frame x:Name="frame" Content="Frame" Margin="0" Source="/Mission Calculator;component/UI/Pages/pgMissionCalculator.xaml">
                 <Frame.Background>
                     <ImageBrush/>
                 </Frame.Background>

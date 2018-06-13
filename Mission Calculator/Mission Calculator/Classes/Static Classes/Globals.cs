@@ -13,6 +13,12 @@ namespace Mission_Calculator.Classes
         public static List<SelestialObject> objList { get; set; }
         public static MainWindow ParetWindow { get; set; }
 
+        public const int StockPlanetsCount = 18;
+        public const int OuterPlanetsCount = 32;
+        public const int RssPlanetsCount = 17;
+        public const int KerbinTime = 21600; //seconds per day
+        public const int EarthTime = 86400; //seconds per day
+
         static string saveDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Interplanetary Mission Calulator";
         static string planeDataDirectoryPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\PlanetsData";
         static string StockPlanetsPath = planeDataDirectoryPath + "\\StockPlanets.json";
