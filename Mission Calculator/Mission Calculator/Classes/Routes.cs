@@ -57,7 +57,9 @@ namespace Mission_Calculator.Classes
             TranferTime = SMath.HohmanTransferTime(this);
             DeparturePhaseAngle = SMath.DeparturePhaseAngle(this);
             DeltaVBugdet = SMath.DeltaVCost(this);
-            if (ObjectTo.OrbitalPeriod < ObjectFrom.OrbitalPeriod)
+            double orbitalPeriodTo = 0, orbitalPeriodFrom = 0;
+            SMath.findActualOrbit(out orbitalPeriodFrom, out orbitalPeriodTo);
+            if (orbitalPeriodTo < orbitalPeriodFrom)
             {
                 ObjectInner = ObjectTo;
                 ObjectOuter = ObjectFrom;

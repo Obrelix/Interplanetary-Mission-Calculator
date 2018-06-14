@@ -105,6 +105,7 @@ namespace Mission_Calculator.Classes
         List<PlanetInfo> activeList = new List<PlanetInfo>();
         Rectangle rect;
 
+
         #endregion
 
         #region "Constractor"

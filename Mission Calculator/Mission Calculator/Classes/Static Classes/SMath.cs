@@ -14,7 +14,14 @@ namespace Mission_Calculator.Classes
 
         static Routes route;
         static List<SelestialObject> objList = Globals.objList;
-        static bool isParentPlanetToMoon, isMoonToParentPlanet, is0, isMoonsOfOtherPlanets, isPlanetToOtherMoon, isMoonToOtherPlanet, isMoonsOfTheSameSystem;
+        public static bool isParentPlanetToMoon { get; private set; }
+        public static bool isMoonToParentPlanet { get; private set; }
+        public static bool is0 { get; private set; }
+        public static bool isMoonsOfOtherPlanets { get; private set; }
+        public static bool isPlanetToOtherMoon { get; private set; }
+        public static bool isMoonToOtherPlanet { get; private set; }
+        public static bool isMoonsOfTheSameSystem { get; private set; }
+
         #endregion
 
         #region "Constractor"
@@ -142,7 +149,7 @@ namespace Mission_Calculator.Classes
         /// <param name="orbPeriodFrom"></param>
         /// <param name="orbPeriodTo"></param>
         /// <returns></returns>
-        private static bool findActualOrbit(out double orbPeriodFrom, out double orbPeriodTo)
+        public static bool findActualOrbit(out double orbPeriodFrom, out double orbPeriodTo)
         {
             try
             {
@@ -221,6 +228,7 @@ namespace Mission_Calculator.Classes
                 throw;
             }
         }
+
         #endregion
 
 
