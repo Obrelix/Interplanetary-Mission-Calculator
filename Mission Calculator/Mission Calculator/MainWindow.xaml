@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Mission_Calculator"
         mc:Ignorable="d"
         d:DesignHeight="700" d:DesignWidth="1000"
-        Title="MainWindow" Height="750" Width="1000
-        " MinWidth="1000" MinHeight="750" Icon="pack://siteoforigin:,,,/Resources/astro.ico">
+        Title="MainWindow" Height="750" Width="1100
+        " MinWidth="1100" MinHeight="750" Icon="pack://siteoforigin:,,,/Resources/astro.ico">
     <Window.Background>
         <ImageBrush ImageSource="Images/Backgrounds/backGround.jpg" Stretch="UniformToFill"/>
     </Window.Background>

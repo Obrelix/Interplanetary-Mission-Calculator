@@ -14,28 +14,7 @@ namespace Mission_Calculator.Classes
 
         static Routes route;
         static List<SelestialObject> objList = Globals.objList;
-        static bool isParentPlanetToMoon = (route.ObjectFrom.ParentObjectIndex == route.ObjectTo.Index);
-
-        static bool isMoonToParentPlanet = (route.ObjectFrom.Index == route.ObjectTo.ParentObjectIndex);
-
-        static bool is0 = (route.ObjectFrom.OrbitalPeriod == 0 || route.ObjectTo.OrbitalPeriod == 0);
-
-        static bool isMoonsOfOtherPlanets = (route.ObjectFrom.Index != route.ObjectFrom.ParentObjectIndex
-                                    && route.ObjectTo.ParentObjectIndex != route.ObjectTo.Index
-                                    && route.ObjectFrom.ParentObjectIndex != route.ObjectTo.ParentObjectIndex);
-
-        static bool isPlanetToOtherMoon = (route.ObjectFrom.Index == route.ObjectFrom.ParentObjectIndex
-                                    && route.ObjectTo.ParentObjectIndex != route.ObjectTo.Index
-                                    && route.ObjectFrom.ParentObjectIndex != route.ObjectTo.ParentObjectIndex);
-
-        static bool isMoonToOtherPlanet = (route.ObjectFrom.Index != route.ObjectFrom.ParentObjectIndex
-                                    && route.ObjectTo.ParentObjectIndex == route.ObjectTo.Index
-                                    && route.ObjectFrom.ParentObjectIndex != route.ObjectTo.ParentObjectIndex);
-
-        static bool isMoonsOfTheSameSystem = (route.ObjectFrom.Index != route.ObjectFrom.ParentObjectIndex
-                                    && route.ObjectTo.ParentObjectIndex != route.ObjectTo.Index
-                                    && route.ObjectFrom.ParentObjectIndex == route.ObjectTo.ParentObjectIndex);
-
+        static bool isParentPlanetToMoon, isMoonToParentPlanet, is0, isMoonsOfOtherPlanets, isPlanetToOtherMoon, isMoonToOtherPlanet, isMoonsOfTheSameSystem;
         #endregion
 
         #region "Constractor"
@@ -75,6 +54,23 @@ namespace Mission_Calculator.Classes
         public static double DeltaVCost(Routes route)
         {
             double DVCost = 0.0;
+            SMath.route = route;
+            blnPropsInit();
+
+            if (route.OrbitFrom != Orbit.Low)
+                DVCost += route.ObjectFrom.SurfaceToLowOrbit;
+            DVCost += route.ObjectFrom.LowOrbitToElipticalOrbit + route.ObjectFrom.LowOrbitToMoonIntercept + route.ObjectFrom.MoonInterceptToElipticalOrbit;
+
+            if (route.OrbitTo != Orbit.Low && !route.ObjectTo.AtmospherePresent)
+                DVCost += route.ObjectTo.SurfaceToLowOrbit;
+            DVCost += route.ObjectTo.LowOrbitToMoonIntercept + route.ObjectTo.LowOrbitToElipticalOrbit + route.ObjectTo.MoonInterceptToElipticalOrbit;
+
+            if (isMoonsOfOtherPlanets || isMoonToOtherPlanet || isPlanetToOtherMoon || isMoonToOtherPlanet)
+            {
+                DVCost += route.ObjectFrom.ElipticalOrbitToPlanetIntercet + route.ObjectFrom.PlanetInterceptToStarElipticalOrbit;
+                DVCost += route.ObjectTo.ElipticalOrbitToPlanetIntercet + route.ObjectTo.PlanetInterceptToStarElipticalOrbit;
+            }
+
             return DVCost;
         }
 
@@ -105,6 +101,44 @@ namespace Mission_Calculator.Classes
         /// <summary>
         /// 
         /// </summary>
+        private static void blnPropsInit()
+        {
+            try
+            {
+
+                isParentPlanetToMoon = (route.ObjectFrom.ParentObjectIndex == route.ObjectTo.Index);
+
+                isMoonToParentPlanet = (route.ObjectFrom.Index == route.ObjectTo.ParentObjectIndex);
+
+                is0 = (route.ObjectFrom.OrbitalPeriod == 0 || route.ObjectTo.OrbitalPeriod == 0);
+
+                isMoonsOfOtherPlanets = (route.ObjectFrom.Index != route.ObjectFrom.ParentObjectIndex
+                                            && route.ObjectTo.ParentObjectIndex != route.ObjectTo.Index
+                                            && route.ObjectFrom.ParentObjectIndex != route.ObjectTo.ParentObjectIndex);
+
+                isPlanetToOtherMoon = (route.ObjectFrom.Index == route.ObjectFrom.ParentObjectIndex
+                                            && route.ObjectTo.ParentObjectIndex != route.ObjectTo.Index
+                                            && route.ObjectFrom.ParentObjectIndex != route.ObjectTo.ParentObjectIndex);
+
+                isMoonToOtherPlanet = (route.ObjectFrom.Index != route.ObjectFrom.ParentObjectIndex
+                                            && route.ObjectTo.ParentObjectIndex == route.ObjectTo.Index
+                                            && route.ObjectFrom.ParentObjectIndex != route.ObjectTo.ParentObjectIndex);
+
+                isMoonsOfTheSameSystem = (route.ObjectFrom.Index != route.ObjectFrom.ParentObjectIndex
+                                            && route.ObjectTo.ParentObjectIndex != route.ObjectTo.Index
+                                            && route.ObjectFrom.ParentObjectIndex == route.ObjectTo.ParentObjectIndex);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="orbPeriodFrom"></param>
         /// <param name="orbPeriodTo"></param>
         /// <returns></returns>
@@ -112,8 +146,7 @@ namespace Mission_Calculator.Classes
         {
             try
             {
-
-
+                blnPropsInit();
                 if (is0 || isMoonToParentPlanet || isParentPlanetToMoon) { orbPeriodFrom = 0; orbPeriodTo = 0; return false; }
 
                 if (isMoonsOfOtherPlanets)

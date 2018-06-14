@@ -90,5 +90,6 @@ namespace Mission_Calculator.Windows
             image.ReleaseMouseCapture();
         }
 
-        #endregion}
+        #endregion
     }
+}

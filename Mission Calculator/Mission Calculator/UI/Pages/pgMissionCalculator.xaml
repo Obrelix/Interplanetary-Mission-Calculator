@@ -25,9 +25,7 @@
                 </ComboBox>
             </StackPanel>-->
 
-        <StackPanel Orientation="Horizontal"  Grid.Row="1" Margin="0,0,1,0" HorizontalAlignment="Left" VerticalAlignment="Top"    >
-
-            <!--<StackPanel x:Name="spTimeUnit" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <!--<StackPanel x:Name="spTimeUnit" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <TextBlock x:Name="txtTimeUnit" Text="Time" FontSize="16" Foreground="#FFF7E428" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <ComboBox x:Name="cboTimeUnit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60"  SelectionChanged="cboPlanetsSelectionChange" FontSize="8">
                     <ComboBoxItem  Content="Kerbin Time" Background="#FF0EF502" ToolTip="(6h days, 426d years)" />
@@ -35,8 +33,9 @@
                 </ComboBox>
                 <CheckBox x:Name="checkBox" Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1EEEE"  Unchecked="checkBox_Checked" Checked="checkBox_Checked" Padding="0" />
             </StackPanel>-->
+        
+        <StackPanel Orientation="Horizontal"  Grid.Row="1" Margin="20"    >
 
-            <StackPanel x:Name="pnlMainControls" >
 
                 <StackPanel>
 
@@ -89,91 +88,12 @@
                             </Rectangle.Fill>
                         </Rectangle>
 
-                        <Expander x:Name="expanderOrigin" Header="Origin" Margin="0"  Expanded="expander_Expanded" Collapsed="expander_Expanded"  ExpandDirection="Right" FontSize="14" Grid.Column="1" Grid.Row="1" Foreground="Wheat" HorizontalAlignment="Left">
-                            <Grid>
-                                <StackPanel  Orientation="Horizontal"   >
-
-                                    <StackPanel>
-                                        <ComboBox x:Name="comboBoxOrigin" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" SelectionChanged="cboPlanetsSelectionChange" FontSize="14" FontWeight="Bold" FontFamily="BatangChe"/>
-                                    </StackPanel>
-                                    <StackPanel Width="88">
-                                        <CheckBox x:Name="checkBoxReturn" Content="Round Trip" HorizontalAlignment="Left"  VerticalAlignment="Center"  Foreground="Wheat" Unchecked="MainEvent" Checked="MainEvent" FontSize="12" Margin="6,0,0,0"/>
-                                        <CheckBox  x:Name="checkBoxLowOrbit" Checked="MainEvent"  Unchecked="MainEvent" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Center"  Foreground="Wheat" FontSize="12" Margin="6,0,0,0"/>
-                                    </StackPanel>
-
-                                </StackPanel>
-
-                            </Grid>
-                        </Expander>
-
-                        <Expander x:Name="expanderStop1" Header="Stop 1" Margin="0"  Expanded="expander_Expanded" Collapsed="expander_Expanded" Foreground="PowderBlue"  ExpandDirection="Right" FontSize="14" Grid.Column="1"  Grid.Row="2" HorizontalAlignment="Left">
-                            <Grid>
-                                <StackPanel Orientation="Horizontal">
-
-                                    <StackPanel>
-                                        <ComboBox x:Name="comboBoxStop1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="100" SelectionChanged="cboPlanetsSelectionChange" FontWeight="Bold"/>
-                                    </StackPanel>
-                                    <StackPanel Width="88">
-                                        <RadioButton GroupName="Dest" x:Name="radioButtonLanding1" Content="Landing" HorizontalAlignment="Left"  VerticalAlignment="Center"  Foreground="PowderBlue" Checked="MainEvent" FontSize="12" Height="16" Margin="6,0,0,0"/>
-                                        <RadioButton GroupName="Dest" x:Name="radioButtonLowOrbit1" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="PowderBlue" Checked="MainEvent" FontSize="12" Margin="6,0,0,0"/>
-                                    </StackPanel>
-
-                                </StackPanel>
-                            </Grid>
-                        </Expander>
-
-                        <Expander Margin="0" x:Name="expanderStop2" Header="Stop 2" Expanded="expander_Expanded" Collapsed="expander_Expanded" Foreground="AliceBlue"  ExpandDirection="Right" HorizontalAlignment="Left" FontSize="14" Grid.Column="1" Grid.Row="3" >
-                            <Grid >
-                                <StackPanel x:Name="Stop1" Orientation="Horizontal" >
-
-                                    <StackPanel>
-                                        <ComboBox x:Name="comboBoxStop2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="100" SelectionChanged="cboPlanetsSelectionChange" FontWeight="Bold"/>
-                                    </StackPanel>
-                                    <StackPanel Width="88" Margin="0">
-                                        <RadioButton GroupName="Stop1" x:Name="radioButtonLanding2" Content="Landing" HorizontalAlignment="Left"  VerticalAlignment="Top"   Foreground="AliceBlue" Checked="MainEvent" FontSize="12" Margin="6,0,0,0"/>
-                                        <RadioButton GroupName="Stop1" x:Name="radioButtonLowOrbit2" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Top"  Foreground="AliceBlue" Checked="MainEvent" FontSize="12" Margin="6,0,0,0"/>
-                                    </StackPanel>
-
-                                </StackPanel>
-                            </Grid>
-                        </Expander>
-
-                        <Expander Margin="0" x:Name="expanderStop3" Header="Stop 3" Expanded="expander_Expanded" Collapsed="expander_Expanded" Foreground="Aquamarine"  ExpandDirection="Right" HorizontalAlignment="Left" FontSize="14" Grid.Column="1" Grid.Row="4">
-                            <Grid >
-                                <StackPanel x:Name="Stop1_Copy" Orientation="Horizontal"  >
-
-                                    <StackPanel>
-                                        <ComboBox x:Name="comboBoxStop3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="100" SelectionChanged="cboPlanetsSelectionChange" FontWeight="Bold" />
-                                    </StackPanel>
-                                    <StackPanel Width="88">
-                                        <RadioButton GroupName="Stop2" x:Name="radioButtonLanding" Content="Landing" HorizontalAlignment="Left"  VerticalAlignment="Top" Foreground="Aquamarine" Checked="MainEvent" FontSize="12" Margin="6,0,0,0"/>
-                                        <RadioButton GroupName="Stop2" x:Name="radioButtonLowOrbit" Content="Low Orbit" HorizontalAlignment="Left"  VerticalAlignment="Top"  Foreground="Aquamarine" Checked="MainEvent" FontSize="12" Margin="6,0,0,0"/>
-                                    </StackPanel>
-
-                                </StackPanel>
-                            </Grid>
-                        </Expander>
+                        
 
                     </Grid>
 
                 </StackPanel>
-
-                <Grid x:Name="grdRouteInfo" VerticalAlignment="Top">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="3*"/>
-                    </Grid.RowDefinitions>
-
-                </Grid>
-
-
-            </StackPanel>
-
-
+            
             <Grid x:Name="grdPlanetInfo" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3"/>
@@ -198,7 +118,18 @@
 
 
             </Grid>
+            
+            <Grid x:Name="grdRouteInfo" VerticalAlignment="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="100*"/>
+                    <RowDefinition Height="100*"/>
+                    <RowDefinition Height="100*"/>
+                    <RowDefinition Height="100*"/>
+                    <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
 
+            </Grid>
         </StackPanel>
 
     </Grid>

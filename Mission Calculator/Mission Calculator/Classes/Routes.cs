@@ -51,6 +51,8 @@ namespace Mission_Calculator.Classes
             this.Name = Name;
             this.ObjectFrom = ObjectFrom;
             this.ObjectTo = ObjectTo;
+            OrbitFrom = Orbit.Surface;
+            OrbitTo = Orbit.Surface;
             IntervalBetweenLanchWindows = SMath.IntervalBetweenLanchWindows(this);
             TranferTime = SMath.HohmanTransferTime(this);
             DeparturePhaseAngle = SMath.DeparturePhaseAngle(this);

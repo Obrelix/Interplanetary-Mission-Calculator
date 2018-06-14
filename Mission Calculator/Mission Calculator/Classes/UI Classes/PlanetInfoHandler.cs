@@ -17,50 +17,178 @@ namespace Mission_Calculator.Classes
     public class PlanetInfo
     {
         #region "General Declaration"
-
-        Brush defColour;
+        public PlaneInfoHandler parent;
+        public Brush Colour { get; set; }
         public int Index { get; set; }
         public SelestialObject obj { get; set; }
         public ComboBox cbo { get; set; }
         public Expander exp { get; set; }
         public TextBlock txt { get; set; }
+        public CheckBox chk { get; set; }
+        public CheckBox chkOrbit { get; set; }
+        public RadioButton rdo { get; set; }
         public Image img { get; set; }
-        public Grid parentGrid { get; set; }
+        public Grid txtparentGrid { get; set; }
+        public Grid expParentGrid { get; set; }
         public List<SelestialObject> planetList { get; set; }
+        public Orbit orbit { get; set; }
 
         #endregion
 
         #region "Constractor"
 
-        public PlanetInfo()
+        public PlanetInfo(int grdRowIndex, Grid txtparentGrid, Grid expParentGrid, Brush foreground, PlaneInfoHandler parent)
         {
-            this.obj = new SelestialObject();
-            this.cbo = new ComboBox();
-            this.exp = new Expander();
-            this.txt = new TextBlock();
-            this.img = new Image();
-            this.parentGrid = new Grid();
-            this.planetList = new List<SelestialObject>();
-
-        }
-
-        public PlanetInfo(Expander exp, ComboBox cbo, System.Drawing.Point txtPoint, System.Drawing.Point imgPoint, Grid parentGrid)
-        {
-            this.parentGrid = parentGrid;
-            this.cbo = cbo;
-            cbo.SelectedIndex = 0;
-            this.exp = exp;
-            this.txt = txtPlanetInfo(txtPoint.X, txtPoint.Y);
-            this.img = imgPlanetInfo(imgPoint.X, imgPoint.Y);
+            this.parent = parent;
+            this.txtparentGrid = txtparentGrid;
+            this.txt = txtPlanetInfo(grdRowIndex, 1);
+            this.img = imgPlanetInfo(grdRowIndex, 2);
+            this.exp = expPlanetInfo(grdRowIndex, 1, foreground);
+            expParentGrid.Children.Add(exp);    
             this.planetList = Globals.objList;
-            comboboxesInit();
+            cboInit();
             this.obj = planetList[cbo.SelectedIndex];
-            defColour = exp.Foreground;
+            Colour = exp.Foreground;
+            this.orbit = Orbit.Surface;
         }
 
         #endregion
 
         #region "Methods"
+
+        private Expander expPlanetInfo(int grdRowIndex, int grdColumnIndex, Brush foreground)
+        {
+            try
+            {
+
+                Grid grd = new Grid();
+                StackPanel pnlMain = new StackPanel { Orientation = Orientation.Horizontal };
+                StackPanel pnlCBO = new StackPanel();
+                cbo = cboPlanetInfo(grdRowIndex);
+                pnlCBO.Children.Add(cbo);
+                StackPanel pnlCHK = new StackPanel { Width = 88 };
+
+                if (grdRowIndex == 1)
+                {
+                    this.chk = chkPlanetInfo(1, foreground);
+                    pnlCHK.Children.Add(chk);
+                    this.chkOrbit = chkPlanetInfo(2, foreground);
+                    pnlCHK.Children.Add(chkOrbit);
+                }
+                else
+                {
+                    this.chkOrbit = new CheckBox();
+                    this.rdo = rdoPlanetInfo(grdRowIndex, 1, foreground);
+                    pnlCHK.Children.Add(rdo);
+                    pnlCHK.Children.Add(rdoPlanetInfo(grdRowIndex, 2, foreground));
+                }
+
+                pnlMain.Children.Add(pnlCBO);
+                pnlMain.Children.Add(pnlCHK);
+                grd.Children.Add(pnlMain);
+
+                Expander exp = new Expander
+                {
+                    Name = "expPlanetInfo" + grdRowIndex,
+                    Header = (grdRowIndex == 1) ? "Origin" : "Stop " + grdRowIndex,
+                    Margin = new Thickness(0),
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    FontSize = 14,
+                    ExpandDirection = ExpandDirection.Right,
+                    Foreground = foreground
+
+                };
+
+                exp.Content = grd;
+                exp.SetValue(Grid.RowProperty, grdRowIndex);
+                exp.SetValue(Grid.ColumnProperty, grdColumnIndex);
+                exp.Expanded += MainEvent;
+                exp.Collapsed += MainEvent;
+                return exp;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private ComboBox cboPlanetInfo(int grdRowIndex)
+        {
+            try
+            {
+                ComboBox cbo = new ComboBox
+                {
+                    Name = "cboPlanetInfo" + grdRowIndex,
+                    Margin = new Thickness(0),
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    Width = 100,
+                    FontSize = 14,
+                    FontWeight = FontWeights.Bold,
+                    FontFamily = new FontFamily("BatangChe"),
+                };
+                cbo.SelectionChanged += cboPlanetsSelectionChange;
+                return cbo;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private RadioButton rdoPlanetInfo(int grdRowIndex,int index, Brush foreground)
+        {
+            try
+            {
+                RadioButton rdo = new RadioButton
+                {
+                    Name = "rdoPlanetInfo" + grdRowIndex,
+                    Content = (index == 1) ? "Surface" : "Low Orbit",
+                    Margin = new Thickness(6, 0, 0, 0),
+                    GroupName = "Stop"+ grdRowIndex,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    FontSize = 12,
+                    Foreground = foreground
+                };
+                rdo.IsChecked = (index == 1);
+                rdo.Unchecked += MainEvent;
+                rdo.Checked += MainEvent;
+                return rdo;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private CheckBox chkPlanetInfo(int grdRowIndex, Brush foreground)
+        {
+            try
+            {
+                CheckBox chk = new CheckBox
+                {
+                    Name = (grdRowIndex == 1) ? "chkRoundTrip" : "chkPlanetInfo" + grdRowIndex,
+                    Content = (grdRowIndex == 1) ? "Round Trip" : "Low Orbit",
+                    Margin = new Thickness(6,0,0,0),
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Top,
+                    FontSize = 12,
+                    Foreground = foreground
+                }; 
+                chk.Unchecked += MainEvent;
+                chk.Checked += MainEvent;
+                return chk;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         private TextBlock txtPlanetInfo(int grdRowIndex, int grdColumnIndex)
         {
@@ -79,7 +207,7 @@ namespace Mission_Calculator.Classes
                 };
                 txt.SetValue(Grid.RowProperty, grdRowIndex);
                 txt.SetValue(Grid.ColumnProperty, grdColumnIndex);
-                txt.MouseLeftButtonDown += textBlockStop_MouseButtonUp;
+                txt.MouseLeftButtonDown += txt_MouseButtonDown;
                 return txt;
             }
             catch (Exception)
@@ -101,7 +229,7 @@ namespace Mission_Calculator.Classes
                 };
                 img.SetValue(Grid.RowProperty, grdRowIndex);
                 img.SetValue(Grid.ColumnProperty, grdColumnIndex);
-                img.MouseLeftButtonDown += image_MouseLeftButtonDown;
+                img.MouseLeftButtonDown += img_MouseLeftButtonDown;
                 return img;
             }
             catch (Exception)
@@ -110,9 +238,8 @@ namespace Mission_Calculator.Classes
                 throw;
             }
         }
-
-
-        private void comboboxesInit()
+        
+        private void cboInit()
         {
             foreach (SelestialObject obj in planetList)
             {
@@ -121,8 +248,7 @@ namespace Mission_Calculator.Classes
             }
             cbo.SelectedIndex = 0;
         }
-
-
+        
         public bool isEnabled()
         {
             return (cbo.SelectedIndex != -1 && cbo.SelectedIndex != 0 && exp.IsExpanded);
@@ -132,8 +258,8 @@ namespace Mission_Calculator.Classes
         {
             try
             {
-                if (parentGrid.Children.Contains(txt)) parentGrid.Children.Remove(txt);
-                if (parentGrid.Children.Contains(img)) parentGrid.Children.Remove(img);
+                if (txtparentGrid.Children.Contains(txt)) txtparentGrid.Children.Remove(txt);
+                if (txtparentGrid.Children.Contains(img)) txtparentGrid.Children.Remove(img);
             }
             catch (Exception)
             {
@@ -147,19 +273,16 @@ namespace Mission_Calculator.Classes
             this.obj = planetList[cbo.SelectedIndex];
             try
             {
+                Reset();
                 List<Run> runLIst;
-                if (parentGrid.Children.Contains(txt)) parentGrid.Children.Remove(txt);
-                if (parentGrid.Children.Contains(img)) parentGrid.Children.Remove(img);
                 if (isEnabled())
                 {
-                    //exp.Foreground = obj.objectColour;
-                    //cbo.Foreground = obj.objectColour;
-                    runLIst = obj.ToShortRunList(defColour, obj.objectColour);
+                    runLIst = obj.ToShortRunList(Colour, obj.objectColour);
                     txt.Inlines.Clear();
                     foreach (Run objRun in runLIst) txt.Inlines.Add(objRun);
                     img.Source = new BitmapImage(new Uri(obj.ImageUri));
-                    if (!parentGrid.Children.Contains(txt)) parentGrid.Children.Add(txt);
-                    if (!parentGrid.Children.Contains(img)) parentGrid.Children.Add(img);
+                    if (!txtparentGrid.Children.Contains(txt)) txtparentGrid.Children.Add(txt);
+                    if (!txtparentGrid.Children.Contains(img)) txtparentGrid.Children.Add(img);
                 }
 
             }
@@ -170,16 +293,18 @@ namespace Mission_Calculator.Classes
             }
 
         }
+
         public void IndexChange(int index)
         {
             this.obj = planetList[cbo.SelectedIndex];
 
         }
+
         #endregion
 
         #region "Event Handlers"
 
-        private void image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void img_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -192,7 +317,7 @@ namespace Mission_Calculator.Classes
             }
         }
 
-        private void textBlockStop_MouseButtonUp(object sender, MouseButtonEventArgs e)
+        private void txt_MouseButtonDown(object sender, MouseButtonEventArgs e)
         {
             try
             {
@@ -204,6 +329,21 @@ namespace Mission_Calculator.Classes
             }
         }
 
+        private void cboPlanetsSelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            Update();
+            parent.Update();
+        }
+        
+        private void MainEvent(object sender, RoutedEventArgs e)
+        {
+            if(rdo != null && chkOrbit != null)
+            orbit = (rdo.IsChecked == true || chkOrbit.IsChecked == true) ? Orbit.Low : Orbit.Surface;
+            Update();
+            parent.Update();
+        }
+        
+
         #endregion
 
     }
@@ -211,7 +351,7 @@ namespace Mission_Calculator.Classes
     public class PlaneInfoHandler
     {
         #region "General Declaration"
-
+        public RoutesInfoHandler routesInfo;
         public List<PlanetInfo> planetInfoCSList = new List<PlanetInfo>();
         List<SelestialObject> currentPlanetList;
 
@@ -221,14 +361,15 @@ namespace Mission_Calculator.Classes
 
         #region "Constractor"
 
-        public PlaneInfoHandler(Grid grdPlanetInfo, List<ComboBox> cboList, List<Expander> expList)
+        public PlaneInfoHandler(Grid grdPlanetInfo, Grid expParentGrid, Grid grdRouteInfo, List<Brush> foregroundList )
         {
 
             this.grdPlanetInfo = grdPlanetInfo;
             this.currentPlanetList = Globals.objList;
             planetInfoCSList.Clear();
             for (int i = 0; i < 4; i++)
-                planetInfoCSList.Add(new PlanetInfo(expList[i], cboList[i], new System.Drawing.Point(i + 1, 1), new System.Drawing.Point(i + 1, 2), grdPlanetInfo));
+                planetInfoCSList.Add(new PlanetInfo(i + 1, grdPlanetInfo, expParentGrid, foregroundList[i], this));
+            routesInfo = new RoutesInfoHandler(planetInfoCSList, grdRouteInfo, planetInfoCSList[0].chk);
         }
 
         #endregion
@@ -244,8 +385,7 @@ namespace Mission_Calculator.Classes
         {
             try
             {
-                foreach (PlanetInfo obj in planetInfoCSList) obj.Reset();
-                foreach (PlanetInfo obj in planetInfoCSList) obj.Update();
+                if (routesInfo != null)routesInfo.Update();
             }
             catch (Exception)
             {

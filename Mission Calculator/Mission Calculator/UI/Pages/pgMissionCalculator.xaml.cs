@@ -27,10 +27,9 @@ namespace Mission_Calculator.Pages
         #region "General Declaration"
         
         List<SelestialObject> currentPlanetList;
-        List<ComboBox> cboList = new List<ComboBox>();
-        List<Expander> expList = new List<Expander>();
-        RoutesInfoHandler RoutesControler;
         PlaneInfoHandler PlanetInfoControler;
+        List<Brush> UIColors = new List<Brush>();
+
         #endregion
 
         /// <summary>
@@ -41,14 +40,10 @@ namespace Mission_Calculator.Pages
             InitializeComponent();
             Globals.errorFileInit();
             currentPlanetList = Globals.planetFilesInit(0);
-            cboList.Add(comboBoxOrigin);
-            cboList.Add(comboBoxStop1);
-            cboList.Add(comboBoxStop2);
-            cboList.Add(comboBoxStop3);
-            expList.Add(expanderOrigin);
-            expList.Add(expanderStop1);
-            expList.Add(expanderStop2);
-            expList.Add(expanderStop3);
+            UIColors.Add(Brushes.Wheat);
+            UIColors.Add(Brushes.PowderBlue);
+            UIColors.Add(Brushes.AliceBlue);
+            UIColors.Add(Brushes.Aquamarine);
         }
 
         #region "Methods"
@@ -63,9 +58,7 @@ namespace Mission_Calculator.Pages
         {
             try
             {
-                PlanetInfoControler = new PlaneInfoHandler(grdPlanetInfo, cboList, expList);
-                RoutesControler = new RoutesInfoHandler(PlanetInfoControler.CSList(), grdRouteInfo, checkBoxReturn);
-                RoutesControler.Update();
+                PlanetInfoControler = new PlaneInfoHandler(grdPlanetInfo, grdPlanetSelection, grdRouteInfo, UIColors);
             }
             catch (Exception)
             {
@@ -74,34 +67,7 @@ namespace Mission_Calculator.Pages
             }
         }
         
-        private void checkBox_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void cboPlanetsSelectionChange(object sender, SelectionChangedEventArgs e)
-        {
-            if(PlanetInfoControler != null)PlanetInfoControler.Update();
-            if (RoutesControler != null) RoutesControler.Update();
-        }
-
-        //private void cboGameMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    planetFilesInit(((ComboBox)sender).SelectedIndex);
-        //}
-
-        private void MainEvent(object sender, RoutedEventArgs e)
-        {
-            if (PlanetInfoControler != null) PlanetInfoControler.Update();
-            if (RoutesControler != null) RoutesControler.Update();
-        }
-
-        private void expander_Expanded(object sender, RoutedEventArgs e)
-        {
-            if (PlanetInfoControler != null) PlanetInfoControler.Update();
-            if (RoutesControler != null) RoutesControler.Update();
-        }
-
+       
         #endregion
 
     }
