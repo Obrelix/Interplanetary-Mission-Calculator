@@ -120,11 +120,12 @@ namespace Mission_Calculator.Classes
             try
             {
                 TimeSpan t = TimeSpan.FromSeconds(secs);
-                DateTime dt = new DateTime();
-                if (TimeSpan.FromDays(365).Seconds > secs) return string.Format("{0:D2} Y {1:D2} M {2:D2} d", t.Days / 365, t.Days / 12, t.Days);
-                else if (TimeSpan.FromDays(30).Seconds > secs) return string.Format("{0:D2} M {1:D2} d {2:D2} h", t.Days / 12, t.Days, t.Hours);
-                else if (TimeSpan.FromDays(7).Seconds > secs) return string.Format("{0:D2} w {1:D2} h {2:D2} m", t.Days/7, t.Hours, t.Minutes);
-                else return string.Format("{0:D2} d {1:D2} h {2:D2} m", t.Days, t.Hours, t.Minutes);
+                double DayInSeconds = TimeSpan.FromDays(1).TotalSeconds;
+                if (DayInSeconds < secs)
+                {
+                    return string.Format("{0:D2} d {1:D2} h {2:D2} m", t.Days, t.Hours, t.Minutes);
+                } 
+                else return string.Format("{0:D2} h {1:D2} m {2:D2} s", t.Hours, t.Minutes, t.Seconds);
             }
             catch (Exception)
             {

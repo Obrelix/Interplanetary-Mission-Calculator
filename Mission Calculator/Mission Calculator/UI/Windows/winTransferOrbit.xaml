@@ -11,5 +11,6 @@
             <Grid x:Name="grdRouteInfo" Background="#FF052F3C">
             </Grid>
         </Expander>
+        <Button x:Name="button" Content="Show Animation" Canvas.Left="525" Width="75" Click="button_Click"/>
     </Canvas>
 </Window>

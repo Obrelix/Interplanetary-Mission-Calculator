@@ -13,11 +13,22 @@ namespace Mission_Calculator.Classes
     {
         #region "General Declaration"
 
+        SelestialObject _objIn, _objOut;        
+        double _rotations;
+
         public string Name { get; set; }
         public SelestialObject ObjectFrom { get; set; }
         public SelestialObject ObjectTo { get; set; }
-        public SelestialObject ObjectInner { get; private set; }
-        public SelestialObject ObjectOuter { get; private set; }
+        public SelestialObject ObjectInner
+        {
+            get {return _objIn; }
+            private set { _objIn = value; }
+        }
+        public SelestialObject ObjectOuter
+        {
+            get { return _objOut; }
+            private set { _objOut = value; }
+        }
         public Orbit OrbitFrom { get; set; }
         public Orbit OrbitTo { get; set; }
         public Brush TitleBrush { get; set; }
@@ -26,8 +37,11 @@ namespace Mission_Calculator.Classes
         public double DeltaVBugdet { get; private set; }
         public double TranferTime { get; private set; }
         public double IntervalBetweenLanchWindows { get; private set; }
-
-
+        public double Rotations
+        {
+            get { return _rotations; }
+            private set { _rotations = value; }
+        }
         public string strTransferTime { get { return Globals.FormatTimeFromSecs(TranferTime); } }
         public string strInterval { get { return Globals.FormatTimeFromSecs(IntervalBetweenLanchWindows); } }
         public string strDv { get { return string.Format("{0:n0}", DeltaVBugdet + " m/s"); } }
@@ -36,14 +50,7 @@ namespace Mission_Calculator.Classes
         #endregion
 
         #region "Constractor"
-
-        public Routes()
-        {
-            ObjectFrom = new SelestialObject();
-            ObjectTo = new SelestialObject();
-            Name = "";
-        }
-
+        
         public Routes(string Name, SelestialObject ObjectFrom, SelestialObject ObjectTo, Brush TitleBrush, Brush ValueBrush)
         {
             this.TitleBrush = TitleBrush;
@@ -53,22 +60,7 @@ namespace Mission_Calculator.Classes
             this.ObjectTo = ObjectTo;
             OrbitFrom = Orbit.Surface;
             OrbitTo = Orbit.Surface;
-            IntervalBetweenLanchWindows = SMath.IntervalBetweenLanchWindows(this);
-            TranferTime = SMath.HohmanTransferTime(this);
-            DeparturePhaseAngle = SMath.DeparturePhaseAngle(this);
-            DeltaVBugdet = SMath.DeltaVCost(this);
-            double orbitalPeriodTo = 0, orbitalPeriodFrom = 0;
-            SMath.findActualOrbit(out orbitalPeriodFrom, out orbitalPeriodTo);
-            if (orbitalPeriodTo < orbitalPeriodFrom)
-            {
-                ObjectInner = ObjectTo;
-                ObjectOuter = ObjectFrom;
-            }
-            else
-            {
-                ObjectInner = ObjectFrom;
-                ObjectOuter = ObjectTo;
-            }
+            Update();
         }
 
         #endregion
@@ -81,8 +73,9 @@ namespace Mission_Calculator.Classes
             {
                 IntervalBetweenLanchWindows = SMath.IntervalBetweenLanchWindows(this);
                 TranferTime = SMath.HohmanTransferTime(this);
-                DeparturePhaseAngle = SMath.DeparturePhaseAngle(this);
+                DeparturePhaseAngle = SMath.DeparturePhaseAngle(this, out _rotations);
                 DeltaVBugdet = SMath.DeltaVCost(this);
+                SMath.findActualObject(out _objIn, out _objOut);
             }
             catch (Exception)
             {

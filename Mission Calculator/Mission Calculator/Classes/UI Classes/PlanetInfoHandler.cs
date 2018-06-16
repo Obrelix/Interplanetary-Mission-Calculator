@@ -332,7 +332,7 @@ namespace Mission_Calculator.Classes
         private void cboPlanetsSelectionChange(object sender, SelectionChangedEventArgs e)
         {
             Update();
-            parent.Update();
+            parent.UpdateRoutes();
         }
         
         private void MainEvent(object sender, RoutedEventArgs e)
@@ -340,7 +340,7 @@ namespace Mission_Calculator.Classes
             if(rdo != null && chkOrbit != null)
             orbit = (rdo.IsChecked == true || chkOrbit.IsChecked == true) ? Orbit.Low : Orbit.Surface;
             Update();
-            parent.Update();
+            parent.UpdateRoutes();
         }
         
 
@@ -381,7 +381,7 @@ namespace Mission_Calculator.Classes
             return planetInfoCSList;
         }
 
-        public void Update()
+        public void UpdateRoutes()
         {
             try
             {

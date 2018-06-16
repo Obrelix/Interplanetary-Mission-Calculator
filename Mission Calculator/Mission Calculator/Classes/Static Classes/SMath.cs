@@ -14,13 +14,13 @@ namespace Mission_Calculator.Classes
 
         static Routes route;
         static List<SelestialObject> objList = Globals.objList;
-        public static bool isParentPlanetToMoon { get; private set; }
-        public static bool isMoonToParentPlanet { get; private set; }
-        public static bool is0 { get; private set; }
-        public static bool isMoonsOfOtherPlanets { get; private set; }
-        public static bool isPlanetToOtherMoon { get; private set; }
-        public static bool isMoonToOtherPlanet { get; private set; }
-        public static bool isMoonsOfTheSameSystem { get; private set; }
+        static bool isParentPlanetToMoon;
+        static bool isMoonToParentPlanet;
+        static bool is0;
+        static bool isMoonsOfOtherPlanets;
+        static bool isPlanetToOtherMoon;
+        static bool isMoonToOtherPlanet;
+        static bool isMoonsOfTheSameSystem;
 
         #endregion
 
@@ -86,16 +86,18 @@ namespace Mission_Calculator.Classes
         /// </summary>
         /// <param name="route"></param>
         /// <returns></returns>
-        public static double DeparturePhaseAngle(Routes route)
+        public static double DeparturePhaseAngle(Routes route, out double Rotations)
         {
             try
             {
                 double HohmannTransferTime = 0, Angle = 0, orbPeriodFrom = 0, orbPeriodTo = 0;
                 HohmannTransferTime = HohmanTransferTime(route);
+                Rotations = 0;
                 if (!findActualOrbit(out orbPeriodFrom, out orbPeriodTo)) return 0;
                 Angle = 180 - (360 * (HohmannTransferTime / orbPeriodTo));
-                if (Angle < -180 && Angle >= -360) Angle += 360;
-                else if (Angle < -360) Angle += Math.Abs(Math.Truncate(Angle / 360) * 360);
+                Rotations = Math.Abs(Angle / 360);
+                if (Angle < -360) Angle += Math.Abs(Math.Truncate(Angle / 360) * 360);
+                if (Angle < -180) Angle += 360;
                 return Angle;
             }
             catch (Exception)
@@ -149,7 +151,7 @@ namespace Mission_Calculator.Classes
         /// <param name="orbPeriodFrom"></param>
         /// <param name="orbPeriodTo"></param>
         /// <returns></returns>
-        public static bool findActualOrbit(out double orbPeriodFrom, out double orbPeriodTo)
+        static bool findActualOrbit(out double orbPeriodFrom, out double orbPeriodTo)
         {
             try
             {
@@ -183,6 +185,79 @@ namespace Mission_Calculator.Classes
             }
 
         }
+
+        public static void findActualObject(out SelestialObject objInner, out SelestialObject objOuter)
+        {
+            try
+            {
+                blnPropsInit();
+
+                if (isMoonsOfOtherPlanets)
+                {
+                    switch (objList[route.ObjectFrom.ParentObjectIndex].OrbitalPeriod < objList[route.ObjectTo.ParentObjectIndex].OrbitalPeriod)
+                    {
+                        case true:
+                            objInner = objList[route.ObjectFrom.ParentObjectIndex];
+                            objOuter = objList[route.ObjectTo.ParentObjectIndex];
+                            break;
+                        default:
+                            objInner = objList[route.ObjectTo.ParentObjectIndex];
+                            objOuter = objList[route.ObjectFrom.ParentObjectIndex];
+                            break;
+                    }
+                }
+                else if (isPlanetToOtherMoon)
+                {
+                    switch (route.ObjectFrom.OrbitalPeriod < objList[route.ObjectTo.ParentObjectIndex].OrbitalPeriod)
+                    {
+                        case true:
+                            objInner = route.ObjectFrom;
+                            objOuter = objList[route.ObjectTo.ParentObjectIndex];
+                            break;
+                        default:
+                            objInner = objList[route.ObjectFrom.ParentObjectIndex];
+                            objOuter = route.ObjectFrom;
+                            break;
+                    }
+                }
+                else if (isMoonToOtherPlanet)
+                {
+                    switch (objList[route.ObjectFrom.ParentObjectIndex].OrbitalPeriod < route.ObjectTo.OrbitalPeriod)
+                    {
+                        case true:
+                            objInner = objList[route.ObjectFrom.ParentObjectIndex];
+                            objOuter = route.ObjectTo;
+                            break;
+                        default:
+                            objInner = route.ObjectTo;
+                            objOuter = objList[route.ObjectFrom.ParentObjectIndex];
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (route.ObjectFrom.OrbitalPeriod < route.ObjectTo.OrbitalPeriod)
+                    {
+                        case true:
+                            objInner = route.ObjectFrom;
+                            objOuter = route.ObjectTo;
+                            break;
+                        default:
+                            objInner = route.ObjectTo;
+                            objOuter = route.ObjectFrom;
+                            break;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+      
 
         /// <summary>
         /// 

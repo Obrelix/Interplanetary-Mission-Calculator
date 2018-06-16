@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using System.Threading;
 
 namespace Mission_Calculator.Windows
 {
@@ -21,9 +23,20 @@ namespace Mission_Calculator.Windows
     public partial class winTransferOrbit : Window
     {
         #region "General Declaration"
-
+        delegate void AddGraphics();
         Routes route;
-
+        Thread AnimationRunner;
+        PathGeometry rocketPath;
+        Image img;
+        Storyboard pathAnimationStoryboard;
+        Ellipse OuterOrbit, InnerOrbit, InnerPlanet, OuterPlanet, Sun;
+        Line line, line2;
+        Path anglePath, HTOArrivalPath, HTODeparturePath;
+        TextBlock InnerPlanetText, OuterPlanetText, AngleText, TransferOrbitText, SunText;
+        Point centerPoint, outerOrbitPoint, innerOrbitPoint, sunPoint, line1EndPoint, line2EndPoint, innerPlanetPoint, outerPlanetPoint, arcStartPoint, arcEndPoint;
+        Size outerOrbitSize, innerOrbitSize, arcSize, sunSize, planetSize;
+        Canvas canvas;
+        double innerRadius, outerRadius, arcRadius, rel = 0.5;
         #endregion
 
         #region "Constractor"
@@ -34,53 +47,145 @@ namespace Mission_Calculator.Windows
             this.route = route;
             this.Title = route.Name + "  [ " + route.ObjectFrom.Name + " ---> " + route.ObjectTo.Name + " ]";
             this.WindowState = WindowState.Normal;
+            canvas = DrawCanvas;
         }
 
         #endregion
 
         #region "Methods"
+        private void AnimationRun()
+        {
+            try
+            {
+                AnimationRunner = new Thread(new ThreadStart(Runner));
+                AnimationRunner.IsBackground = true;
+                AnimationRunner.Start();
+                //img.Loaded += delegate (object sender, RoutedEventArgs e)
+                //{
+                //    // Start the storyboard.
 
+                //};
+                pathAnimationStoryboard.Begin(this);
+                this.DrawCanvas.Children.Add(img);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        private void Runner()
+        {
+            try
+            {
+                while (true)
+                {
+                    //Canvas.Invoke
+                    DrawCanvas.Dispatcher.Invoke(new AddGraphics(animation));
+                    Thread.Sleep(40);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         private void update(Size maxSize, Size canvasSize, Size planetSize)
         {
             /// note that the starting point of canvas (0,0) is the left top corner.
             try
             {
-                SelestialObject sun = Globals.objList[17];
-                Size outerOrbitSize = maxSize;
-                Size innerOrbitSize = new Size(outerOrbitSize.Width / 2, outerOrbitSize.Height / 2);
-                Size arcSize = new Size(innerOrbitSize.Width / 4, innerOrbitSize.Height / 4);
-                Size sunSize = new Size(planetSize.Width * 2, planetSize.Height * 2);
+                this.planetSize = planetSize;
+                SelestialObject sun = Globals.objList[Globals.objList.Count-1];
+                //double rel = (route.ObjectInner.OrbitalPeriod / route.ObjectOuter.OrbitalPeriod) ;
+                outerOrbitSize = maxSize;
+                innerOrbitSize = new Size(outerOrbitSize.Width * rel, outerOrbitSize.Height * rel);
+                arcSize = new Size(innerOrbitSize.Width / 4, innerOrbitSize.Height / 4);
+                sunSize = new Size(planetSize.Width * 2, planetSize.Height * 2);
 
-                double innerRadius = innerOrbitSize.Width / 2;
-                double outerRadius = outerOrbitSize.Width / 2;
-                double arcRadius = arcSize.Width;
+                innerRadius = innerOrbitSize.Width / 2;
+                outerRadius = outerOrbitSize.Width / 2;
+                arcRadius = arcSize.Width;
 
-                Point centerPoint = new Point(canvasSize.Width / 2, canvasSize.Height / 2);
-                Point outerOrbitPoint = new Point(canvasSize.Width - outerOrbitSize.Width, canvasSize.Height - outerOrbitSize.Height);
-                Point innerOrbitPoint = new Point(centerPoint.X - innerRadius, centerPoint.Y - innerRadius);
-                Point sunPoint = new Point(centerPoint.X - sunSize.Width / 2, centerPoint.Y - sunSize.Height / 2);
-                Point line1EndPoint = new Point(centerPoint.X + innerRadius, centerPoint.Y);
-                Point line2EndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, outerRadius, route.DeparturePhaseAngle);
-                Point innerPlanetPoint = new Point(line1EndPoint.X - planetSize.Width / 2, line1EndPoint.Y - planetSize.Height / 2);
-                Point outerPlanetPoint = new Point(line2EndPoint.X - planetSize.Width / 2, line2EndPoint.Y - planetSize.Height / 2);
-                Point arcStartPoint = new Point(centerPoint.X + arcRadius, centerPoint.Y);
-                Point arcEndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, arcRadius, route.DeparturePhaseAngle);
+                centerPoint = new Point(canvasSize.Width / 2, canvasSize.Height / 2);
+                outerOrbitPoint = new Point(canvasSize.Width - outerOrbitSize.Width, canvasSize.Height - outerOrbitSize.Height);
+                innerOrbitPoint = new Point(centerPoint.X - innerRadius, centerPoint.Y - innerRadius);
+                sunPoint = new Point(centerPoint.X - sunSize.Width / 2, centerPoint.Y - sunSize.Height / 2);
+                line1EndPoint = new Point(centerPoint.X + innerRadius, centerPoint.Y);
+                line2EndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, outerRadius, route.DeparturePhaseAngle);
+                innerPlanetPoint = new Point(line1EndPoint.X - planetSize.Width / 2, line1EndPoint.Y - planetSize.Height / 2);
+                outerPlanetPoint = new Point(line2EndPoint.X - planetSize.Width / 2, line2EndPoint.Y - planetSize.Height / 2);
+                arcStartPoint = new Point(centerPoint.X + arcRadius, centerPoint.Y);
+                arcEndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, arcRadius, route.DeparturePhaseAngle);
 
-                Line line = Shapes.lineShape(centerPoint, line1EndPoint, Brushes.White);
-                Line line2 = Shapes.lineShape(centerPoint, line2EndPoint, Brushes.White);
-                Ellipse OuterOrbit = Shapes.orbitShape(outerOrbitPoint, outerOrbitSize, route.ObjectOuter.objectColour);
-                Ellipse InnerOrbit = Shapes.orbitShape(innerOrbitPoint, innerOrbitSize, route.ObjectInner.objectColour);
-                Ellipse InnerPlanet = Shapes.planetShape(innerPlanetPoint, planetSize, route.ObjectInner.objectColour);
-                Ellipse OuterPlanet = Shapes.planetShape(outerPlanetPoint, planetSize, route.ObjectOuter.objectColour);
-                Ellipse Sun = Shapes.planetShape(sunPoint, sunSize, Brushes.Yellow);
+                line = Shapes.lineShape(centerPoint, line1EndPoint, Brushes.White);
+                line2 = Shapes.lineShape(centerPoint, line2EndPoint, Brushes.White);
+                OuterOrbit = Shapes.orbitShape(outerOrbitPoint, outerOrbitSize, route.ObjectOuter.objectColour);
+                InnerOrbit = Shapes.orbitShape(innerOrbitPoint, innerOrbitSize, route.ObjectInner.objectColour);
+                InnerPlanet = Shapes.planetShape(innerPlanetPoint, planetSize, route.ObjectInner.objectColour);
+                OuterPlanet = Shapes.planetShape(outerPlanetPoint, planetSize, route.ObjectOuter.objectColour);
+                Sun = Shapes.planetShape(sunPoint, sunSize, Brushes.Yellow);
                 SweepDirection dir = (route.DeparturePhaseAngle < 0) ? SweepDirection.Clockwise : SweepDirection.Counterclockwise;
-                Path path = Shapes.arcShape(arcStartPoint, arcEndPoint, arcSize, Brushes.SkyBlue, 90, dir);
+                anglePath = Shapes.arcShape(arcStartPoint, arcEndPoint, arcSize, Brushes.SkyBlue, 90, dir);
+                AngleText = Shapes.textBlock(route.strPhAngle, new Point(arcEndPoint.X + 30, arcEndPoint.Y + 10), 14, Brushes.SkyBlue);
+                InnerPlanetText = Shapes.textBlock(route.ObjectInner.Name, new Point(innerPlanetPoint.X - planetSize.Width - 15, innerPlanetPoint.Y - 15), 16, route.ObjectInner.objectColour);
+                OuterPlanetText = Shapes.textBlock(route.ObjectOuter.Name, new Point(outerPlanetPoint.X - planetSize.Width - 15, outerPlanetPoint.Y - 15), 16, route.ObjectOuter.objectColour);
+                SunText = Shapes.textBlock(sun.Name, new Point(sunPoint.X - sunSize.Width, sunPoint.Y + 20), 16, sun.objectColour);
 
-                TextBlock AngleText = Shapes.textBlock(route.strPhAngle, new Point(arcEndPoint.X + 30, arcEndPoint.Y + 10), 14, Brushes.SkyBlue);
-                TextBlock InnerPlanetText = Shapes.textBlock(route.ObjectInner.Name, new Point(innerPlanetPoint.X - planetSize.Width - 15, innerPlanetPoint.Y - 15), 16, route.ObjectInner.objectColour);
-                TextBlock OuterPlanetText = Shapes.textBlock(route.ObjectOuter.Name, new Point(outerPlanetPoint.X - planetSize.Width - 15, outerPlanetPoint.Y - 15), 16, route.ObjectOuter.objectColour);
-                TextBlock SunText = Shapes.textBlock(sun.Name, new Point(sunPoint.X - sunSize.Width, sunPoint.Y + 20), 16, sun.objectColour);
+                if (route.ObjectInner.ParentObjectIndex == route.ObjectFrom.ParentObjectIndex)
+                {
+                    HTOArrivalPath = Shapes.arcShape(line1EndPoint, new Point(0, centerPoint.Y), new Size(83, 100), Brushes.LightSeaGreen, 90, dir);
+                    HTODeparturePath = Shapes.arcShape(new Point(0, centerPoint.Y), line1EndPoint, new Size(83, 100), Brushes.Gray, 90, dir);
+                    rocketPath = Shapes.animationShape(line1EndPoint, new Point(0, centerPoint.Y), new Size(83, 100), 90, dir);
+                    TransferOrbitText = Shapes.textBlock("", new Point(10, centerPoint.Y -20), 10, Brushes.LightGreen);
+                }
+                else
+                {
+                    HTOArrivalPath = Shapes.arcShape(line2EndPoint, SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, 180 + route.DeparturePhaseAngle), 
+                        new Size(83, 100), Brushes.LightSeaGreen, 90 - route.DeparturePhaseAngle, SweepDirection.Counterclockwise);
+                    HTODeparturePath = Shapes.arcShape(line2EndPoint, SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, 180 + route.DeparturePhaseAngle), 
+                        new Size(83, 100), Brushes.Gray, 90 - route.DeparturePhaseAngle, SweepDirection.Clockwise);
+                    rocketPath = Shapes.animationShape(line2EndPoint, SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, 180 + route.DeparturePhaseAngle),
+                        new Size(83, 100),90 - route.DeparturePhaseAngle, SweepDirection.Counterclockwise);
+                    TransferOrbitText = Shapes.textBlock("", SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, 180 + route.DeparturePhaseAngle), 10, Brushes.LightGreen);
 
+                }
+
+                img = new Image
+                {
+                    Width = 50,
+                    Height = 10,
+                    MinWidth = 50,
+                    MinHeight = 10,
+                    Stretch = Stretch.UniformToFill,
+                    Cursor = Cursors.Hand,
+                    Source = new BitmapImage(new Uri(@"pack://application:,,/Images/Misc/Rockets.png")),
+                };
+                this.RegisterName("imgRocket", img);
+
+                MatrixAnimationUsingPath matrixAnimation =
+                    new MatrixAnimationUsingPath();
+                matrixAnimation.PathGeometry = rocketPath;
+                matrixAnimation.Duration = TimeSpan.FromSeconds(5);
+                matrixAnimation.RepeatBehavior = RepeatBehavior.Forever;
+                matrixAnimation.DoesRotateWithTangent = true;
+
+                Storyboard.SetTargetName(matrixAnimation, "imgMatrixTransform");
+                Storyboard.SetTargetProperty(matrixAnimation,
+                    new PropertyPath(MatrixTransform.MatrixProperty));
+
+                pathAnimationStoryboard = new Storyboard();
+                pathAnimationStoryboard.Children.Add(matrixAnimation);
+
+                MatrixTransform imgMatrixTransform = new MatrixTransform();
+                img.RenderTransform = imgMatrixTransform;
+                this.RegisterName("imgMatrixTransform", imgMatrixTransform);
+
+                TransferOrbitText.Inlines.Clear();
+                for (int i = 8; i < route.ToShortRunList().Count -2; i++)
+                    TransferOrbitText.Inlines.Add(route.ToShortRunList()[i]);
+                rocketPath.Freeze();
                 SunText.ToolTip = sun.Name;
                 Sun.ToolTip = sun.Name;
                 InnerOrbit.ToolTip = route.ObjectInner.Name;
@@ -90,22 +195,27 @@ namespace Mission_Calculator.Windows
                 OuterPlanetText.ToolTip = route.ObjectOuter.Name;
                 OuterPlanet.ToolTip = route.ObjectOuter.Name;
                 AngleText.ToolTip = route.strPhAngle;
-                path.ToolTip = route.strPhAngle;
+                anglePath.ToolTip = route.strPhAngle;
                 line.ToolTip = route.strPhAngle;
                 line2.ToolTip = route.strPhAngle;
 
+
+                this.DrawCanvas.Children.Add(HTOArrivalPath);
+                this.DrawCanvas.Children.Add(HTODeparturePath);
                 this.DrawCanvas.Children.Add(OuterOrbit);
                 this.DrawCanvas.Children.Add(InnerOrbit);
                 this.DrawCanvas.Children.Add(line);
                 this.DrawCanvas.Children.Add(line2);
                 this.DrawCanvas.Children.Add(InnerPlanet);
                 this.DrawCanvas.Children.Add(OuterPlanet);
-                this.DrawCanvas.Children.Add(path);
+                this.DrawCanvas.Children.Add(anglePath);
                 this.DrawCanvas.Children.Add(Sun);
                 this.DrawCanvas.Children.Add(AngleText);
                 this.DrawCanvas.Children.Add(InnerPlanetText);
                 this.DrawCanvas.Children.Add(SunText);
                 this.DrawCanvas.Children.Add(OuterPlanetText);
+                this.DrawCanvas.Children.Add(TransferOrbitText);
+
             }
             catch (Exception)
             {
@@ -115,32 +225,119 @@ namespace Mission_Calculator.Windows
 
         }
 
+        private void cleanCanvas()
+        {
+            try
+            {
+                if (DrawCanvas.Children.Contains(HTOArrivalPath)) this.DrawCanvas.Children.Remove(HTOArrivalPath);
+                if (DrawCanvas.Children.Contains(HTODeparturePath)) this.DrawCanvas.Children.Remove(HTODeparturePath);
+                if (DrawCanvas.Children.Contains(OuterOrbit)) this.DrawCanvas.Children.Remove(OuterOrbit);
+                if (DrawCanvas.Children.Contains(InnerOrbit)) this.DrawCanvas.Children.Remove(InnerOrbit);
+                if (DrawCanvas.Children.Contains(line)) this.DrawCanvas.Children.Remove(line);
+                if (DrawCanvas.Children.Contains(line2)) this.DrawCanvas.Children.Remove(line2);
+                if (DrawCanvas.Children.Contains(InnerPlanet)) this.DrawCanvas.Children.Remove(InnerPlanet);
+                if (DrawCanvas.Children.Contains(OuterPlanet)) this.DrawCanvas.Children.Remove(OuterPlanet);
+                if (DrawCanvas.Children.Contains(anglePath)) this.DrawCanvas.Children.Remove(anglePath);
+                if (DrawCanvas.Children.Contains(Sun)) this.DrawCanvas.Children.Remove(Sun);
+                if (DrawCanvas.Children.Contains(AngleText)) this.DrawCanvas.Children.Remove(AngleText);
+                if (DrawCanvas.Children.Contains(InnerPlanetText)) this.DrawCanvas.Children.Remove(InnerPlanetText);
+                if (DrawCanvas.Children.Contains(SunText)) this.DrawCanvas.Children.Remove(SunText);
+                if (DrawCanvas.Children.Contains(OuterPlanetText)) this.DrawCanvas.Children.Remove(OuterPlanetText);
+                if (DrawCanvas.Children.Contains(TransferOrbitText)) this.DrawCanvas.Children.Remove(TransferOrbitText);
+                if (DrawCanvas.Children.Contains(img)) this.DrawCanvas.Children.Remove(img);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void cleanForUpdate()
+        {
+            try
+            {
+                if (DrawCanvas.Children.Contains(line)) this.DrawCanvas.Children.Remove(line);
+                if (DrawCanvas.Children.Contains(line2)) this.DrawCanvas.Children.Remove(line2);
+                if (DrawCanvas.Children.Contains(InnerPlanet)) this.DrawCanvas.Children.Remove(InnerPlanet);
+                if (DrawCanvas.Children.Contains(OuterPlanet)) this.DrawCanvas.Children.Remove(OuterPlanet);
+                if (DrawCanvas.Children.Contains(anglePath)) this.DrawCanvas.Children.Remove(anglePath);
+                if (DrawCanvas.Children.Contains(AngleText)) this.DrawCanvas.Children.Remove(AngleText);
+                if (DrawCanvas.Children.Contains(InnerPlanetText)) this.DrawCanvas.Children.Remove(InnerPlanetText);
+                if (DrawCanvas.Children.Contains(SunText)) this.DrawCanvas.Children.Remove(SunText);
+                if (DrawCanvas.Children.Contains(OuterPlanetText)) this.DrawCanvas.Children.Remove(OuterPlanetText);
+                if (DrawCanvas.Children.Contains(TransferOrbitText)) this.DrawCanvas.Children.Remove(TransferOrbitText);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void animation()
+        {
+            try
+            {
+                cleanForUpdate();
+
+                line1EndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, route.DeparturePhaseAngle);
+                line2EndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, outerRadius, route.DeparturePhaseAngle);
+                innerPlanetPoint = new Point(line1EndPoint.X - planetSize.Width / 2, line1EndPoint.Y - planetSize.Height / 2);
+                outerPlanetPoint = new Point(line2EndPoint.X - planetSize.Width / 2, line2EndPoint.Y - planetSize.Height / 2);
+
+               
+                this.DrawCanvas.Children.Add(InnerPlanet);
+                this.DrawCanvas.Children.Add(OuterPlanet);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         #endregion
 
         #region "Event Handlers"
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //this.DrawCanvas.Children.Clear(); // Genocide :P
-            Size planetSize = new Size(30, 30);
-            Size canvasSize = new Size(DrawCanvas.Width, DrawCanvas.Height);
-            Size maxSize = new Size(DrawCanvas.Width, DrawCanvas.Height);
-            update(canvasSize, maxSize, planetSize);
-            expRouteInfo.Header = route.Name + " Info";
-            TextBlock routeInfo = new TextBlock
+            try
             {
-                Margin = new Thickness(0),
-                HorizontalAlignment = HorizontalAlignment.Left,
-                TextWrapping = TextWrapping.Wrap,
-                FontSize = 14,
-                TextAlignment = TextAlignment.Justify,
-                FontFamily = new FontFamily("Consolas"),
-            };
-            routeInfo.Inlines.Clear();
-            foreach (Run obj in route.ToShortRunList()) routeInfo.Inlines.Add(obj);
-            grdRouteInfo.Children.Add(routeInfo);
+                //this.DrawCanvas.Children.Clear(); // Genocide :P
+                Size planetSize = new Size(30, 30);
+                Size canvasSize = new Size(DrawCanvas.Width, DrawCanvas.Height);
+                Size maxSize = new Size(DrawCanvas.Width, DrawCanvas.Height);
+                update(canvasSize, maxSize, planetSize);
+                expRouteInfo.Header = route.Name + " Info";
+                TextBlock routeInfo = new TextBlock
+                {
+                    Margin = new Thickness(0),
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    TextWrapping = TextWrapping.Wrap,
+                    FontSize = 14,
+                    TextAlignment = TextAlignment.Justify,
+                    FontFamily = new FontFamily("Consolas"),
+                };
+                routeInfo.Inlines.Clear();
+                foreach (Run obj in route.ToShortRunList()) routeInfo.Inlines.Add(obj);
+                grdRouteInfo.Children.Add(routeInfo);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            AnimationRun();
         }
 
         #endregion
+
     }
 }

@@ -52,6 +52,7 @@ namespace Mission_Calculator.Classes
                     Stroke = brush,
                     Height = size.Height,
                     Width = size.Width,
+                    Opacity = 0.3,
                     Margin = new Thickness(startPoint.X, startPoint.Y, 0, 0)
                 };
                 Orbit.SetValue(RenderOptions.EdgeModeProperty, EdgeMode.Aliased);
@@ -105,9 +106,28 @@ namespace Mission_Calculator.Classes
                     StrokeThickness = 3,
                     Stroke = brush,
                     Data = ArcPath,
+                    Opacity = 0.5
                 };
                 path.SetValue(RenderOptions.EdgeModeProperty, EdgeMode.Aliased);
                 return path;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public static PathGeometry animationShape(Point startPoint, Point endPoint, Size size, double rotationAngle, SweepDirection dir)
+        {
+            try
+            {
+                PathGeometry ArcPath = new PathGeometry();
+                PathFigure ArcFigure = new PathFigure();
+                ArcFigure.StartPoint = startPoint;
+                ArcFigure.Segments.Add(new ArcSegment(endPoint, size, rotationAngle, false, dir, true));
+                ArcPath.Figures.Add(ArcFigure);
+                return ArcPath;
             }
             catch (Exception)
             {
@@ -124,6 +144,8 @@ namespace Mission_Calculator.Classes
                 Text = txt,
                 Foreground = brush,
                 FontSize = size,
+                TextAlignment = TextAlignment.Justify,
+                FontFamily = new FontFamily("Consolas"),
                 Margin = new Thickness(startPoint.X, startPoint.Y, 0, 0)
             };
         }

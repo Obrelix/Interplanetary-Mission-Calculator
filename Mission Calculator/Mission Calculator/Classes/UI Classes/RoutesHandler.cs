@@ -174,14 +174,14 @@ namespace Mission_Calculator.Classes
                 throw;
             }
         }
-        private RoutesInfo CreateRoute(int i)
+        private RoutesInfo CreateRoute(int intListIndex)
         {
             try
             {
-                if (i > 3) return new RoutesInfo(grdRouteInfo,
-                                new Routes("Return ", activeList[activeList.Count - 1].obj, activeList[0].obj, activeList[0].exp.Foreground, Brushes.Tomato), i);
-                else return new RoutesInfo(grdRouteInfo,
-                                new Routes("Route " + i, activeList[i - 1].obj, activeList[i].obj, activeList[i].exp.Foreground, Brushes.Tomato), i);
+                Routes route;
+                if (intListIndex > 3) route = new Routes("Return ", activeList[activeList.Count - 1].obj, activeList[0].obj, activeList[0].exp.Foreground, Brushes.Tomato);
+                else route = new Routes("Route " + intListIndex, activeList[intListIndex - 1].obj, activeList[intListIndex].obj, activeList[intListIndex].exp.Foreground, Brushes.Tomato);
+                return new RoutesInfo(grdRouteInfo, route, intListIndex);
             }
             catch (Exception)
             {
