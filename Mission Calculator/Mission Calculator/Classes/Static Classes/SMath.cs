@@ -304,6 +304,14 @@ namespace Mission_Calculator.Classes
             }
         }
 
+        public static double map(
+           double originalStart, double originalEnd, // original range
+           double newStart, double newEnd, // desired range
+           double value) // value to convert
+        {
+            double scale = (double)(newEnd - newStart) / (originalEnd - originalStart);
+            return (newStart + ((value - originalStart) * scale));
+        }
         #endregion
 
 

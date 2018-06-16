@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Threading;
+using System.Security.Permissions;
 
 namespace Mission_Calculator.Windows
 {
@@ -34,9 +35,10 @@ namespace Mission_Calculator.Windows
         Path anglePath, HTOArrivalPath, HTODeparturePath;
         TextBlock InnerPlanetText, OuterPlanetText, AngleText, TransferOrbitText, SunText;
         Point centerPoint, outerOrbitPoint, innerOrbitPoint, sunPoint, line1EndPoint, line2EndPoint, innerPlanetPoint, outerPlanetPoint, arcStartPoint, arcEndPoint;
-        Size outerOrbitSize, innerOrbitSize, arcSize, sunSize, planetSize;
-        Canvas canvas;
-        double innerRadius, outerRadius, arcRadius, rel = 0.5;
+        Size outerOrbitSize, innerOrbitSize, arcSize, sunSize, planetSize, canvasSize, maxSize;
+        double innerRadius, outerRadius, arcRadius, rel = 0.5, angleInner, angleOuter, timeCounter = 0;
+        MatrixTransform imgMatrixTransform;
+        winTransferOrbit form;
         #endregion
 
         #region "Constractor"
@@ -44,19 +46,66 @@ namespace Mission_Calculator.Windows
         public winTransferOrbit(Routes route)
         {
             InitializeComponent();
+            form = this;
             this.route = route;
             this.Title = route.Name + "  [ " + route.ObjectFrom.Name + " ---> " + route.ObjectTo.Name + " ]";
             this.WindowState = WindowState.Normal;
-            canvas = DrawCanvas;
+            planetSize = new Size(30, 30);
+            canvasSize = new Size( DrawCanvas.Width, DrawCanvas.Height);
+            maxSize = new Size(DrawCanvas.Width, DrawCanvas.Height);
         }
 
         #endregion
 
         #region "Methods"
+
+        private void rocketImageInit()
+        {
+            try
+            {
+                img = new Image
+                {
+                    Width = 50,
+                    Height = 10,
+                    MinWidth = 50,
+                    MinHeight = 10,
+                    Stretch = Stretch.UniformToFill,
+                    Cursor = Cursors.Hand,
+                    Source = new BitmapImage(new Uri(@"pack://application:,,/Images/Misc/Rockets.png")),
+                };
+
+                MatrixAnimationUsingPath matrixAnimation =
+                    new MatrixAnimationUsingPath();
+                matrixAnimation.PathGeometry = rocketPath;
+                matrixAnimation.Duration = TimeSpan.FromSeconds(10);
+                matrixAnimation.RepeatBehavior = RepeatBehavior.Forever;
+                matrixAnimation.DoesRotateWithTangent = true;
+
+                Storyboard.SetTargetName(matrixAnimation, "imgMatrixTransform");
+                Storyboard.SetTargetProperty(matrixAnimation, new PropertyPath(MatrixTransform.MatrixProperty));
+
+                pathAnimationStoryboard = new Storyboard();
+                pathAnimationStoryboard.Children.Add(matrixAnimation);
+
+                imgMatrixTransform = new MatrixTransform();
+                img.RenderTransform = imgMatrixTransform;
+                this.RegisterName("imgMatrixTransform", imgMatrixTransform);
+                this.RegisterName("imgRocket", img);
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         private void AnimationRun()
         {
             try
             {
+                angleInner = 0;
+                angleOuter = route.DeparturePhaseAngle;
                 AnimationRunner = new Thread(new ThreadStart(Runner));
                 AnimationRunner.IsBackground = true;
                 AnimationRunner.Start();
@@ -65,7 +114,7 @@ namespace Mission_Calculator.Windows
                 //    // Start the storyboard.
 
                 //};
-                pathAnimationStoryboard.Begin(this);
+                pathAnimationStoryboard.Begin(this,true);
                 this.DrawCanvas.Children.Add(img);
             }
             catch (Exception)
@@ -74,16 +123,18 @@ namespace Mission_Calculator.Windows
                 throw;
             }
         }
+
         private void Runner()
         {
             try
             {
-                while (true)
+                while (timeCounter < 190)
                 {
-                    //Canvas.Invoke
+                    timeCounter++;
                     DrawCanvas.Dispatcher.Invoke(new AddGraphics(animation));
-                    Thread.Sleep(40);
+                    Thread.Sleep(50);
                 }
+                if (pathAnimationStoryboard != null) pathAnimationStoryboard.Stop(form);
             }
             catch (Exception)
             {
@@ -91,11 +142,13 @@ namespace Mission_Calculator.Windows
                 throw;
             }
         }
+
         private void update(Size maxSize, Size canvasSize, Size planetSize)
         {
             /// note that the starting point of canvas (0,0) is the left top corner.
             try
             {
+                cleanCanvas();
                 this.planetSize = planetSize;
                 SelestialObject sun = Globals.objList[Globals.objList.Count-1];
                 //double rel = (route.ObjectInner.OrbitalPeriod / route.ObjectOuter.OrbitalPeriod) ;
@@ -133,11 +186,12 @@ namespace Mission_Calculator.Windows
                 OuterPlanetText = Shapes.textBlock(route.ObjectOuter.Name, new Point(outerPlanetPoint.X - planetSize.Width - 15, outerPlanetPoint.Y - 15), 16, route.ObjectOuter.objectColour);
                 SunText = Shapes.textBlock(sun.Name, new Point(sunPoint.X - sunSize.Width, sunPoint.Y + 20), 16, sun.objectColour);
 
+
                 if (route.ObjectInner.ParentObjectIndex == route.ObjectFrom.ParentObjectIndex)
                 {
                     HTOArrivalPath = Shapes.arcShape(line1EndPoint, new Point(0, centerPoint.Y), new Size(83, 100), Brushes.LightSeaGreen, 90, dir);
                     HTODeparturePath = Shapes.arcShape(new Point(0, centerPoint.Y), line1EndPoint, new Size(83, 100), Brushes.Gray, 90, dir);
-                    rocketPath = Shapes.animationShape(line1EndPoint, new Point(0, centerPoint.Y), new Size(83, 100), 90, dir);
+                    rocketPath = Shapes.animationShape(new Point(line1EndPoint.X - 6, line1EndPoint.Y), new Point(6, centerPoint.Y), new Size(83, 100), 90, dir);
                     TransferOrbitText = Shapes.textBlock("", new Point(10, centerPoint.Y -20), 10, Brushes.LightGreen);
                 }
                 else
@@ -146,41 +200,13 @@ namespace Mission_Calculator.Windows
                         new Size(83, 100), Brushes.LightSeaGreen, 90 - route.DeparturePhaseAngle, SweepDirection.Counterclockwise);
                     HTODeparturePath = Shapes.arcShape(line2EndPoint, SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, 180 + route.DeparturePhaseAngle), 
                         new Size(83, 100), Brushes.Gray, 90 - route.DeparturePhaseAngle, SweepDirection.Clockwise);
-                    rocketPath = Shapes.animationShape(line2EndPoint, SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, 180 + route.DeparturePhaseAngle),
+                    rocketPath = Shapes.animationShape(
+                        SMath.FindNextPointByAngleAndDistance(centerPoint, outerRadius - 6, route.DeparturePhaseAngle),
+                        SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius -6, 180 + route.DeparturePhaseAngle),
                         new Size(83, 100),90 - route.DeparturePhaseAngle, SweepDirection.Counterclockwise);
                     TransferOrbitText = Shapes.textBlock("", SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, 180 + route.DeparturePhaseAngle), 10, Brushes.LightGreen);
 
                 }
-
-                img = new Image
-                {
-                    Width = 50,
-                    Height = 10,
-                    MinWidth = 50,
-                    MinHeight = 10,
-                    Stretch = Stretch.UniformToFill,
-                    Cursor = Cursors.Hand,
-                    Source = new BitmapImage(new Uri(@"pack://application:,,/Images/Misc/Rockets.png")),
-                };
-                this.RegisterName("imgRocket", img);
-
-                MatrixAnimationUsingPath matrixAnimation =
-                    new MatrixAnimationUsingPath();
-                matrixAnimation.PathGeometry = rocketPath;
-                matrixAnimation.Duration = TimeSpan.FromSeconds(5);
-                matrixAnimation.RepeatBehavior = RepeatBehavior.Forever;
-                matrixAnimation.DoesRotateWithTangent = true;
-
-                Storyboard.SetTargetName(matrixAnimation, "imgMatrixTransform");
-                Storyboard.SetTargetProperty(matrixAnimation,
-                    new PropertyPath(MatrixTransform.MatrixProperty));
-
-                pathAnimationStoryboard = new Storyboard();
-                pathAnimationStoryboard.Children.Add(matrixAnimation);
-
-                MatrixTransform imgMatrixTransform = new MatrixTransform();
-                img.RenderTransform = imgMatrixTransform;
-                this.RegisterName("imgMatrixTransform", imgMatrixTransform);
 
                 TransferOrbitText.Inlines.Clear();
                 for (int i = 8; i < route.ToShortRunList().Count -2; i++)
@@ -198,7 +224,7 @@ namespace Mission_Calculator.Windows
                 anglePath.ToolTip = route.strPhAngle;
                 line.ToolTip = route.strPhAngle;
                 line2.ToolTip = route.strPhAngle;
-
+                rocketImageInit();
 
                 this.DrawCanvas.Children.Add(HTOArrivalPath);
                 this.DrawCanvas.Children.Add(HTODeparturePath);
@@ -229,6 +255,9 @@ namespace Mission_Calculator.Windows
         {
             try
             {
+                
+                if (imgMatrixTransform != null) this.UnregisterName("imgMatrixTransform");
+                if (img != null) this.UnregisterName("imgRocket");
                 if (DrawCanvas.Children.Contains(HTOArrivalPath)) this.DrawCanvas.Children.Remove(HTOArrivalPath);
                 if (DrawCanvas.Children.Contains(HTODeparturePath)) this.DrawCanvas.Children.Remove(HTODeparturePath);
                 if (DrawCanvas.Children.Contains(OuterOrbit)) this.DrawCanvas.Children.Remove(OuterOrbit);
@@ -280,13 +309,27 @@ namespace Mission_Calculator.Windows
             try
             {
                 cleanForUpdate();
+                double Incr;
+                if (route.ObjectInner.ParentObjectIndex == route.ObjectFrom.ParentObjectIndex)
+                {
+                    Incr = SMath.map(0, route.ObjectOuter.OrbitalPeriod,0,7, route.ObjectInner.OrbitalPeriod);
+                    Incr = (180 - route.DeparturePhaseAngle) / 190;
+                    angleOuter += Incr;
+                    angleInner += Incr * 2;
+                }
+                else
+                {
+                    Incr = Math.Abs((route.DeparturePhaseAngle + 180 + 360) / 190);
+                    angleOuter += Incr / 4;
+                    angleInner += Incr;
+                }
 
-                line1EndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, route.DeparturePhaseAngle);
-                line2EndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, outerRadius, route.DeparturePhaseAngle);
+                line1EndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, angleInner);
+                line2EndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, outerRadius, angleOuter);
                 innerPlanetPoint = new Point(line1EndPoint.X - planetSize.Width / 2, line1EndPoint.Y - planetSize.Height / 2);
                 outerPlanetPoint = new Point(line2EndPoint.X - planetSize.Width / 2, line2EndPoint.Y - planetSize.Height / 2);
-
-               
+                InnerPlanet.Margin = new Thickness(innerPlanetPoint.X, innerPlanetPoint.Y, 0, 0);
+                OuterPlanet.Margin = new Thickness(outerPlanetPoint.X, outerPlanetPoint.Y, 0, 0);
                 this.DrawCanvas.Children.Add(InnerPlanet);
                 this.DrawCanvas.Children.Add(OuterPlanet);
 
@@ -298,6 +341,12 @@ namespace Mission_Calculator.Windows
             }
         }
 
+        [SecurityPermissionAttribute(SecurityAction.Demand, ControlThread = true)]
+        private void KillTheThread()
+        {
+            AnimationRunner.Abort();
+        }
+
         #endregion
 
         #region "Event Handlers"
@@ -307,9 +356,6 @@ namespace Mission_Calculator.Windows
             try
             {
                 //this.DrawCanvas.Children.Clear(); // Genocide :P
-                Size planetSize = new Size(30, 30);
-                Size canvasSize = new Size(DrawCanvas.Width, DrawCanvas.Height);
-                Size maxSize = new Size(DrawCanvas.Width, DrawCanvas.Height);
                 update(canvasSize, maxSize, planetSize);
                 expRouteInfo.Header = route.Name + " Info";
                 TextBlock routeInfo = new TextBlock
@@ -334,7 +380,14 @@ namespace Mission_Calculator.Windows
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            AnimationRun();
+            if (button.IsChecked == true)
+                AnimationRun();
+            else
+            {
+                KillTheThread();
+                update(canvasSize, maxSize, planetSize);
+                timeCounter = 0;
+            }
         }
 
         #endregion
