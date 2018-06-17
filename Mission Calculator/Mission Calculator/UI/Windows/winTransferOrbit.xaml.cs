@@ -126,7 +126,7 @@ namespace Mission_Calculator.Windows
                 while (timeCounter < 190)
                 {
                     timeCounter++;
-                    DrawCanvas.Dispatcher.Invoke(new AddGraphics(animation));
+                    DrawCanvas.Dispatcher.Invoke(new AddGraphics(movePlanets));
                     Thread.Sleep(50);
                 }
                 if (pathAnimationStoryboard != null) pathAnimationStoryboard.Stop(form);
@@ -300,24 +300,25 @@ namespace Mission_Calculator.Windows
             }
         }
 
-        private void animation()
+        private void movePlanets()
         {
             try
             {
                 cleanForUpdate();
-                double Incr;
+                double angleStep = 0, 
+                       orbitalPeriodRatio = (route.ObjectOuter.OrbitalPeriod / route.ObjectInner.OrbitalPeriod);
+
                 if (route.ObjectInner.ParentObjectIndex == route.ObjectFrom.ParentObjectIndex)
                 {
-                    Incr = SMath.map(0, route.ObjectOuter.OrbitalPeriod,0,7, route.ObjectInner.OrbitalPeriod);
-                    Incr = (180 - route.DeparturePhaseAngle) / 190;
-                    angleOuter += Incr;
-                    angleInner += Incr * 3;
+                    angleStep = (180 - route.DeparturePhaseAngle) / 190;
+                    angleOuter += angleStep;
+                    angleInner += angleStep * orbitalPeriodRatio;
                 }
                 else
                 {
-                    Incr = Math.Abs((route.DeparturePhaseAngle + 180 + 360) / 190);
-                    angleOuter += Incr / 3;
-                    angleInner += Incr;
+                    angleStep = Math.Abs((route.DeparturePhaseAngle + 180 + Math.Truncate(route.Rotations) * 360) / 190);
+                    angleOuter += angleStep / orbitalPeriodRatio ;
+                    angleInner += angleStep;
                 }
 
                 line1EndPoint = SMath.FindNextPointByAngleAndDistance(centerPoint, innerRadius, angleInner);
