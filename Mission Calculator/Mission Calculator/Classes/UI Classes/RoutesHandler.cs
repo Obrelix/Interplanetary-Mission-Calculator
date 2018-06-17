@@ -10,6 +10,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Mission_Calculator.Pages;
+using Mission_Calculator.Enumerators;
 
 namespace Mission_Calculator.Classes
 {
@@ -28,7 +30,7 @@ namespace Mission_Calculator.Classes
         public RoutesInfo(Grid parentGrid, Routes route, int grdRowIndex)
         {
             this.parentGrid = parentGrid;
-            this.txt = txtTravelInfo(grdRowIndex);
+            this.txt = txtRouteInfo(grdRowIndex);
             this.route = route;
         }
 
@@ -36,12 +38,12 @@ namespace Mission_Calculator.Classes
 
         #region "Methods"
 
-        private TextBlock txtTravelInfo(int grdRowIndex)
+        private TextBlock txtRouteInfo(int grdRowIndex)
         {
             TextBlock txt = new TextBlock
             {
                 Name = "txtRoute" + grdRowIndex,
-                Margin = new Thickness(0),
+                Margin = new Thickness(5),
                 HorizontalAlignment = HorizontalAlignment.Left,
                 TextWrapping = TextWrapping.Wrap,
                 FontSize = 14,
@@ -50,6 +52,7 @@ namespace Mission_Calculator.Classes
                 Cursor = Cursors.Hand
             };
             txt.SetValue(Grid.RowProperty, grdRowIndex);
+            txt.SetValue(Grid.ColumnProperty, 1);
             txt.MouseLeftButtonDown += txtTravelInfo_MouseButtonUp;
             return txt;
         }
@@ -98,9 +101,10 @@ namespace Mission_Calculator.Classes
 
         #region "General Declaration"
 
+        double dblDVBudget, dblTravelTime;
         List<RoutesInfo> routesCSList = new List<RoutesInfo>();
-        Grid grdRouteInfo;
-        CheckBox checkBoxReturn;
+        pgMissionCalculator parent;
+        CheckBox chkReturn;
         List<PlanetInfo> planetInfoCSList;
         List<PlanetInfo> activeList = new List<PlanetInfo>();
         Rectangle rect;
@@ -110,11 +114,13 @@ namespace Mission_Calculator.Classes
 
         #region "Constractor"
 
-        public RoutesInfoHandler(List<PlanetInfo> planetInfoCSList, Grid grdRouteInfo, CheckBox checkBoxReturn)
+        public RoutesInfoHandler(List<PlanetInfo> planetInfoCSList, pgMissionCalculator parent, CheckBox chkReturn)
         {
             this.planetInfoCSList = planetInfoCSList;
-            this.grdRouteInfo = grdRouteInfo;
-            this.checkBoxReturn = checkBoxReturn;
+            this.parent = parent;
+            this.chkReturn = chkReturn;
+            dblDVBudget = 0;
+            dblTravelTime = 0;
             rectInit();
         }
 
@@ -131,7 +137,8 @@ namespace Mission_Calculator.Classes
                 RadiusY = 10,
 
             };
-            Grid.SetRowSpan(rect, 6);
+            Grid.SetRowSpan(rect, 8);
+            Grid.SetColumnSpan(rect, 6);
             rect.Fill = new SolidColorBrush { Color = Color.FromRgb(5, 47, 60), Opacity = 0.5 };
         }
 
@@ -140,6 +147,7 @@ namespace Mission_Calculator.Classes
             try
             {
                 if (this == null) return;
+                Reset();
                 routesCSList.Clear();
                 activeList.Clear();
                 foreach (PlanetInfo obj in planetInfoCSList)
@@ -149,11 +157,17 @@ namespace Mission_Calculator.Classes
                 {
                     for (int i = 1; i < activeList.Count; i++)
                         routesCSList.Add(CreateRoute(i));
-                    if (checkBoxReturn.IsChecked == true)
+                    if (chkReturn.IsChecked == true)
                         routesCSList.Add(CreateRoute(4));
                 }
-                gridReset();
-                foreach (RoutesInfo obj in routesCSList) obj.Update();
+                foreach (RoutesInfo obj in routesCSList)
+                {
+                    obj.Update();
+                    dblDVBudget += obj.route.DeltaVBugdet;
+                    dblTravelTime += obj.route.TranferTime;
+                }
+                parent.txtDVBudget.Text = string.Format("{0:n0}", dblDVBudget) + " m/s";
+                parent.txtTotaTime.Text = Globals.FormatTimeFromSecs(dblTravelTime);
             }
             catch (Exception)
             {
@@ -161,12 +175,17 @@ namespace Mission_Calculator.Classes
                 throw;
             }
         }
-        private void gridReset()
+
+        private void Reset()
         {
             try
             {
-                grdRouteInfo.Children.Clear();
-                if (rect != null) grdRouteInfo.Children.Add(rect);
+                dblDVBudget = 0;
+                dblTravelTime = 0;
+                parent.txtDVBudget.Text = "";
+                parent.txtTotaTime.Text = "";
+                parent.grdRouteInfo.Children.Clear();
+                if (rect != null) parent.grdRouteInfo.Children.Add(rect);
             }
             catch (Exception)
             {
@@ -174,14 +193,28 @@ namespace Mission_Calculator.Classes
                 throw;
             }
         }
+
         private RoutesInfo CreateRoute(int intListIndex)
         {
             try
             {
                 Routes route;
-                if (intListIndex > 3) route = new Routes("Return ", activeList[activeList.Count - 1].obj, activeList[0].obj, activeList[0].exp.Foreground, Brushes.Tomato);
-                else route = new Routes("Route " + intListIndex, activeList[intListIndex - 1].obj, activeList[intListIndex].obj, activeList[intListIndex].exp.Foreground, Brushes.Tomato);
-                return new RoutesInfo(grdRouteInfo, route, intListIndex);
+                PlanetInfo PIFrom, PITo;
+                string Name = string.Empty;
+                if (intListIndex > 3)
+                {
+                    PIFrom = activeList[activeList.Count - 1];
+                    PITo = activeList[0];
+                    Name = "Return ";
+                }
+                else
+                {
+                    Name = "Route ";
+                    PIFrom = activeList[intListIndex - 1];
+                    PITo = activeList[intListIndex];
+                }
+                route = new Routes(Name, PIFrom, PITo, Brushes.Tomato);
+                return new RoutesInfo(parent.grdRouteInfo, route, intListIndex);
             }
             catch (Exception)
             {

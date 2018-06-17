@@ -58,7 +58,7 @@ namespace Mission_Calculator.Pages
         {
             try
             {
-                PlanetInfoControler = new PlaneInfoHandler(grdPlanetInfo, grdPlanetSelection, grdRouteInfo, UIColors);
+                PlanetInfoControler = new PlaneInfoHandler(this, UIColors);
             }
             catch (Exception)
             {

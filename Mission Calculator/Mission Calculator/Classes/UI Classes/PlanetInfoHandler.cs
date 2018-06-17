@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Mission_Calculator.Enumerators;
+using Mission_Calculator.Pages;
 
 namespace Mission_Calculator.Classes
 {
@@ -24,9 +25,10 @@ namespace Mission_Calculator.Classes
         public ComboBox cbo { get; set; }
         public Expander exp { get; set; }
         public TextBlock txt { get; set; }
-        public CheckBox chk { get; set; }
+        public CheckBox chkReturn { get; set; }
         public CheckBox chkOrbit { get; set; }
-        public RadioButton rdo { get; set; }
+        public RadioButton rdoSurface { get; set; }
+        public RadioButton rdoLO { get; set; }
         public Image img { get; set; }
         public Grid txtparentGrid { get; set; }
         public Grid expParentGrid { get; set; }
@@ -68,19 +70,20 @@ namespace Mission_Calculator.Classes
                 pnlCBO.Children.Add(cbo);
                 StackPanel pnlCHK = new StackPanel { Width = 88 };
 
-                if (grdRowIndex == 1)
+                if (grdRowIndex == 2)
                 {
-                    this.chk = chkPlanetInfo(1, foreground);
-                    pnlCHK.Children.Add(chk);
+                    this.chkReturn = chkPlanetInfo(1, foreground);
+                    pnlCHK.Children.Add(chkReturn);
                     this.chkOrbit = chkPlanetInfo(2, foreground);
                     pnlCHK.Children.Add(chkOrbit);
                 }
                 else
                 {
                     this.chkOrbit = new CheckBox();
-                    this.rdo = rdoPlanetInfo(grdRowIndex, 1, foreground);
-                    pnlCHK.Children.Add(rdo);
-                    pnlCHK.Children.Add(rdoPlanetInfo(grdRowIndex, 2, foreground));
+                    this.rdoSurface = rdoPlanetInfo(grdRowIndex, 1, foreground);
+                    pnlCHK.Children.Add(rdoSurface);
+                    this.rdoLO = rdoPlanetInfo(grdRowIndex, 2, foreground);
+                    pnlCHK.Children.Add(rdoLO);
                 }
 
                 pnlMain.Children.Add(pnlCBO);
@@ -90,8 +93,8 @@ namespace Mission_Calculator.Classes
                 Expander exp = new Expander
                 {
                     Name = "expPlanetInfo" + grdRowIndex,
-                    Header = (grdRowIndex == 1) ? "Origin" : "Stop " + grdRowIndex,
-                    Margin = new Thickness(0),
+                    Header = (grdRowIndex == 2) ? "Origin" : "Stop " + grdRowIndex,
+                    Margin = new Thickness(2),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     FontSize = 14,
                     ExpandDirection = ExpandDirection.Right,
@@ -153,6 +156,7 @@ namespace Mission_Calculator.Classes
                     FontSize = 12,
                     Foreground = foreground
                 };
+
                 rdo.IsChecked = (index == 1);
                 rdo.Unchecked += MainEvent;
                 rdo.Checked += MainEvent;
@@ -205,7 +209,7 @@ namespace Mission_Calculator.Classes
                     FontFamily = new FontFamily("Consolas"),
                     Cursor = Cursors.Hand
                 };
-                txt.SetValue(Grid.RowProperty, grdRowIndex);
+                txt.SetValue(Grid.RowProperty, grdRowIndex - 1);
                 txt.SetValue(Grid.ColumnProperty, grdColumnIndex);
                 txt.MouseLeftButtonDown += txt_MouseButtonDown;
                 return txt;
@@ -225,9 +229,11 @@ namespace Mission_Calculator.Classes
                 {
                     Name = "imgPlanetInfo" + grdRowIndex,
                     Stretch = Stretch.UniformToFill,
-                    Cursor = Cursors.Hand
+                    Cursor = Cursors.Hand,
+                    MaxHeight = 130,
+                    MaxWidth =130
                 };
-                img.SetValue(Grid.RowProperty, grdRowIndex);
+                img.SetValue(Grid.RowProperty, grdRowIndex - 1);
                 img.SetValue(Grid.ColumnProperty, grdColumnIndex);
                 img.MouseLeftButtonDown += img_MouseLeftButtonDown;
                 return img;
@@ -275,6 +281,14 @@ namespace Mission_Calculator.Classes
             {
                 Reset();
                 List<Run> runLIst;
+                bool hasSurface = (obj.Type != Types.Gasgiant && obj.Type != Types.Star);
+                bool isLowOrbit = false;
+
+                if (rdoSurface != null) isLowOrbit = (rdoSurface.IsChecked == false);
+                else if (chkOrbit != null) isLowOrbit = (chkOrbit.IsChecked == true);
+
+                orbit = (isLowOrbit || !hasSurface) ? Orbit.Low : Orbit.Surface;
+
                 if (isEnabled())
                 {
                     runLIst = obj.ToShortRunList(Colour, obj.objectColour);
@@ -337,8 +351,7 @@ namespace Mission_Calculator.Classes
         
         private void MainEvent(object sender, RoutedEventArgs e)
         {
-            if(rdo != null && chkOrbit != null)
-            orbit = (rdo.IsChecked == true || chkOrbit.IsChecked == true) ? Orbit.Low : Orbit.Surface;
+
             Update();
             parent.UpdateRoutes();
         }
@@ -355,21 +368,17 @@ namespace Mission_Calculator.Classes
         public List<PlanetInfo> planetInfoCSList = new List<PlanetInfo>();
         List<SelestialObject> currentPlanetList;
 
-        Grid grdPlanetInfo;
-
         #endregion
 
         #region "Constractor"
 
-        public PlaneInfoHandler(Grid grdPlanetInfo, Grid expParentGrid, Grid grdRouteInfo, List<Brush> foregroundList )
+        public PlaneInfoHandler(pgMissionCalculator parent, List<Brush> foregroundList )
         {
-
-            this.grdPlanetInfo = grdPlanetInfo;
             this.currentPlanetList = Globals.objList;
             planetInfoCSList.Clear();
             for (int i = 0; i < 4; i++)
-                planetInfoCSList.Add(new PlanetInfo(i + 1, grdPlanetInfo, expParentGrid, foregroundList[i], this));
-            routesInfo = new RoutesInfoHandler(planetInfoCSList, grdRouteInfo, planetInfoCSList[0].chk);
+                planetInfoCSList.Add(new PlanetInfo(i + 2, parent.grdPlanetInfo, parent.grdPlanetSelection, foregroundList[i], this));
+            routesInfo = new RoutesInfoHandler(planetInfoCSList, parent, planetInfoCSList[0].chkReturn);
         }
 
         #endregion

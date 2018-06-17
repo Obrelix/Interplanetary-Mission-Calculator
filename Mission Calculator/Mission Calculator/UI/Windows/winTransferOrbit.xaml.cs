@@ -109,11 +109,6 @@ namespace Mission_Calculator.Windows
                 AnimationRunner = new Thread(new ThreadStart(Runner));
                 AnimationRunner.IsBackground = true;
                 AnimationRunner.Start();
-                //img.Loaded += delegate (object sender, RoutedEventArgs e)
-                //{
-                //    // Start the storyboard.
-
-                //};
                 pathAnimationStoryboard.Begin(this,true);
                 this.DrawCanvas.Children.Add(img);
             }
@@ -296,6 +291,7 @@ namespace Mission_Calculator.Windows
                 if (DrawCanvas.Children.Contains(SunText)) this.DrawCanvas.Children.Remove(SunText);
                 if (DrawCanvas.Children.Contains(OuterPlanetText)) this.DrawCanvas.Children.Remove(OuterPlanetText);
                 if (DrawCanvas.Children.Contains(TransferOrbitText)) this.DrawCanvas.Children.Remove(TransferOrbitText);
+                if (DrawCanvas.Children.Contains(HTODeparturePath)) this.DrawCanvas.Children.Remove(HTODeparturePath);
             }
             catch (Exception)
             {
@@ -315,12 +311,12 @@ namespace Mission_Calculator.Windows
                     Incr = SMath.map(0, route.ObjectOuter.OrbitalPeriod,0,7, route.ObjectInner.OrbitalPeriod);
                     Incr = (180 - route.DeparturePhaseAngle) / 190;
                     angleOuter += Incr;
-                    angleInner += Incr * 2;
+                    angleInner += Incr * 3;
                 }
                 else
                 {
                     Incr = Math.Abs((route.DeparturePhaseAngle + 180 + 360) / 190);
-                    angleOuter += Incr / 4;
+                    angleOuter += Incr / 3;
                     angleInner += Incr;
                 }
 

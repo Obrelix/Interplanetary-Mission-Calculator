@@ -550,7 +550,7 @@
     "SMUpperAtmosphere": 0.0,
     "SMNearSpace": 7.0,
     "SMOuterSpace": 6.0,
-    "SurfaceToLowOrbit": 130,
+    "SurfaceToLowOrbit": 430,
     "LowOrbitToMoonIntercept": 0,
     "MoonInterceptToElipticalOrbit": 0,
     "MoonInterceptToElipticalOrbitMPC": 0,

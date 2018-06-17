@@ -44,22 +44,22 @@ namespace Mission_Calculator.Classes
         }
         public string strTransferTime { get { return Globals.FormatTimeFromSecs(TranferTime); } }
         public string strInterval { get { return Globals.FormatTimeFromSecs(IntervalBetweenLanchWindows); } }
-        public string strDv { get { return string.Format("{0:n0}", DeltaVBugdet + " m/s"); } }
+        public string strDv { get { return string.Format("{0:n0}", DeltaVBugdet) + " m/s"; } }
         public string strPhAngle { get { return DeparturePhaseAngle.ToString("n2") + " °"; } }
 
         #endregion
 
         #region "Constractor"
         
-        public Routes(string Name, SelestialObject ObjectFrom, SelestialObject ObjectTo, Brush TitleBrush, Brush ValueBrush)
+        public Routes(string Name, PlanetInfo PIFrom, PlanetInfo PITo, Brush ValueBrush)
         {
-            this.TitleBrush = TitleBrush;
-            this.ValueBrush = ValueBrush;
             this.Name = Name;
-            this.ObjectFrom = ObjectFrom;
-            this.ObjectTo = ObjectTo;
-            OrbitFrom = Orbit.Surface;
-            OrbitTo = Orbit.Surface;
+            this.ValueBrush = ValueBrush;
+            TitleBrush = PITo.exp.Foreground;
+            ObjectFrom = PIFrom.obj;
+            ObjectTo = PITo.obj;
+            OrbitFrom = PIFrom.orbit;
+            OrbitTo = PITo.orbit;
             Update();
         }
 

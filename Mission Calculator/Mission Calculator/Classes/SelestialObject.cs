@@ -395,6 +395,7 @@ namespace Mission_Calculator.Classes
                 foreach (Run objRun in this.ToLongRunList()) txt.Inlines.Add(objRun);
                 viewer.Content = txt;
                 popUpWindow.Content = viewer;
+                popUpWindow.Icon = new System.Windows.Media.Imaging.BitmapImage(new Uri(this.ImageUri));
                 popUpWindow.Show();
 
             }

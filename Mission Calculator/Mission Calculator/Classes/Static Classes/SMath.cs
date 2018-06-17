@@ -21,6 +21,7 @@ namespace Mission_Calculator.Classes
         static bool isPlanetToOtherMoon;
         static bool isMoonToOtherPlanet;
         static bool isMoonsOfTheSameSystem;
+        static bool isInterplanetary;
 
         #endregion
 
@@ -72,10 +73,10 @@ namespace Mission_Calculator.Classes
                 DVCost += route.ObjectTo.SurfaceToLowOrbit;
             DVCost += route.ObjectTo.LowOrbitToMoonIntercept + route.ObjectTo.LowOrbitToElipticalOrbit + route.ObjectTo.MoonInterceptToElipticalOrbit;
 
-            if (isMoonsOfOtherPlanets || isMoonToOtherPlanet || isPlanetToOtherMoon || isMoonToOtherPlanet)
+            if (isInterplanetary)
             {
-                DVCost += route.ObjectFrom.ElipticalOrbitToPlanetIntercet + route.ObjectFrom.PlanetInterceptToStarElipticalOrbit;
-                DVCost += route.ObjectTo.ElipticalOrbitToPlanetIntercet + route.ObjectTo.PlanetInterceptToStarElipticalOrbit;
+                DVCost += route.ObjectFrom.ElipticalOrbitToPlanetIntercet + route.ObjectFrom.PlanetInterceptToStarElipticalOrbit + route.ObjectFrom.MaxPlaneChange;
+                DVCost += route.ObjectTo.ElipticalOrbitToPlanetIntercet + route.ObjectTo.PlanetInterceptToStarElipticalOrbit + route.ObjectTo.MaxPlaneChange;
             }
 
             return DVCost;
@@ -136,6 +137,11 @@ namespace Mission_Calculator.Classes
                 isMoonsOfTheSameSystem = (route.ObjectFrom.Index != route.ObjectFrom.ParentObjectIndex
                                             && route.ObjectTo.ParentObjectIndex != route.ObjectTo.Index
                                             && route.ObjectFrom.ParentObjectIndex == route.ObjectTo.ParentObjectIndex);
+
+                isInterplanetary = (isMoonsOfOtherPlanets || isMoonToOtherPlanet || isPlanetToOtherMoon || isMoonToOtherPlanet) 
+                                            || (route.ObjectFrom.ParentObjectIndex == route.ObjectFrom.Index && route.ObjectTo.Index == route.ObjectTo.ParentObjectIndex 
+                                            && route.ObjectFrom.Index != route.ObjectTo.Index);
+                                        
 
             }
             catch (Exception)
@@ -215,7 +221,7 @@ namespace Mission_Calculator.Classes
                             objOuter = objList[route.ObjectTo.ParentObjectIndex];
                             break;
                         default:
-                            objInner = objList[route.ObjectFrom.ParentObjectIndex];
+                            objInner = objList[route.ObjectTo.ParentObjectIndex];
                             objOuter = route.ObjectFrom;
                             break;
                     }

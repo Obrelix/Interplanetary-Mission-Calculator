@@ -5,15 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Mission_Calculator.Pages"
        mc:Ignorable="d" 
-      d:DesignHeight="740" d:DesignWidth="1000"
-     Title="Mission Calculator" x:Name="Main" Loaded="Main_Loaded" MinHeight="620" MinWidth="1000">
+      d:DesignHeight="745" d:DesignWidth="850"
+     Title="Mission Calculator" x:Name="Main" Loaded="Main_Loaded" MinHeight="745" MinWidth="800">
 
     <Grid >
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*"/>
-            <RowDefinition Height="557*"/>
-            <RowDefinition Height="50*"/>
+            <RowDefinition Height="20*"/>
+            <RowDefinition Height="600*"/>
+            <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
 
         <!--<StackPanel  VerticalAlignment="Center" Margin="0" HorizontalAlignment="Right" Visibility="Hidden">
@@ -33,91 +33,103 @@
                 </ComboBox>
                 <CheckBox x:Name="checkBox" Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1EEEE"  Unchecked="checkBox_Checked" Checked="checkBox_Checked" Padding="0" />
             </StackPanel>-->
-        
-        <StackPanel Orientation="Horizontal"  Grid.Row="1" Margin="20"    >
+
+        <StackPanel x:FieldModifier="public" x:Name="pnlParent" Orientation="Horizontal"  Grid.Row="1" Margin="20"    >
 
 
-                <StackPanel>
+            <StackPanel x:FieldModifier="public" x:Name="pnlLeft">
 
-                    <Grid x:Name="grdTotalInfo">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100*"/>
-                            <ColumnDefinition Width="10*"/>
-                            <ColumnDefinition Width="100*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="15*"/>
-                            <RowDefinition Height="15*"/>
-                        </Grid.RowDefinitions>
+                <Grid x:FieldModifier="public" x:Name="grdTotalInfo" Height="60">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="3"/>
+                        <ColumnDefinition Width="100*"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="15*"/>
+                        <RowDefinition Height="15*"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
 
-                        <Rectangle  RadiusY="10" RadiusX="10" Grid.RowSpan="2" Grid.ColumnSpan="3">
+                        <Rectangle  RadiusY="10" RadiusX="10" Grid.RowSpan="4" Grid.ColumnSpan="5">
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="Black" Opacity="0.5"/>
                             </Rectangle.Fill>
                         </Rectangle>
 
-                        <TextBlock Text="Δv Budget" FontSize="12" Grid.Column="0" Foreground="#FFFF3A00" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        <TextBlock Text="Tranfer Time" Grid.Column="0" Grid.Row="1" FontSize="12" Foreground="#FFFFDC00" Margin="0" HorizontalAlignment="Center" />
+                        <TextBlock Text="Δv Budget" FontSize="18" Grid.Column="1" Grid.Row="1"  Foreground="#FFFF3A00" Margin="0" TextAlignment="Center" />
+                        <TextBlock Text="Tranfer Time" FontSize="18" Grid.Column="1" Grid.Row="2"  Foreground="#FFFFDC00" Margin="0" TextAlignment="Center" />
 
-                        <Viewbox  Grid.Row="0" Grid.Column="2" Width="80">
-                            <TextBlock x:Name="textBlockTotalDV" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="#FFFF3A00" Margin="0"/>
+                        <Viewbox  Grid.Row="1" Grid.Column="3" Width="100">
+                        <TextBlock x:FieldModifier="public" x:Name="txtDVBudget" Foreground="#FFFF3A00" Margin="0"/>
                         </Viewbox>
 
-                        <Viewbox Grid.Row="1" Grid.Column="2" Width="80">
-                            <TextBlock x:Name="textBlockTotaTime"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" Foreground="#FFFFDC00" Margin="0"  />
+                        <Viewbox Grid.Row="2" Grid.Column="3" Width="100">
+                        <TextBlock x:FieldModifier="public" x:Name="txtTotaTime" Foreground="#FFFFDC00" Margin="0"  />
                         </Viewbox>
+                        
                     </Grid>
 
 
-                    <Grid x:Name="grdPlanetSelection" HorizontalAlignment="Left">
+                <Grid x:Name="grdPlanetSelection" x:FieldModifier="public">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="3"/>
-                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="0*"/>
+                            <ColumnDefinition Width="5"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="100*"/>
-                            <RowDefinition Height="100*"/>
-                            <RowDefinition Height="100*"/>
-                            <RowDefinition Height="100*"/>
-                            <RowDefinition Height="100*"/>
-                        </Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="0*"/>
+                            <RowDefinition Height="0*"/>
+                            <RowDefinition Height="0*"/>
+                            <RowDefinition Height="0*"/>
+                            <RowDefinition Height="0*"/>
+                            <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
 
-                        <Rectangle RadiusX="10" RadiusY="10" Grid.ColumnSpan="2" Margin="0" Grid.RowSpan="5">
+                        <Rectangle RadiusX="10" RadiusY="10" Grid.ColumnSpan="3" Margin="0" Grid.RowSpan="7">
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="#FF052F3C" Opacity="0.5"/>
                             </Rectangle.Fill>
                         </Rectangle>
 
-                        
-
                     </Grid>
-                <Grid x:Name="grdRouteInfo" VerticalAlignment="Top">
+                
+                <Grid x:Name="grdRouteInfo" x:FieldModifier="public">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="0*"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="5"/>
                         <RowDefinition Height="100*"/>
                         <RowDefinition Height="100*"/>
                         <RowDefinition Height="100*"/>
                         <RowDefinition Height="100*"/>
-                        <RowDefinition Height="3*"/>
+                        <RowDefinition Height="5"/>
                     </Grid.RowDefinitions>
 
                 </Grid>
             </StackPanel>
-            
-            <Grid x:Name="grdPlanetInfo" VerticalAlignment="Top">
+
+            <Grid x:Name="grdPlanetInfo" x:FieldModifier="public" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3"/>
+                    <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="60*"/>
                     <ColumnDefinition Width="60*"/>
-                    <ColumnDefinition Width="3"/>
+                    <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="3"/>
+                    <RowDefinition Height="5"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="2*"/>
-                    <RowDefinition Height="3"/>
+                    <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
 
                 <Rectangle RadiusX="10" RadiusY="10" Grid.RowSpan="6" Grid.ColumnSpan="4" >
