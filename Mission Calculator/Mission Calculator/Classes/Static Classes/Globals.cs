@@ -119,6 +119,7 @@ namespace Mission_Calculator.Classes
         {
             try
             {
+                if (double.IsInfinity(secs)) return "∞";
                 TimeSpan t = TimeSpan.FromSeconds(secs);
                 double DayInSeconds = TimeSpan.FromDays(1).TotalSeconds;
                 if (DayInSeconds < secs)
