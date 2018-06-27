@@ -5,39 +5,27 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Mission_Calculator.Pages"
        mc:Ignorable="d" 
-      d:DesignHeight="745" d:DesignWidth="850"
-     Title="Mission Calculator" x:Name="Main" Loaded="Main_Loaded" MinHeight="745" MinWidth="800">
+      d:DesignHeight="600" d:DesignWidth="780"
+     Title="Mission Calculator" x:Name="Main" Loaded="Main_Loaded" MinHeight="600" MinWidth="780">
 
-    <Grid >
+    <Grid  x:FieldModifier="public" x:Name="grdMain" >
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="20*"/>
-            <RowDefinition Height="600*"/>
-            <RowDefinition Height="20*"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
 
-        <!--<StackPanel  VerticalAlignment="Center" Margin="0" HorizontalAlignment="Right" Visibility="Hidden">
-                <TextBlock x:Name="txtGameMode" Text="Mode" FontSize="16" Foreground="#FFF7E428" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ComboBox x:Name="cboGameMode" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" FontSize="12" SelectionChanged="cboGameMode_SelectionChanged">
-                    <ComboBoxItem Background="#FF0EF502" Content="Stock Planets" />
-                    <ComboBoxItem Content="Outer Planets" Foreground="Black" Background="#FFFF7373"/>
-                    <ComboBoxItem Content="RSS" Foreground="Black" Background="#FFE8FF80"/>
-                </ComboBox>
-            </StackPanel>-->
-
-        <!--<StackPanel x:Name="spTimeUnit" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <TextBlock x:Name="txtTimeUnit" Text="Time" FontSize="16" Foreground="#FFF7E428" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <ComboBox x:Name="cboTimeUnit" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60"  SelectionChanged="cboPlanetsSelectionChange" FontSize="8">
-                    <ComboBoxItem  Content="Kerbin Time" Background="#FF0EF502" ToolTip="(6h days, 426d years)" />
-                    <ComboBoxItem Content="Earth Time" Foreground="Black" ToolTip=" (24h days, 365d years)" Background="#FFFF5959"/>
-                </ComboBox>
-                <CheckBox x:Name="checkBox" Content="Show All" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF1EEEE"  Unchecked="checkBox_Checked" Checked="checkBox_Checked" Padding="0" />
-            </StackPanel>-->
-
-        <StackPanel x:FieldModifier="public" x:Name="pnlParent" Orientation="Horizontal"  Grid.Row="1" Margin="20"    >
+        <StackPanel x:FieldModifier="public" Grid.Row="2" Grid.Column="1" x:Name="pnlDown" Orientation="Horizontal" >
 
 
-            <StackPanel x:FieldModifier="public" x:Name="pnlLeft">
+            <StackPanel x:FieldModifier="public" x:Name="pnlDownLeft">
 
                 <Grid x:FieldModifier="public" x:Name="grdTotalInfo" Height="60">
                     <Grid.ColumnDefinitions>
@@ -54,96 +42,27 @@
                         <RowDefinition Height="5"/>
                     </Grid.RowDefinitions>
 
-                        <Rectangle  RadiusY="10" RadiusX="10" Grid.RowSpan="4" Grid.ColumnSpan="5">
-                            <Rectangle.Fill>
-                                <SolidColorBrush Color="Black" Opacity="0.5"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
+                    <Rectangle  RadiusY="10" RadiusX="10" Grid.RowSpan="4" Grid.ColumnSpan="5">
+                        <Rectangle.Fill>
+                            <SolidColorBrush Color="Black" Opacity="0.5"/>
+                        </Rectangle.Fill>
+                    </Rectangle>
 
-                        <TextBlock Text="Δv Budget" FontSize="18" Grid.Column="1" Grid.Row="1"  Foreground="#FFFF3A00" Margin="0" TextAlignment="Center" />
-                        <TextBlock Text="Tranfer Time" FontSize="18" Grid.Column="1" Grid.Row="2"  Foreground="#FFFFDC00" Margin="0" TextAlignment="Center" />
+                    <TextBlock Text="Δv Budget" FontSize="18" Grid.Column="1" Grid.Row="1"  Foreground="#FFFF3A00" Margin="0" TextAlignment="Center" />
+                    <TextBlock Text="Tranfer Time" FontSize="18" Grid.Column="1" Grid.Row="2"  Foreground="#FFFFDC00" Margin="0" TextAlignment="Center" />
 
-                        <Viewbox  Grid.Row="1" Grid.Column="3" Width="100">
+                    <Viewbox  Grid.Row="1" Grid.Column="3" Width="100">
                         <TextBlock x:FieldModifier="public" x:Name="txtDVBudget" Foreground="#FFFF3A00" Margin="0"/>
-                        </Viewbox>
+                    </Viewbox>
 
-                        <Viewbox Grid.Row="2" Grid.Column="3" Width="100">
+                    <Viewbox Grid.Row="2" Grid.Column="3" Width="100">
                         <TextBlock x:FieldModifier="public" x:Name="txtTotaTime" Foreground="#FFFFDC00" Margin="0"  />
-                        </Viewbox>
-                        
-                    </Grid>
-
-
-                <Grid x:Name="grdPlanetSelection" x:FieldModifier="public">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5"/>
-                            <ColumnDefinition Width="0*"/>
-                            <ColumnDefinition Width="5"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="5"/>
-                            <RowDefinition Height="0*"/>
-                            <RowDefinition Height="0*"/>
-                            <RowDefinition Height="0*"/>
-                            <RowDefinition Height="0*"/>
-                            <RowDefinition Height="0*"/>
-                            <RowDefinition Height="5"/>
-                    </Grid.RowDefinitions>
-
-                        <Rectangle RadiusX="10" RadiusY="10" Grid.ColumnSpan="3" Margin="0" Grid.RowSpan="7">
-                            <Rectangle.Fill>
-                                <SolidColorBrush Color="#FF052F3C" Opacity="0.5"/>
-                            </Rectangle.Fill>
-                        </Rectangle>
-
-                    </Grid>
-                
-                <Grid x:Name="grdRouteInfo" x:FieldModifier="public">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="0*"/>
-                        <ColumnDefinition Width="5"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="100*"/>
-                        <RowDefinition Height="5"/>
-                    </Grid.RowDefinitions>
+                    </Viewbox>
 
                 </Grid>
+
             </StackPanel>
-
-            <Grid x:Name="grdPlanetInfo" x:FieldModifier="public" VerticalAlignment="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition Width="60*"/>
-                    <ColumnDefinition Width="60*"/>
-                    <ColumnDefinition Width="5"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="5"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="5"/>
-                </Grid.RowDefinitions>
-
-                <Rectangle RadiusX="10" RadiusY="10" Grid.RowSpan="6" Grid.ColumnSpan="4" >
-                    <Rectangle.Fill>
-                        <SolidColorBrush Color="#FF052F3C" Opacity="0.5"/>
-                    </Rectangle.Fill>
-                </Rectangle>
-
-
-            </Grid>
-            
-            
         </StackPanel>
-
     </Grid>
 
 </Page>

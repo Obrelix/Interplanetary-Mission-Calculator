@@ -65,6 +65,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\Static Classes\Globals.cs" />
     <Compile Include="Classes\Routes.cs" />
+    <Compile Include="Classes\Static Classes\UIControls.cs" />
     <Compile Include="Classes\UI Classes\RoutesHandler.cs" />
     <Compile Include="Classes\Static Classes\Shapes.cs" />
     <Compile Include="Classes\Static Classes\SMath.cs" />

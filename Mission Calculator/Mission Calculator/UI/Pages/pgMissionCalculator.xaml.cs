@@ -44,6 +44,13 @@ namespace Mission_Calculator.Pages
             UIColors.Add(Brushes.PowderBlue);
             UIColors.Add(Brushes.AliceBlue);
             UIColors.Add(Brushes.Aquamarine);
+            UIColors.Add(Brushes.MediumAquamarine);
+            UIColors.Add(Brushes.Aqua);
+            UIColors.Add(Brushes.CadetBlue);
+            UIColors.Add(Brushes.DodgerBlue);
+            UIColors.Add(Brushes.DarkSlateBlue);
+            UIColors.Add(Brushes.DeepSkyBlue);
+            UIColors.Add(Brushes.LawnGreen);
         }
 
         #region "Methods"
@@ -66,8 +73,8 @@ namespace Mission_Calculator.Pages
                 throw;
             }
         }
-        
-       
+
+
         #endregion
 
     }

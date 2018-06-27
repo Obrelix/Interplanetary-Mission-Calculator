@@ -97,17 +97,17 @@ namespace Mission_Calculator.Classes
                 objPropsRunList.Add(Globals.coloredRun(ObjectTo.Name, ObjectTo.objectColour));
                 objPropsRunList.Add(Globals.coloredRun(" ]", ValueBrush));
                 objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("Phase Angle : ", TitleBrush));
-                objPropsRunList.Add(Globals.coloredRun(strPhAngle, ValueBrush));
+                objPropsRunList.Add(Globals.coloredRun("D.P.A   : ", TitleBrush, "Departure Phase Angle."));
+                objPropsRunList.Add(Globals.coloredRun(strPhAngle, ValueBrush, "Departure Phase Angle."));
                 objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("Transfer Δv : ", TitleBrush));
-                objPropsRunList.Add(Globals.coloredRun(strDv, ValueBrush));
+                objPropsRunList.Add(Globals.coloredRun("Tr. ΔV  : ", TitleBrush, "Transfer Delta V"));
+                objPropsRunList.Add(Globals.coloredRun(strDv, ValueBrush, "Transfer Delta V"));
                 objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("Travel Time : ", TitleBrush));
-                objPropsRunList.Add(Globals.coloredRun(strTransferTime, ValueBrush));
+                objPropsRunList.Add(Globals.coloredRun("Tr. Time: ", TitleBrush, "Transfer Time"));
+                objPropsRunList.Add(Globals.coloredRun(strTransferTime, ValueBrush, "Transfer Time"));
                 objPropsRunList.Add(new Run(Environment.NewLine));
-                objPropsRunList.Add(Globals.coloredRun("I.B.L.W     : ", TitleBrush, "Interval between launch windows."));
-                objPropsRunList.Add(Globals.coloredRun(strInterval, ValueBrush));
+                objPropsRunList.Add(Globals.coloredRun("I.B.L.W : ", TitleBrush, "Interval between launch windows."));
+                objPropsRunList.Add(Globals.coloredRun(strInterval, ValueBrush, "Interval between launch windows."));
                 return objPropsRunList;
             }
             catch (Exception)

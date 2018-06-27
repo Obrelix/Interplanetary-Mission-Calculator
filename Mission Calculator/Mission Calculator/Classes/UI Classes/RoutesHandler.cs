@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using Mission_Calculator.Pages;
 using Mission_Calculator.Enumerators;
+using Mission_Calculator.Classes.Static_Classes;
 
 namespace Mission_Calculator.Classes
 {
@@ -49,10 +50,14 @@ namespace Mission_Calculator.Classes
                 FontSize = 14,
                 TextAlignment = TextAlignment.Justify,
                 FontFamily = new FontFamily("Consolas"),
-                Cursor = Cursors.Hand
+                Cursor = Cursors.Hand,
+                
             };
-            txt.SetValue(Grid.RowProperty, grdRowIndex);
-            txt.SetValue(Grid.ColumnProperty, 1);
+            if (grdRowIndex == 999) grdRowIndex = parentGrid.ColumnDefinitions.Count - 2;
+            //txt.SetValue(Border.BorderThicknessProperty, 1);
+            //txt.SetValue(Border.BorderBrushProperty, Brushes.Red);
+            txt.SetValue(Grid.RowProperty,1);
+            txt.SetValue(Grid.ColumnProperty, grdRowIndex);
             txt.MouseLeftButtonDown += txtTravelInfo_MouseButtonUp;
             return txt;
         }
@@ -107,8 +112,8 @@ namespace Mission_Calculator.Classes
         CheckBox chkReturn;
         List<PlanetInfo> planetInfoCSList;
         List<PlanetInfo> activeList = new List<PlanetInfo>();
-        Rectangle rect;
-
+        Grid grdRouteInfo;
+        ScrollViewer viewer;
 
         #endregion
 
@@ -121,25 +126,32 @@ namespace Mission_Calculator.Classes
             this.chkReturn = chkReturn;
             dblDVBudget = 0;
             dblTravelTime = 0;
-            rectInit();
+            grdRouteInfo = UIControls.grdPInit(1);
+            viewer = UIControls.viewerInit();
+            //viewer.MaxWidth = 500;
+            viewer.Content = grdRouteInfo;
+            viewer.SetValue(Grid.RowProperty, 1);
+            viewer.SetValue(Grid.ColumnProperty, 1);
+            parent.grdMain.Children.Add(viewer);
         }
 
         #endregion
 
         #region "Methods"
-        private void rectInit()
-        {
-            rect = new Rectangle
-            {
-                Name = "rectRouteInfo",
-                Margin = new Thickness(0),
-                RadiusX = 10,
-                RadiusY = 10,
 
-            };
-            Grid.SetRowSpan(rect, 8);
-            Grid.SetColumnSpan(rect, 6);
-            rect.Fill = new SolidColorBrush { Color = Color.FromRgb(5, 47, 60), Opacity = 0.5 };
+        private void grdRouteInfoAddColumn()
+        {
+            try
+            {
+                grdRouteInfo.ColumnDefinitions[grdRouteInfo.ColumnDefinitions.Count - 1].Width = new GridLength(0, GridUnitType.Auto);
+                grdRouteInfo.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5) });
+                viewer.MaxWidth = parent.ActualWidth - 40;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         public void Update()
@@ -156,9 +168,11 @@ namespace Mission_Calculator.Classes
                 if (activeList.Count > 1)
                 {
                     for (int i = 1; i < activeList.Count; i++)
+                    {
                         routesCSList.Add(CreateRoute(i));
+                    }
                     if (chkReturn.IsChecked == true)
-                        routesCSList.Add(CreateRoute(4));
+                        routesCSList.Add(CreateRoute(999));
                 }
                 foreach (RoutesInfo obj in routesCSList)
                 {
@@ -184,8 +198,9 @@ namespace Mission_Calculator.Classes
                 dblTravelTime = 0;
                 parent.txtDVBudget.Text = "";
                 parent.txtTotaTime.Text = "";
-                parent.grdRouteInfo.Children.Clear();
-                if (rect != null) parent.grdRouteInfo.Children.Add(rect);
+                viewer.Content = null;
+                grdRouteInfo = UIControls.grdPInit(1);
+                viewer.Content = grdRouteInfo;
             }
             catch (Exception)
             {
@@ -201,7 +216,8 @@ namespace Mission_Calculator.Classes
                 Routes route;
                 PlanetInfo PIFrom, PITo;
                 string Name = string.Empty;
-                if (intListIndex > 3)
+                grdRouteInfoAddColumn();
+                if (intListIndex == 999)
                 {
                     PIFrom = activeList[activeList.Count - 1];
                     PITo = activeList[0];
@@ -214,7 +230,7 @@ namespace Mission_Calculator.Classes
                     PITo = activeList[intListIndex];
                 }
                 route = new Routes(Name, PIFrom, PITo, Brushes.Tomato);
-                return new RoutesInfo(parent.grdRouteInfo, route, intListIndex);
+                return new RoutesInfo(grdRouteInfo, route, intListIndex);
             }
             catch (Exception)
             {
