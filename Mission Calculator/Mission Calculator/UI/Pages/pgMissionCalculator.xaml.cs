@@ -48,7 +48,6 @@ namespace Mission_Calculator.Pages
             UIColors.Add(Brushes.Aqua);
             UIColors.Add(Brushes.CadetBlue);
             UIColors.Add(Brushes.DodgerBlue);
-            UIColors.Add(Brushes.DarkSlateBlue);
             UIColors.Add(Brushes.DeepSkyBlue);
             UIColors.Add(Brushes.LawnGreen);
         }
@@ -76,6 +75,6 @@ namespace Mission_Calculator.Pages
 
 
         #endregion
-
+        
     }
 }

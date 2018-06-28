@@ -9,9 +9,9 @@
      Title="Mission Calculator" x:Name="Main" Loaded="Main_Loaded" MinHeight="600" MinWidth="780">
 
     <Grid  x:FieldModifier="public" x:Name="grdMain" >
-
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
@@ -22,47 +22,65 @@
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel x:FieldModifier="public" Grid.Row="2" Grid.Column="1" x:Name="pnlDown" Orientation="Horizontal" >
+        <Grid x:FieldModifier="public" Grid.Row="1" Grid.Column="1" x:Name="grdTotalInfo" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+            </Grid.RowDefinitions>
+
+            <Rectangle  RadiusY="10" RadiusX="10" Grid.RowSpan="14" Grid.ColumnSpan="15">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="Black" Opacity="0.5"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
+            <TextBlock Text="Δv Budget :" FontSize="18" Grid.Column="1" Grid.Row="1"  Foreground="#FFFF3A00" Margin="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Text="Tranfer Time :" FontSize="18" Grid.Column="5" Grid.Row="1"  Foreground="#FFFFDC00" Margin="0" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+            <Viewbox  Grid.Row="1" Grid.Column="3"  Width="120" MaxHeight="35">
+                <TextBlock x:FieldModifier="public" x:Name="txtDVBudget" Foreground="#FFFF3A00" Margin="0" TextAlignment="Center"/>
+            </Viewbox>
+
+            <Viewbox Grid.Row="1" Grid.Column="7" Width="120" MaxHeight="35">
+                <TextBlock x:FieldModifier="public" x:Name="txtTotaTime" Foreground="#FFFFDC00" Margin="0"  TextAlignment="Center"/>
+            </Viewbox>
+
+        </Grid>
 
 
-            <StackPanel x:FieldModifier="public" x:Name="pnlDownLeft">
+        <Grid x:FieldModifier="public" Grid.Row="2" Grid.Column="1" x:Name="pnlDown" HorizontalAlignment="Left" >
 
-                <Grid x:FieldModifier="public" x:Name="grdTotalInfo" Height="60">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition Width="100*"/>
-                        <ColumnDefinition Width="3"/>
-                        <ColumnDefinition Width="100*"/>
-                        <ColumnDefinition Width="5"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="5"/>
-                        <RowDefinition Height="15*"/>
-                        <RowDefinition Height="15*"/>
-                        <RowDefinition Height="5"/>
-                    </Grid.RowDefinitions>
-
-                    <Rectangle  RadiusY="10" RadiusX="10" Grid.RowSpan="4" Grid.ColumnSpan="5">
-                        <Rectangle.Fill>
-                            <SolidColorBrush Color="Black" Opacity="0.5"/>
-                        </Rectangle.Fill>
-                    </Rectangle>
-
-                    <TextBlock Text="Δv Budget" FontSize="18" Grid.Column="1" Grid.Row="1"  Foreground="#FFFF3A00" Margin="0" TextAlignment="Center" />
-                    <TextBlock Text="Tranfer Time" FontSize="18" Grid.Column="1" Grid.Row="2"  Foreground="#FFFFDC00" Margin="0" TextAlignment="Center" />
-
-                    <Viewbox  Grid.Row="1" Grid.Column="3" Width="100">
-                        <TextBlock x:FieldModifier="public" x:Name="txtDVBudget" Foreground="#FFFF3A00" Margin="0"/>
-                    </Viewbox>
-
-                    <Viewbox Grid.Row="2" Grid.Column="3" Width="100">
-                        <TextBlock x:FieldModifier="public" x:Name="txtTotaTime" Foreground="#FFFFDC00" Margin="0"  />
-                    </Viewbox>
-
-                </Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="5"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+            </Grid.RowDefinitions>
+            
+            <StackPanel x:FieldModifier="public" x:Name="pnlDownLeft" Grid.Row="1" Grid.Column="1">
 
             </StackPanel>
-        </StackPanel>
+
+        </Grid>
+
     </Grid>
 
 </Page>

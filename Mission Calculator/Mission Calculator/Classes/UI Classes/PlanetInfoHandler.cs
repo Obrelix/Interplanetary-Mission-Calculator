@@ -37,7 +37,9 @@ namespace Mission_Calculator.Classes
         public Grid expParentGrid { get; set; }
         public List<SelestialObject> planetList { get; set; }
         public Orbit orbit { get; set; }
-
+        public StackPanel pnl { get; set; }
+        public Border brdTxt { get; set; }
+        public Border brdImg { get; set; }
         #endregion
 
         #region "Constractor"
@@ -47,8 +49,18 @@ namespace Mission_Calculator.Classes
             this.parent = parent;
             this.txtparentGrid = txtparentGrid;
             this.expParentGrid = expParentGrid;
-            this.txt = txtPlanetInfo(grdRowIndex, 1);
-            this.img = imgPlanetInfo(grdRowIndex, 2);
+            this.txt = txtPlanetInfo(grdRowIndex);
+            this.img = imgPlanetInfo(grdRowIndex);
+            this.brdImg = brdInit();
+            this.brdTxt = brdInit();
+            //this.brdTxt.ToolTip = "Click to show S.O. characteristics.";
+            //this.brdImg.ToolTip = "Click to Show Biome map.";
+            this.brdTxt.Child = txt;
+            this.brdImg.Child = img;
+
+            this.pnl = pnlPlanetInfo(grdRowIndex, 1);
+            pnl.Children.Add(brdTxt);
+            pnl.Children.Add(brdImg);
             this.exp = expPlanetInfo(grdRowIndex, 1, foreground);
             expParentGrid.Children.Add(exp);    
             this.planetList = Globals.objList;
@@ -61,7 +73,29 @@ namespace Mission_Calculator.Classes
         #endregion
 
         #region "Methods"
+        private Border brdInit()
+        {
+            try
+            {
+                Border brd = new Border
+                {
+                    Background = Brushes.Transparent,
+                    //BorderBrush = new SolidColorBrush { Color = Color.FromRgb(102, 255, 179), Opacity = 0.5 },
+                    BorderBrush = Brushes.Transparent,
+                    BorderThickness = new Thickness(2),
+                    Margin = new Thickness(0),
+                    //Opacity = 0.9
+                };
+                brd.MouseEnter += brdMouseEnter;
+                brd.MouseLeave += brdMouseLeave;
+                return brd;
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
+        }
         private Expander expPlanetInfo(int grdRowIndex, int grdColumnIndex, Brush foreground)
         {
             try
@@ -98,7 +132,7 @@ namespace Mission_Calculator.Classes
                 {
                     Name = "expPlanetInfo" + grdRowIndex,
                     Header = (grdRowIndex == 1) ? "Origin" : "Stop " + (grdRowIndex - 1),
-                    Margin = new Thickness(2),
+                    Margin = new Thickness(4),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     FontSize = 14,
                     ExpandDirection = ExpandDirection.Right,
@@ -199,14 +233,36 @@ namespace Mission_Calculator.Classes
             }
         }
 
-        private TextBlock txtPlanetInfo(int grdRowIndex, int grdColumnIndex)
+        private StackPanel pnlPlanetInfo(int grdRowIndex, int grdColumnIndex)
+        {
+            try
+            {
+                StackPanel pnl = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Name = "pnlPlanetInfo" + grdRowIndex,
+                    Margin = new Thickness(2),
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                };
+                pnl.SetValue(Grid.RowProperty, grdRowIndex);
+                pnl.SetValue(Grid.ColumnProperty, grdColumnIndex);
+                return pnl;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private TextBlock txtPlanetInfo(int grdRowIndex)
         {
             try
             {
                 TextBlock txt = new TextBlock
                 {
                     Name = "txtPlanetInfo" + grdRowIndex,
-                    Margin = new Thickness(0),
+                    Margin = new Thickness(1),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     TextWrapping = TextWrapping.Wrap,
                     FontSize = 14,
@@ -214,8 +270,6 @@ namespace Mission_Calculator.Classes
                     FontFamily = new FontFamily("Consolas"),
                     Cursor = Cursors.Hand
                 };
-                txt.SetValue(Grid.RowProperty, grdRowIndex);
-                txt.SetValue(Grid.ColumnProperty, grdColumnIndex);
                 txt.MouseLeftButtonDown += txt_MouseButtonDown;
                 return txt;
             }
@@ -226,7 +280,7 @@ namespace Mission_Calculator.Classes
             }
         }
 
-        private Image imgPlanetInfo(int grdRowIndex, int grdColumnIndex)
+        private Image imgPlanetInfo(int grdRowIndex)
         {
             try
             {
@@ -234,12 +288,11 @@ namespace Mission_Calculator.Classes
                 {
                     Name = "imgPlanetInfo" + grdRowIndex,
                     Stretch = Stretch.UniformToFill,
+                    Margin = new Thickness(1),
                     Cursor = Cursors.Hand,
                     MaxHeight = 130,
                     MaxWidth =130
                 };
-                img.SetValue(Grid.RowProperty, grdRowIndex);
-                img.SetValue(Grid.ColumnProperty, grdColumnIndex);
                 img.MouseLeftButtonDown += img_MouseLeftButtonDown;
                 return img;
             }
@@ -269,8 +322,7 @@ namespace Mission_Calculator.Classes
         {
             try
             {
-                if (txtparentGrid.Children.Contains(txt)) txtparentGrid.Children.Remove(txt);
-                if (txtparentGrid.Children.Contains(img)) txtparentGrid.Children.Remove(img);
+                if (txtparentGrid.Children.Contains(pnl)) txtparentGrid.Children.Remove(pnl);
             }
             catch (Exception)
             {
@@ -313,8 +365,7 @@ namespace Mission_Calculator.Classes
                     txt.Inlines.Clear();
                     foreach (Run objRun in runLIst) txt.Inlines.Add(objRun);
                     img.Source = new BitmapImage(new Uri(obj.ImageUri));
-                    if (!txtparentGrid.Children.Contains(txt)) txtparentGrid.Children.Add(txt);
-                    if (!txtparentGrid.Children.Contains(img)) txtparentGrid.Children.Add(img);
+                    if (!txtparentGrid.Children.Contains(pnl)) txtparentGrid.Children.Add(pnl);
                 }
 
             }
@@ -373,7 +424,16 @@ namespace Mission_Calculator.Classes
             Update();
             parent.UpdateRoutes();
         }
-        
+
+        private void brdMouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Border)sender).BorderBrush = new SolidColorBrush { Color = Color.FromRgb(102, 255, 179), Opacity = 0.5 };
+        }
+
+        private void brdMouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Border)sender).BorderBrush = Brushes.Transparent;
+        }
 
         #endregion
 
@@ -402,13 +462,15 @@ namespace Mission_Calculator.Classes
             this.parent = parent;
             this.currentPlanetList = Globals.objList;
             planetInfoCSList.Clear();
-            grdPlanetInfo = UIControls.grdPInit(2);
+            grdPlanetInfo = UIControls.grdPInit(1);
 
             vrPI = UIControls.viewerInit();
             vrPI.Name = "vrPI";
-            vrPI.MaxHeight =650;
+            vrPI.MaxHeight =570;
             vrPI.Content = grdPlanetInfo;
             vrPI.ScrollChanged += ScrollChanged;
+            vrPI.SetValue(Grid.RowProperty, 1);
+            vrPI.SetValue(Grid.ColumnProperty, 3);
             parent.pnlDown.Children.Add(vrPI);
 
             StackPanel pnlMainControls = UIControls.pnlInit(Orientation.Vertical);
@@ -424,8 +486,8 @@ namespace Mission_Calculator.Classes
             pnlBtns.HorizontalAlignment = HorizontalAlignment.Center;
             pnlBtns.Children.Add(btnAddPI);
             pnlBtns.Children.Add(btnRemovePI);
-            pnlMainControls.Children.Add(pnlBtns);
             pnlMainControls.Children.Add(vrPS);
+            pnlMainControls.Children.Add(pnlBtns);
             parent.pnlDownLeft.Children.Add(pnlMainControls);
 
             planetInfoCSList.Add(new PlanetInfo(RowCounter + 1, grdPlanetInfo, grdPlanetSelection, foregroundList[RowCounter], this));
@@ -592,7 +654,7 @@ namespace Mission_Calculator.Classes
 
         private void btnAddClick(object sender, RoutedEventArgs e)
         {
-            if (RowCounter > 9) return;
+            if (RowCounter > 8) return;
             RowCounter++;
             addPI();
         }
@@ -609,38 +671,7 @@ namespace Mission_Calculator.Classes
         {
             try
             {
-                //// User scroll event : set or unset auto-scroll mode
-                //if (e.ExtentHeightChange == 0)
-                //{   // Content unchanged : user scroll event
-                //    if (((ScrollViewer)sender).VerticalOffset == ((ScrollViewer)sender).ScrollableHeight)
-                //    {   // Scroll bar is in bottom
-                //        // Set auto-scroll mode
-                //        AutoScroll = true;
-                //    }
-                //    else
-                //    {   // Scroll bar isn't in bottom
-                //        // Unset auto-scroll mode
-                //        AutoScroll = false;
-                //    }
-                //}
 
-                //// Content scroll event : auto-scroll eventually
-                //if (e.VerticalOffset != 0)
-                //{   // Content changed and auto-scroll mode set
-                //    // Autoscroll
-                //    vrPI.ScrollToVerticalOffset(e.ExtentHeight);
-                //}
-                //switch (((ScrollViewer)sender).Name)
-                //{
-                //    case "vrPI":
-
-                //        //vrPS.SetValue(vie += e.ViewportHeightChange;
-                //        break;
-                //    case "vrPS":
-                //        break;
-                //    default:
-                //        break;
-                //}
             }
             catch (Exception)
             {

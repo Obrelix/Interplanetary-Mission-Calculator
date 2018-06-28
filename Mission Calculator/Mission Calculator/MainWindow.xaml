@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mission_Calculator"
         mc:Ignorable="d"
-        d:DesignHeight="850" d:DesignWidth="970"
-        Title="MainWindow" Height="850" Width="900" MinWidth="970" MinHeight="850" Icon="pack://siteoforigin:,,,/Resources/astro.ico">
+        d:DesignHeight="850" d:DesignWidth="1000"
+        Title="MainWindow" Height="850" Width="1000" MinWidth="1000" MinHeight="850" MaxWidth="1000" MaxHeight="850" Icon="pack://siteoforigin:,,,/Resources/astro.ico">
     <Window.Background>
         <ImageBrush ImageSource="Images/Backgrounds/backGround.jpg" Stretch="UniformToFill"/>
     </Window.Background>

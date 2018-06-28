@@ -21,8 +21,8 @@ namespace Mission_Calculator.Classes
         #region "General Declaration"
 
         public Grid parentGrid { get; set; }
-        public TextBlock txt { get; set; }
         public Routes route { get; set; }
+        private Border txtBorder;
 
         #endregion
 
@@ -31,15 +31,14 @@ namespace Mission_Calculator.Classes
         public RoutesInfo(Grid parentGrid, Routes route, int grdRowIndex)
         {
             this.parentGrid = parentGrid;
-            this.txt = txtRouteInfo(grdRowIndex);
+            this.txtBorder = txtRouteInfo(grdRowIndex);
             this.route = route;
         }
 
         #endregion
 
         #region "Methods"
-
-        private TextBlock txtRouteInfo(int grdRowIndex)
+        private Border txtRouteInfo(int grdRowIndex)
         {
             TextBlock txt = new TextBlock
             {
@@ -53,23 +52,32 @@ namespace Mission_Calculator.Classes
                 Cursor = Cursors.Hand,
                 
             };
-            if (grdRowIndex == 999) grdRowIndex = parentGrid.ColumnDefinitions.Count - 2;
-            //txt.SetValue(Border.BorderThicknessProperty, 1);
-            //txt.SetValue(Border.BorderBrushProperty, Brushes.Red);
-            txt.SetValue(Grid.RowProperty,1);
-            txt.SetValue(Grid.ColumnProperty, grdRowIndex);
             txt.MouseLeftButtonDown += txtTravelInfo_MouseButtonUp;
-            return txt;
+            if (grdRowIndex == 999) grdRowIndex = parentGrid.ColumnDefinitions.Count - 2;
+            Border brd = new Border
+            {
+                Background = Brushes.Transparent,
+                BorderBrush = new SolidColorBrush { Color = Color.FromRgb(102, 255, 179), Opacity = 0.1 },
+                BorderThickness = new Thickness(3),
+                Margin = new Thickness(5),
+                Opacity = 0.9
+            };
+            brd.Child = txt;
+            brd.SetValue(Grid.RowProperty,1);
+            brd.SetValue(Grid.ColumnProperty, grdRowIndex);
+            brd.MouseEnter += brdMouseEnter;
+            brd.MouseLeave += brdMouseLeave;
+            return brd;
         }
 
         public void Update()
         {
             try
             {
-                if (parentGrid.Children.Contains(txt)) parentGrid.Children.Remove(txt);
-                txt.Inlines.Clear();
-                foreach (Run obj in route.ToShortRunList()) txt.Inlines.Add(obj);
-                parentGrid.Children.Add(txt);
+                if (parentGrid.Children.Contains(txtBorder)) parentGrid.Children.Remove(txtBorder);
+                ((TextBlock)txtBorder.Child).Inlines.Clear();
+                foreach (Run obj in route.ToShortRunList()) ((TextBlock)txtBorder.Child).Inlines.Add(obj);
+                parentGrid.Children.Add(txtBorder);
             }
             catch (Exception)
             {
@@ -95,6 +103,16 @@ namespace Mission_Calculator.Classes
 
                 throw;
             }
+        }
+
+        private void brdMouseEnter(object sender, MouseEventArgs e)
+        {
+            ((Border)sender).BorderBrush = new SolidColorBrush { Color = Color.FromRgb(102, 255, 179), Opacity = 0.5 };
+        }
+
+        private void brdMouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Border)sender).BorderBrush = new SolidColorBrush { Color = Color.FromRgb(102, 255, 179), Opacity = 0.1 };
         }
 
         #endregion
@@ -130,7 +148,7 @@ namespace Mission_Calculator.Classes
             viewer = UIControls.viewerInit();
             //viewer.MaxWidth = 500;
             viewer.Content = grdRouteInfo;
-            viewer.SetValue(Grid.RowProperty, 1);
+            viewer.SetValue(Grid.RowProperty, 3);
             viewer.SetValue(Grid.ColumnProperty, 1);
             parent.grdMain.Children.Add(viewer);
         }
@@ -145,7 +163,7 @@ namespace Mission_Calculator.Classes
             {
                 grdRouteInfo.ColumnDefinitions[grdRouteInfo.ColumnDefinitions.Count - 1].Width = new GridLength(0, GridUnitType.Auto);
                 grdRouteInfo.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5) });
-                viewer.MaxWidth = parent.ActualWidth - 40;
+                viewer.MaxWidth = parent.ActualWidth - 50;
             }
             catch (Exception)
             {
@@ -229,7 +247,7 @@ namespace Mission_Calculator.Classes
                     PIFrom = activeList[intListIndex - 1];
                     PITo = activeList[intListIndex];
                 }
-                route = new Routes(Name, PIFrom, PITo, Brushes.Tomato);
+                route = new Routes(Name, PIFrom, PITo, Brushes.LightGoldenrodYellow);
                 return new RoutesInfo(grdRouteInfo, route, intListIndex);
             }
             catch (Exception)
