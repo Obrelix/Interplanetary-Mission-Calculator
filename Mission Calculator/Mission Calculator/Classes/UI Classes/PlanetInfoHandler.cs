@@ -40,6 +40,7 @@ namespace Mission_Calculator.Classes
         public StackPanel pnl { get; set; }
         public Border brdTxt { get; set; }
         public Border brdImg { get; set; }
+        public Border brdExp { get; set; }
         #endregion
 
         #region "Constractor"
@@ -53,6 +54,7 @@ namespace Mission_Calculator.Classes
             this.img = imgPlanetInfo(grdRowIndex);
             this.brdImg = brdInit();
             this.brdTxt = brdInit();
+            this.brdExp = brdInit();
             //this.brdTxt.ToolTip = "Click to show S.O. characteristics.";
             //this.brdImg.ToolTip = "Click to Show Biome map.";
             this.brdTxt.Child = txt;
@@ -82,7 +84,7 @@ namespace Mission_Calculator.Classes
                     Background = Brushes.Transparent,
                     //BorderBrush = new SolidColorBrush { Color = Color.FromRgb(102, 255, 179), Opacity = 0.5 },
                     BorderBrush = Brushes.Transparent,
-                    BorderThickness = new Thickness(2),
+                    BorderThickness = new Thickness(4),
                     Margin = new Thickness(0),
                     //Opacity = 0.9
                 };
@@ -132,20 +134,23 @@ namespace Mission_Calculator.Classes
                 {
                     Name = "expPlanetInfo" + grdRowIndex,
                     Header = (grdRowIndex == 1) ? "Origin" : "Stop " + (grdRowIndex - 1),
-                    Margin = new Thickness(4),
+                    Margin = new Thickness(1),
                     HorizontalAlignment = HorizontalAlignment.Left,
                     FontSize = 14,
                     ExpandDirection = ExpandDirection.Right,
-                    Foreground = foreground
-
-                };
+                    Foreground = foreground,
+                    BorderThickness = new Thickness(5),
+                    BorderBrush = Brushes.Transparent
+            };
 
                 exp.Content = grd;
-                exp.IsExpanded = !(grdRowIndex == 1);
+                //exp.IsExpanded = !(grdRowIndex == 1);
                 exp.SetValue(Grid.RowProperty, grdRowIndex);
                 exp.SetValue(Grid.ColumnProperty, grdColumnIndex);
                 exp.Expanded += MainEvent;
                 exp.Collapsed += MainEvent;
+                exp.MouseEnter += MouseEnter;
+                exp.MouseLeave += MouseLeave;
                 return exp;
             }
             catch (Exception)
@@ -241,7 +246,7 @@ namespace Mission_Calculator.Classes
                 {
                     Orientation = Orientation.Horizontal,
                     Name = "pnlPlanetInfo" + grdRowIndex,
-                    Margin = new Thickness(2),
+                    Margin = new Thickness(0),
                     HorizontalAlignment = HorizontalAlignment.Left,
                 };
                 pnl.SetValue(Grid.RowProperty, grdRowIndex);
@@ -336,6 +341,7 @@ namespace Mission_Calculator.Classes
             try
             {
                 if (expParentGrid.Children.Contains(exp)) expParentGrid.Children.Remove(exp);
+                pnl.Children.Clear();
             }
             catch (Exception)
             {
@@ -425,16 +431,28 @@ namespace Mission_Calculator.Classes
             parent.UpdateRoutes();
         }
 
+        private void MouseEnter(object sender, MouseEventArgs e)
+        {
+            
+            ((Expander)sender).BorderBrush =  new SolidColorBrush { Color = ((SolidColorBrush)((Expander)sender).Foreground).Color, Opacity = 0.2 };
+            //((Expander)sender).BorderBrush.Opacity = 0.5;
+        }
+
+        private void MouseLeave(object sender, MouseEventArgs e)
+        {
+            ((Expander)sender).BorderBrush = Brushes.Transparent;
+        }
+
         private void brdMouseEnter(object sender, MouseEventArgs e)
         {
-            ((Border)sender).BorderBrush = new SolidColorBrush { Color = Color.FromRgb(102, 255, 179), Opacity = 0.5 };
+            ((Border)sender).BorderBrush = new SolidColorBrush { Color = ((SolidColorBrush)obj.objectColour).Color , Opacity = 0.2 };
         }
 
         private void brdMouseLeave(object sender, MouseEventArgs e)
         {
             ((Border)sender).BorderBrush = Brushes.Transparent;
         }
-
+        
         #endregion
 
     }
@@ -478,16 +496,21 @@ namespace Mission_Calculator.Classes
             vrPS = UIControls.viewerInit();
             vrPS.Content = grdPlanetSelection;
             vrPS.Name = "vrPS";
-            //vrPS.MaxHeight = 200;
+            vrPS.MaxHeight = 570;
             vrPS.ScrollChanged += ScrollChanged;
             btnAddPI = btnAddInit();
             btnRemovePI = btnRemovedInit();
             StackPanel pnlBtns = UIControls.pnlInit(Orientation.Horizontal);
-            pnlBtns.HorizontalAlignment = HorizontalAlignment.Center;
+            pnlBtns.HorizontalAlignment = HorizontalAlignment.Right;
+            pnlBtns.VerticalAlignment = VerticalAlignment.Top;
+            pnlBtns.Margin = new Thickness(0, 5, 0, 0);
+            pnlBtns.Background = new SolidColorBrush { Color = Color.FromRgb(5, 47, 60), Opacity = 0.5 };
             pnlBtns.Children.Add(btnAddPI);
             pnlBtns.Children.Add(btnRemovePI);
+            pnlBtns.SetValue(Grid.RowProperty, 0);
+            pnlBtns.SetValue(Grid.ColumnProperty, 0);
             pnlMainControls.Children.Add(vrPS);
-            pnlMainControls.Children.Add(pnlBtns);
+            parent.grdTop.Children.Add(pnlBtns);
             parent.pnlDownLeft.Children.Add(pnlMainControls);
 
             planetInfoCSList.Add(new PlanetInfo(RowCounter + 1, grdPlanetInfo, grdPlanetSelection, foregroundList[RowCounter], this));
@@ -510,10 +533,10 @@ namespace Mission_Calculator.Classes
                     Name = "btnAddPlanet",
                     Content = "+",
                     FontWeight = FontWeights.Bold,
-                    Margin = new Thickness(2),
+                    Margin = new Thickness(7),
                     Height = 20,
                     Width = 20,
-                    HorizontalAlignment = HorizontalAlignment.Left,
+                    HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
                     FontSize = 12,
                     Foreground = Brushes.Black
@@ -537,10 +560,10 @@ namespace Mission_Calculator.Classes
                     Name = "btnRemovePlanet",
                     Content = "-",
                     FontWeight = FontWeights.Bold,
-                    Margin = new Thickness(0),
+                    Margin = new Thickness(7),
                     Height = 20,
                     Width = 20,
-                    HorizontalAlignment = HorizontalAlignment.Right,
+                    HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center,
                     FontSize = 12,
                     Foreground = Brushes.Black
@@ -628,6 +651,7 @@ namespace Mission_Calculator.Classes
             planetInfoCSList[planetInfoCSList.Count - 1].Reset();
             planetInfoCSList[planetInfoCSList.Count - 1].ResetExp();
             planetInfoCSList.Remove(planetInfoCSList[planetInfoCSList.Count -1]);
+            UpdateRoutes();
         }
 
         public List<PlanetInfo> CSList()
@@ -654,7 +678,7 @@ namespace Mission_Calculator.Classes
 
         private void btnAddClick(object sender, RoutedEventArgs e)
         {
-            if (RowCounter > 8) return;
+            if (RowCounter > 18) return;
             RowCounter++;
             addPI();
         }

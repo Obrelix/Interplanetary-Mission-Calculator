@@ -56,8 +56,8 @@ namespace Mission_Calculator.Classes.Static_Classes
                 RadiusY = 10,
 
             };
-            Grid.SetRowSpan(rect, 20);
-            Grid.SetColumnSpan(rect, 12);
+            Grid.SetRowSpan(rect, 100);
+            Grid.SetColumnSpan(rect, 100);
             rect.Fill = new SolidColorBrush { Color = Color.FromRgb(5, 47, 60), Opacity = 0.5 };
             return rect;
         }

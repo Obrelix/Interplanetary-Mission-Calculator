@@ -108,11 +108,15 @@ namespace Mission_Calculator.Classes
         private void brdMouseEnter(object sender, MouseEventArgs e)
         {
             ((Border)sender).BorderBrush = new SolidColorBrush { Color = Color.FromRgb(102, 255, 179), Opacity = 0.5 };
+            ((Border)sender).BorderThickness = new Thickness(6);
+            ((Border)sender).Margin = new Thickness(2);
         }
 
         private void brdMouseLeave(object sender, MouseEventArgs e)
         {
             ((Border)sender).BorderBrush = new SolidColorBrush { Color = Color.FromRgb(102, 255, 179), Opacity = 0.1 };
+            ((Border)sender).BorderThickness = new Thickness(3);
+            ((Border)sender).Margin = new Thickness(5);
         }
 
         #endregion
@@ -163,7 +167,7 @@ namespace Mission_Calculator.Classes
             {
                 grdRouteInfo.ColumnDefinitions[grdRouteInfo.ColumnDefinitions.Count - 1].Width = new GridLength(0, GridUnitType.Auto);
                 grdRouteInfo.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5) });
-                viewer.MaxWidth = parent.ActualWidth - 50;
+                viewer.MaxWidth = parent.ActualWidth - 70;
             }
             catch (Exception)
             {

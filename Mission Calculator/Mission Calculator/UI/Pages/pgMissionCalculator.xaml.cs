@@ -50,6 +50,16 @@ namespace Mission_Calculator.Pages
             UIColors.Add(Brushes.DodgerBlue);
             UIColors.Add(Brushes.DeepSkyBlue);
             UIColors.Add(Brushes.LawnGreen);
+            UIColors.Add(Brushes.Chartreuse);
+            UIColors.Add(Brushes.LimeGreen);
+            UIColors.Add(Brushes.SpringGreen);
+            UIColors.Add(Brushes.Thistle);
+            UIColors.Add(Brushes.Snow);
+            UIColors.Add(Brushes.Silver);
+            UIColors.Add(Brushes.RosyBrown);
+            UIColors.Add(Brushes.DarkSeaGreen);
+            UIColors.Add(Brushes.Gainsboro);
+            UIColors.Add(Brushes.Crimson);
         }
 
         #region "Methods"
