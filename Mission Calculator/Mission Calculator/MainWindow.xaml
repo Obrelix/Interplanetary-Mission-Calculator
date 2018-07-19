@@ -13,29 +13,25 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="White">
             <MenuItem Header="_Menu" >
-                <Separator />
-                <MenuItem Header="_Start KSP" Click="KSP_Click" />
-                <!--<MenuItem Header="_Start Ckan" Click="Ckan_Click" />-->
-                <Separator />
-                <MenuItem Header="_Forums" Click="Forum_Click" />
-                <MenuItem Header="_SubReddit" Click="Reddit_Click"/>
-                <MenuItem Header="_Wiki" Click="Wiki_Click"/>
-                <MenuItem Header="_Mods" Click="CurseMods_Click"/>
+                <!--<Separator />
+                --><!--<MenuItem Header="_Start KSP" Click="KSP_Click" />-->
+                <!--<MenuItem Header="_Start Ckan" Click="Ckan_Click" />--><!--
+                <Separator />-->
+                <MenuItem x:Name="btnForumLink" Header="_Forums" Click="btnMenuLink_Click" />
+                <MenuItem x:Name="btnRedditLink" Header="_SubReddit" Click="btnMenuLink_Click"/>
+                <MenuItem x:Name="btnWikiLink" Header="_Wiki" Click="btnMenuLink_Click"/>
+                <MenuItem x:Name="btnCurseModsLink" Header="_Mods" Click="btnMenuLink_Click"/>
+                <MenuItem x:Name="btnCKANLink" Header="_Ckan" Click="btnMenuLink_Click"/>
                 <Separator />
                 <MenuItem Header="_Exit" Click="Exit_Click" />
             </MenuItem>
             <MenuItem Header="Help">
-                <MenuItem Header="Download" Click="Download"/>
-                <MenuItem Header="Report an _issue" Click="Issues_Click"/>
+                <MenuItem x:Name="btnSourceCodeLink" Header="Source Code" Click="btnMenuLink_Click"/>
+                <MenuItem x:Name="btnIssuesLink"  Header="Report an _issue" Click="btnMenuLink_Click"/>
             </MenuItem>
         </Menu>
         <Grid>
-            <Frame x:Name="frame" Content="Frame" Margin="0" Source="/Mission Calculator;component/UI/Pages/pgMissionCalculator.xaml">
-                <Frame.Background>
-                    <ImageBrush/>
-                </Frame.Background>
-            </Frame>
-
+            <Frame x:Name="frame" Content="Frame" Margin="0" Source="/Mission Calculator;component/UI/Pages/pgMissionCalculator.xaml" NavigationUIVisibility="Hidden"/>
         </Grid>
     </DockPanel>
 </Window>
