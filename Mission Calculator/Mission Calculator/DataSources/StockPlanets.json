@@ -841,7 +841,7 @@
   },
   {
     "Name": "Pol",
-    "Index": 14,
+    "Index": 15,
     "ImageUri": "pack://application:,,/Images/Planets/Pol.png",
     "BiomeImageUri": "pack://application:,,/Images/Biomes/Pol_Biome_Map_1.2.png",
     "Type": 2,
@@ -897,7 +897,7 @@
   },
   {
     "Name": "Eeloo",
-    "Index": 14,
+    "Index": 16,
     "ImageUri": "pack://application:,,/Images/Planets/Eeloo.png",
     "BiomeImageUri": "pack://application:,,/Images/Biomes/Eeloo_Biome_Map_1.2.png",
     "Type": 1,
@@ -953,7 +953,7 @@
   },
   {
     "Name": "Kerbol",
-    "Index": 14,
+    "Index": 17,
     "ImageUri": "pack://application:,,/Images/Planets/Kerbol.png",
     "BiomeImageUri": "pack://application:,,/Images/Biomes/None.png",
     "Type": 0,
