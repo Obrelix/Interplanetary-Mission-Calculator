@@ -145,7 +145,7 @@ namespace Mission_Calculator.Windows
             {
                 cleanCanvas();
                 this.planetSize = planetSize;
-                SelestialObject sun = Globals.objList[Globals.objList.Count-1];
+                SelestialObject sun = IO.objList[IO.objList.Count-1];
                 //double rel = (route.ObjectInner.OrbitalPeriod / route.ObjectOuter.OrbitalPeriod) ;
                 outerOrbitSize = maxSize;
                 innerOrbitSize = new Size(outerOrbitSize.Width * rel, outerOrbitSize.Height * rel);

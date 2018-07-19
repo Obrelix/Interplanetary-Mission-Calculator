@@ -65,7 +65,7 @@ namespace Mission_Calculator.Classes
             pnl.Children.Add(brdImg);
             this.exp = expPlanetInfo(grdRowIndex, 1, foreground);
             expParentGrid.Children.Add(exp);    
-            this.planetList = Globals.objList;
+            this.planetList = IO.objList;
             cboInit();
             this.obj = planetList[cbo.SelectedIndex];
             Colour = exp.Foreground;
@@ -478,7 +478,7 @@ namespace Mission_Calculator.Classes
         {
             this.foregroundList = foregroundList;
             this.parent = parent;
-            this.currentPlanetList = Globals.objList;
+            this.currentPlanetList = IO.objList;
             planetInfoCSList.Clear();
             grdPlanetInfo = UIControls.grdPInit(1);
 

@@ -13,7 +13,7 @@ namespace Mission_Calculator.Classes
         #region "General Declaration"
 
         static Routes route;
-        static List<SelestialObject> objList = Globals.objList;
+        static List<SelestialObject> objList = IO.objList;
         static bool isParentPlanetToMoon;
         static bool isMoonToParentPlanet;
         static bool is0;

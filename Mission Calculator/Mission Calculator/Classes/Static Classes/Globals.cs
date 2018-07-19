@@ -12,20 +12,12 @@ namespace Mission_Calculator.Classes
     {
         #region "General Declaration"
 
-        public static List<SelestialObject> objList { get; set; }
-        public static MainWindow ParetWindow { get; set; }
 
         public const int StockPlanetsCount = 18;
         public const int OuterPlanetsCount = 32;
         public const int RssPlanetsCount = 17;
         public const int KerbinTime = 21600; //seconds per day
         public const int EarthTime = 86400; //seconds per day
-
-        static string saveDirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\Interplanetary Mission Calulator";
-        static string planeDataDirectoryPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\PlanetsData";
-        static string StockPlanetsPath = planeDataDirectoryPath + "\\StockPlanets.json";
-        static string OuterPlanetsPath = planeDataDirectoryPath + "\\OuterPlanets.json";
-        static string RSSPlanetsPath = planeDataDirectoryPath + "\\RSSPlanets.json";
 
         #endregion
 
@@ -34,59 +26,6 @@ namespace Mission_Calculator.Classes
         #endregion
 
         #region "Methods"
-        public static List<SelestialObject> planetFilesInit(int mode)
-        {
-            if (objList != null) objList.Clear();
-            switch (mode)
-            {
-                case 0:
-                    objList = IO.LoadListFromFile(StockPlanetsPath);
-                    break;
-                case 1:
-                    objList = IO.LoadListFromFile(OuterPlanetsPath);
-                    break;
-                case 2:
-                    objList = IO.LoadListFromFile(RSSPlanetsPath);
-                    break;
-                default:
-                    objList = IO.LoadListFromFile(StockPlanetsPath);
-                    break;
-            }
-            return objList;
-        }
-
-        public static void errorFileInit()
-        {
-            string errorFilePath = saveDirectoryPath + "\\errorLog.txt";
-            IO.errorFilePath = errorFilePath;
-            IO.createFile(errorFilePath, "");
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public static void saveFilesInit()
-        {
-            List<SelestialObject> objList = new List<SelestialObject>();
-            for (int i = 0; i <= 17; i++)
-            {
-                objList.Add(new SelestialObject());
-            }
-            IO.saveListToFile(StockPlanetsPath, objList);
-            objList.Clear();
-            for (int i = 0; i <= 31; i++)
-            {
-                objList.Add(new SelestialObject());
-            }
-            IO.saveListToFile(OuterPlanetsPath, objList);
-            objList.Clear();
-            for (int i = 0; i <= 16; i++)
-            {
-                objList.Add(new SelestialObject());
-            }
-            IO.saveListToFile(RSSPlanetsPath, objList);
-            objList.Clear();
-        }
 
         /// <summary>
         /// Returns a new coloured Run with text

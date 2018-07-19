@@ -25,8 +25,7 @@ namespace Mission_Calculator.Pages
     public partial class pgMissionCalculator : Page
     {
         #region "General Declaration"
-        
-        List<SelestialObject> currentPlanetList;
+
         PlaneInfoHandler PlanetInfoControler;
         List<Brush> UIColors = new List<Brush>();
 
@@ -38,8 +37,8 @@ namespace Mission_Calculator.Pages
         public pgMissionCalculator()
         {
             InitializeComponent();
-            Globals.errorFileInit();
-            currentPlanetList = Globals.planetFilesInit(0);
+            IO.errorFileInit();
+            IO.planetFilesInit(0);
             UIColors.Add(Brushes.Wheat);
             UIColors.Add(Brushes.PowderBlue);
             UIColors.Add(Brushes.AliceBlue);
